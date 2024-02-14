@@ -62,7 +62,7 @@ const Home = () => {
                 </div>
                 <div className="w-4/5">
                     <input type="checkbox" id="search-mode-toggle" className="toggle-checkbox" />
-                    <label for="search-mode-toggle" className="toggle-label flex-none">
+                    <label htmlFor="search-mode-toggle" className="toggle-label flex-none">
                         <span className="toggle-search-category text-sm text-center">
                             種類・カテゴリで探す
                         </span>
