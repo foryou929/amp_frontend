@@ -12,9 +12,13 @@ const request = async (method, url, data, success, error) => {
             success(result.data)
         return result.data
     } catch (err) {
-        _.map(err.response?.data, (message, index) => {
-            NotificationManager.error(message, index.charAt(0).toUpperCase() + index.slice(1))
-        })
+        if (err.response?.data) {
+            _.map(err.response?.data, (message, index) => {
+                NotificationManager.error(message, index.charAt(0).toUpperCase() + index.slice(1))
+            })
+        } else {
+            NotificationManager.error(err.message, 'Error');
+        }
         if (error)
             error(err.response?.data)
     }
