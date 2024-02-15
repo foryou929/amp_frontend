@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
+import Password from "../../components/common/Password";
 import query from "../../utils/query";
 import md5 from "md5"
 
@@ -22,7 +23,7 @@ const Login = () => {
                 </section>
                 <section className="py-2">
                     <label>Password:</label>
-                    <Input onChange={(e) => setPassword(e.target.value)} />
+                    <Password onChange={(e) => setPassword(e.target.value)} />
                 </section>
                 <section className="py-2 flex gap-2">
                     <Button label={"Login"} className="flex-grow" />

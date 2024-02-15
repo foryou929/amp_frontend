@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { NotificationManager } from 'react-notifications'
 import i18next from 'i18next'
+import _ from 'lodash'
 
 const request = async (method, url, data, success, error) => {
     try {
@@ -11,7 +12,9 @@ const request = async (method, url, data, success, error) => {
             success(result.data)
         return result.data
     } catch (err) {
-        NotificationManager.error(i18next.t(err.response?.data?.message) || err.message, i18next.t('Error'))
+        _.map(err.response?.data, (message, index) => {
+            NotificationManager.error(message, index.charAt(0).toUpperCase() + index.slice(1))
+        })
         if (error)
             error(err.response?.data)
     }
