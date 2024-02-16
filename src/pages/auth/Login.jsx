@@ -3,7 +3,8 @@ import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
 import Password from "../../components/common/Password";
 import query from "../../utils/query";
-import md5 from "md5"
+import md5 from "md5";
+import { saveTokens } from "../../app/auth";
 
 const Login = () => {
     const [username, setUserName] = useState('');
@@ -11,7 +12,9 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.post('/api/auth/login', { username, password: md5(password) })
+        query.post('/api/auth/login', { username, password: md5(password) }, (res) => {
+            saveTokens(res.token);
+        })
     }
 
     return (

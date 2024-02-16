@@ -2,8 +2,13 @@ import axios from 'axios'
 import { NotificationManager } from 'react-notifications'
 import i18next from 'i18next'
 import _ from 'lodash'
+import { getAccessToken } from "../app/auth"
 
 const request = async (method, url, data, success, error) => {
+    const token = getAccessToken();
+    if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    }
     try {
         const result = await axios.request({ method, url, data })
         if (result.data?.message)
@@ -12,10 +17,13 @@ const request = async (method, url, data, success, error) => {
             success(result.data)
         return result.data
     } catch (err) {
-        if (err.response?.data) {
+        if (typeof err.response?.data == 'object') {
             _.map(err.response?.data, (message, index) => {
-                NotificationManager.error(message, index.charAt(0).toUpperCase() + index.slice(1))
+                if (typeof message == 'string')
+                    NotificationManager.error(message, index.charAt(0).toUpperCase() + index.slice(1))
             })
+        } else if (typeof err.response?.data == 'string') {
+            
         } else {
             NotificationManager.error(err.message, 'Error');
         }
