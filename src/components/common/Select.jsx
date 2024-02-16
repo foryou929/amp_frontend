@@ -1,7 +1,11 @@
-const Select = ({ ...rest }) => {
+const Select = ({ className, options, ...rest }) => {
     return (
-        <div {...rest}>
-            <select className={`w-full p-2 border border-[#DEE2E6] bg-[#F8F9FA]`}></select>
+        <div className={className}>
+            <select className={`w-full p-2 border border-[#DEE2E6] bg-[#F8F9FA]`} {...rest}>
+                {
+                    options?.map((option, index) => <option key={index} value={option.value}>{option.label}</option>)
+                }
+            </select>
         </div>
     )
 }
