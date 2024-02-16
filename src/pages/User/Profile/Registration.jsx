@@ -34,7 +34,7 @@ const Registration = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.post('/api/user/profile/register', profile);
+        query.auth.post('/api/user/profile/register', profile);
     }
 
     return (
