@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Input from "../../../components/common/Input";
 import DatePicker from "../../../components/common/DatePicker";
 import Select from "../../../components/common/Select";
@@ -6,6 +6,7 @@ import Button from "../../../components/common/Button";
 import Textarea from "../../../components/common/Textarea";
 import CheckGroup from "../../../components/common/CheckGroup";
 import query from "../../../utils/query";
+import { NotificationManager } from "react-notifications";
 
 const Registration = () => {
     const [profile, setProfile] = useState(
@@ -34,7 +35,9 @@ const Registration = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.auth.post('/api/user/profile/register', profile);
+        query.auth.post('/api/user/profile', profile, res => {
+            NotificationManager.success('Success');
+        });
     }
 
     return (
