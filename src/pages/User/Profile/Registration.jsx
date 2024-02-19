@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import Input from "../../../components/common/Input";
-import DatePicker from "../../../components/common/DatePicker";
-import Select from "../../../components/common/Select";
-import Button from "../../../components/common/Button";
-import Textarea from "../../../components/common/Textarea";
-import CheckGroup from "../../../components/common/CheckGroup";
+import { useState } from "react";
+import Input from "../../../components/Input";
+import DatePicker from "../../../components/DatePicker";
+import Select from "../../../components/Select";
+import Button from "../../../components/Button";
+import Textarea from "../../../components/Textarea";
+import CheckGroup from "../../../components/CheckGroup";
 import query from "../../../utils/query";
+import { NotificationManager } from "react-notifications";
 
 const Registration = () => {
     const [profile, setProfile] = useState(
@@ -34,11 +35,13 @@ const Registration = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.post('/api/user/profile/register', profile);
+        query.auth.post('/api/user/profile', profile, res => {
+            NotificationManager.success('Success');
+        });
     }
 
     return (
-        <div className="container">
+        <>
             <h1 className="text-2xl font-bold">ユーザープロフィール</h1>
             <form onSubmit={handleSubmit}>
                 <section className="py-2">
@@ -118,7 +121,7 @@ const Registration = () => {
                     <Button label={"保存"} className="w-full" />
                 </section>
             </form>
-        </div>
+        </>
     )
 }
 

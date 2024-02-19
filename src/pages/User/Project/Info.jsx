@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Button from "../../../components/common/Button";
-import Tab from "../../../components/common/Tab";
+import Button from "../../../components/Button";
+import Tab from "../../../components/Tab";
 
 const Info = () => {
     const [steps, setSteps] = useState(
@@ -19,7 +19,7 @@ const Info = () => {
         ]
     )
     return (
-        <div className="container">
+        <>
             <h1 className="text-2xl font-bold">プリウスの後ろ窓にステッカー を貼ります</h1>
             <Tab
                 className="mt-12"
@@ -137,7 +137,7 @@ const Info = () => {
                     </li>
                 </ul>
             </div>
-        </div>
+        </>
     )
 }
 
