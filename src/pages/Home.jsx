@@ -1,10 +1,15 @@
+import { useState } from "react";
+
 import Header from "./Header";
 import ModeSwitch from "../components/ModeSwitch"
 
+import { user_menus, client_menus } from "./menu";
+
 const Home = () => {
+    const [mode, setMode] = useState();
     return (
         <>
-            <Header>
+            <Header menu={mode ? client_menus : user_menus}>
                 <ModeSwitch
                     label1={
                         <div>
@@ -18,6 +23,9 @@ const Home = () => {
                             <p className="text-xs text-center">MODE</p>
                         </div>
                     }
+                    onChange={(v) => {
+                        setMode(v)
+                    }}
                 />
             </Header>
             <div className="container">

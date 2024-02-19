@@ -8,8 +8,8 @@ import Home from './pages/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 
-import UserLayout from './pages/Layout/UserLayout';
-import ClientLayout from './pages/Layout/ClientLayout';
+import UserLayout from './pages/User/Layout';
+import ClientLayout from './pages/Client/Layout';
 
 initializeApp();
 

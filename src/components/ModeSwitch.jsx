@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const ModeSwitch = ({label1, label2}) => {
+const ModeSwitch = ({ label1, label2, onChange }) => {
     const [flag, setFlag] = useState(false);
+    useEffect(() => {
+        if (onChange)
+            onChange(flag)
+    }, [flag])
     return (
         <div className="flex items-end">
             <div
