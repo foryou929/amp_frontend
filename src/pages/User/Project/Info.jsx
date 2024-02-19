@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Button from "../../../components/common/Button";
-import Tab from "../../../components/common/Tab";
+import Button from "../../../components/Button";
+import Tab from "../../../components/Tab";
 
 const Info = () => {
     const [steps, setSteps] = useState(

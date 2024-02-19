@@ -1,19 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Avatar from "../components/common/Avatar";
+import Avatar from "../components/Avatar";
 
-const Header = ({ avatar, name, subname, menu }) => {
+const Header = ({ avatar, name, subname, menu, children }) => {
     const navigate = useNavigate()
 
     const [open, setOpen] = useState(false);
     return (
         <div className={`w-full shadow ${open && "fixed"}`}>
-            <div className="w-full h-20 flex justify-between bg-white">
-                <div className="flex-none">
+            <div className="w-full h-20 py-4 flex justify-between bg-white">
+                <div className="w-36 flex-none flex justify-center items-center">
                     <img src="/img/logo.png" />
                 </div>
-                <div className="w-16 flex items-center justify-center" onClick={() => setOpen(!open)}>
+                <div className="flex-grow flex justify-center items-end">
+                    {
+                        children
+                    }
+                </div>
+                <div className="w-16 flex-none flex justify-center items-center" onClick={() => setOpen(!open)}>
                     {
                         open ?
                             <svg key={1} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
@@ -43,7 +48,7 @@ const Header = ({ avatar, name, subname, menu }) => {
                     {subname}
                 </div>
                 {
-                    menu.map((submenu, index) => (
+                    menu?.map((submenu, index) => (
                         <div key={index} className="border-b py-4">
                             {
                                 submenu.map((menuitem, index) => (

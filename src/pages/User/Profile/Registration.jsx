@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Input from "../../../components/common/Input";
-import DatePicker from "../../../components/common/DatePicker";
-import Select from "../../../components/common/Select";
-import Button from "../../../components/common/Button";
-import Textarea from "../../../components/common/Textarea";
-import CheckGroup from "../../../components/common/CheckGroup";
+import Input from "../../../components/Input";
+import DatePicker from "../../../components/DatePicker";
+import Select from "../../../components/Select";
+import Button from "../../../components/Button";
+import Textarea from "../../../components/Textarea";
+import CheckGroup from "../../../components/CheckGroup";
 import query from "../../../utils/query";
 import { NotificationManager } from "react-notifications";
 

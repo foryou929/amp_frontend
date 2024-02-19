@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Button from "../../components/common/Button";
-import Input from "../../components/common/Input";
-import Password from "../../components/common/Password";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
+import Password from "../../components/Password";
 import query from "../../utils/query";
 import md5 from "md5";
 import { saveTokens } from "../../app/auth";
