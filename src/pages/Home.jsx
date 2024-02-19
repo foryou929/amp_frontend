@@ -6,6 +6,19 @@ const Home = () => {
         <>
             <Header>
                 <ModeSwitch
+                    label1={
+                        <div>
+                            <p className="text-sm font-bold text-center">USER</p>
+                            <p className="text-xs text-center">MODE</p>
+                        </div>
+                    }
+                    label2={
+                        <div>
+                            <p className="text-sm font-bold text-center">PR ORDER</p>
+                            <p className="text-xs text-center">MODE</p>
+                        </div>
+                    }
+                />
             </Header>
             <div className="container">
                 <div className="w-full flex bg-gray-200 p-2">
