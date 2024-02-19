@@ -39,6 +39,7 @@ const UserLayout = () => {
         <>
             <Header
                 name={"クライアントモードに切り替え"}
+                subname={"ユーザーメニュー"}
                 menu={menus}
             />
             <div className="container">

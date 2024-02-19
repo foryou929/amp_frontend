@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import Avatar from "../components/common/Avatar";
 
-const Header = ({ avatar, name, menu }) => {
+const Header = ({ avatar, name, subname, menu }) => {
     const navigate = useNavigate()
 
     const [open, setOpen] = useState(false);
@@ -40,7 +40,7 @@ const Header = ({ avatar, name, menu }) => {
                     </div>
                 </div>
                 <div className="text-gray-400">
-                    ユーザーメニュー
+                    {subname}
                 </div>
                 {
                     menu.map((submenu, index) => (
