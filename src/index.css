@@ -90,3 +90,8 @@ code {
   height: 40px;
   border-radius: 4px 4px 4px 0;
 }
+
+.container {
+  overflow-y: scroll;
+  height: calc(100vh - 80px);
+}

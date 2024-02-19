@@ -19,7 +19,7 @@ const Info = () => {
         ]
     )
     return (
-        <div className="container">
+        <>
             <h1 className="text-2xl font-bold">プリウスの後ろ窓にステッカー を貼ります</h1>
             <Tab
                 className="mt-12"
@@ -137,7 +137,7 @@ const Info = () => {
                     </li>
                 </ul>
             </div>
-        </div>
+        </>
     )
 }
 

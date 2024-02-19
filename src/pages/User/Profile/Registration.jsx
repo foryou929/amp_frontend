@@ -41,7 +41,7 @@ const Registration = () => {
     }
 
     return (
-        <div className="container">
+        <>
             <h1 className="text-2xl font-bold">ユーザープロフィール</h1>
             <form onSubmit={handleSubmit}>
                 <section className="py-2">
@@ -121,7 +121,7 @@ const Registration = () => {
                     <Button label={"保存"} className="w-full" />
                 </section>
             </form>
-        </div>
+        </>
     )
 }
 

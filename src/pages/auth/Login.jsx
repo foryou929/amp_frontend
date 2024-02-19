@@ -18,7 +18,7 @@ const Login = () => {
     }
 
     return (
-        <div className="container">
+        <>
             <form onSubmit={handleSubmit}>
                 <section className="py-2">
                     <label>Username:</label>
@@ -32,7 +32,7 @@ const Login = () => {
                     <Button label={"Login"} className="flex-grow" />
                 </section>
             </form>
-        </div>
+        </>
     )
 }
 

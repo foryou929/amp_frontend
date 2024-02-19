@@ -26,7 +26,7 @@ const Register = () => {
     }
 
     return (
-        <div className="container">
+        <>
             <form onSubmit={handleSubmit}>
                 <section className="py-2">
                     <label>Username:</label>
@@ -55,7 +55,7 @@ const Register = () => {
                     <p>- Ensure your password is at least 8 characters long.</p>
                 </div>
             </form>
-        </div>
+        </>
     )
 }
 
