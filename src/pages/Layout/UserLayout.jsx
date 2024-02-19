@@ -19,7 +19,7 @@ const menus = [
         { icon: <MdHome className='w-full h-full' />, href: "/user/home", content: "マイページ" },
         { icon: <IoDocumentText className='w-full h-full' />, href: "/user/profile", content: "プロフィール" },
         { icon: <IoMdBriefcase className='w-full h-full' />, href: "/user/profile/registration", content: "プロジェクト管理" },
-        { icon: <IoDocumentText className='w-full h-full' />, href: "/user/find-job", content: "仕事•案件を探す" },
+        { icon: <IoDocumentText className='w-full h-full' />, href: "/user/project/find", content: "仕事•案件を探す" },
     ],
     [
         { icon: <MdSpaceDashboard className='w-full h-full' />, href: "/user/space/manage", content: "貸出スペース管理" },

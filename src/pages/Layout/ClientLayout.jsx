@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Home from '../Home';
 import Profile from '../Client/Profile';
+import ProjectRegistration from '../Client/Project/Registration'
 
 import Header from '../Header';
 
@@ -17,10 +18,10 @@ const menus = [
         { icon: <MdHome className='w-full h-full' />, href: "/client/home", content: "マイページ" },
         { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/profile", content: "プロジェクト管理" },
         { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/profile/registration", content: "プロジェクトを作成" },
-        { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/find-job", content: "スカウトー覧" },
+        { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/project/manage", content: "スカウトー覧" },
     ],
     [
-        { icon: <MdSpaceDashboard className='w-full h-full' />, href: "/client/space/manage", content: "スペースを探す" },
+        { icon: <MdSpaceDashboard className='w-full h-full' />, href: "/client/space/find", content: "スペースを探す" },
     ],
     [
         { icon: <FaMoneyBills className='w-full h-full' />, href: "/client/score", content: "支払い管理" },
@@ -43,6 +44,7 @@ const ClientLayout = () => {
                 <Routes>
                     <Route path="/home" element={<Home />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/project/registration" element={<ProjectRegistration />} />
                 </Routes>
             </div>
         </>
