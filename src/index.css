@@ -19,6 +19,29 @@ code {
 .container {
   padding-left: 18px;
   padding-right: 18px;
+  max-width: 100%;
   height: calc(100vh - 80px);
   overflow-y: scroll;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+/* ::-webkit-scrollbar-track {
+
+} */
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #8884;
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #6664;
 }
