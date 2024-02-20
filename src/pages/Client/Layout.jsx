@@ -1,11 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 
-import Profile from './Profile';
-import ProjectRegistration from './Project/Registration'
-
+import { client_menus } from "../menu";
 import Header from '../Header';
 
-import { client_menus } from "../menu";
+import Profile from './Profile';
+
+import ProjectManage from '../Project/Manage';
+import ProjectRegistration from '../Project/Registration';
+
+import SpaceView from '../Space/View';
 
 const ClientLayout = () => {
     return (
@@ -19,7 +22,10 @@ const ClientLayout = () => {
             <div className="container">
                 <Routes>
                     <Route path="/profile/view" element={<Profile />} />
+                    <Route path="/project/manage" element={<ProjectManage />} />
                     <Route path="/project/registration" element={<ProjectRegistration />} />
+
+                    <Route path="/space/view" element={<SpaceView />} />
                 </Routes>
             </div>
         </>

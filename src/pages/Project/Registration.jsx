@@ -1,8 +1,9 @@
-import Button from "../../../components/Button";
-import Image from "../../../components/Image";
-import Input from "../../../components/Input";
-import Select from "../../../components/Select";
-import Textarea from "../../../components/Textarea";
+import Button from "../../components/Button";
+import Image from "../../components/Image";
+import Input from "../../components/Input";
+import RadioGroup from "../../components/RadioGroup";
+import Select from "../../components/Select";
+import Textarea from "../../components/Textarea";
 
 const Registration = () => {
     return (
@@ -45,8 +46,14 @@ const Registration = () => {
                 </section>
                 <section className="my-4">
                     <h6>年代指定</h6>
-                    <input name="year" type="radio" className="border border-ltgray" id="no" checked onChange={() => { }} /> <label htmlFor="no">なし</label><br />
-                    <input name="year" type="radio" className="border border-ltgray" id="yes" onChange={() => { }} /> <label htmlFor="yes">あり</label><br />
+                    <RadioGroup
+                        name="year"
+                        defaultValue={0}
+                        options={[
+                            { value: 0, label: "なし" },
+                            { value: 1, label: "あり"}
+                        ]}
+                    />
                 </section>
                 <section className="my-4">
                     <h6>募集数</h6>

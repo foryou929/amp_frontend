@@ -8,11 +8,11 @@ export const user_menus = [
         { icon: <MdHome className='w-full h-full' />, href: "/user/profile/view", content: "マイページ" },
         { icon: <IoDocumentText className='w-full h-full' />, href: "/user/profile/registration", content: "プロフィール" },
         { icon: <IoMdBriefcase className='w-full h-full' />, href: "/user/project/manage", content: "プロジェクト管理" },
-        { icon: <IoDocumentText className='w-full h-full' />, href: "/user/job/find", content: "仕事•案件を探す" },
+        { icon: <IoDocumentText className='w-full h-full' />, href: "/user/project/view", content: "仕事•案件を探す" },
     ],
     [
         { icon: <MdSpaceDashboard className='w-full h-full' />, href: "/user/space/manage", content: "貸出スペース管理" },
-        { icon: <MdSpaceDashboard className='w-full h-full' />, href: "/user/space/create", content: "貸出スペースを作成" },
+        { icon: <MdSpaceDashboard className='w-full h-full' />, href: "/user/space/registration", content: "貸出スペースを作成" },
     ],
     [
         { icon: <FaMoneyBills className='w-full h-full' />, href: "/user/score", content: "報酬管理" },
@@ -31,7 +31,7 @@ export const client_menus = [
         { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/project/scout", content: "スカウトー覧" },
     ],
     [
-        { icon: <MdSpaceDashboard className='w-full h-full' />, href: "/client/space/find", content: "スペースを探す" },
+        { icon: <MdSpaceDashboard className='w-full h-full' />, href: "/client/space/view", content: "スペースを探す" },
     ],
     [
         { icon: <FaMoneyBills className='w-full h-full' />, href: "/client/score", content: "支払い管理" },
