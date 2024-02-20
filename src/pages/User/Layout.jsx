@@ -10,7 +10,7 @@ import ProjectManage from '../Project/Manage';
 import ProjectView from '../Project/View';
 
 import SpaceManage from '../Space/Manage';
-import SpaceRegistration from '../Space/Manage';
+import SpaceRegistration from '../Space/Registration';
 
 const UserLayout = () => {
     return (

@@ -3,30 +3,25 @@ import Image from "../../components/Image";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import Textarea from "../../components/Textarea";
+import RadioGroup from "../../components/RadioGroup";
 
 const Registration = () => {
     return (
         <>
-            <h1 className="text-2xl font-bold">プロジェクトを作成</h1>
+            <h1 className="text-2xl font-bold">スペースを作成</h1>
             <form>
                 <section className="my-4">
                     <h6>タイトル</h6>
                     <Textarea />
                 </section>
                 <section className="my-4">
-                    <h6>金額</h6>
+                    <h6>価格</h6>
                     <div>
                         <Input /> pt
                     </div>
                 </section>
                 <section className="my-4">
-                    <h6>募集コンテンツ</h6>
-                    <Select options={[
-                        { value: 0, label: "ステッカー" }
-                    ]} />
-                </section>
-                <section className="my-4">
-                    <h6>スペース種別</h6>
+                    <h6>期間</h6>
                     <Select options={[
                         { value: 0, label: "車の窓" }
                     ]} />
@@ -44,23 +39,16 @@ const Registration = () => {
                     ]} />
                 </section>
                 <section className="my-4">
-                    <h6>年代指定</h6>
-                    <input name="year" type="radio" className="border border-ltgray" id="no" checked onChange={() => { }} /> <label htmlFor="no">なし</label><br />
-                    <input name="year" type="radio" className="border border-ltgray" id="yes" onChange={() => { }} /> <label htmlFor="yes">あり</label><br />
-                </section>
-                <section className="my-4">
-                    <h6>募集数</h6>
-                    <Input /> 人
-                </section>
-                <section className="my-4">
-                    <h6>プロジェクト期間</h6>
-                    <Select options={[
-                        { value: 0, label: "3週間" }
-                    ]} />
-                </section>
-                <section className="my-4">
-                    <h6>コンテンツのサイズ等</h6>
-                    <Input />
+                    <h6>ステータス</h6>
+                    <RadioGroup
+                        name="status"
+                        defaultValue={0}
+                        options={[
+                            { value: 0, label: "募集中" },
+                            { value: 1, label: "募集休止中" },
+                            { value: 2, label: "募集開始予定" },
+                        ]}
+                    />
                 </section>
                 <section className="my-4">
                     <h6>説明文</h6>
@@ -82,7 +70,7 @@ const Registration = () => {
                     </div>
                 </section>
                 <section className="my-4">
-                    <Button label="プロジェクトを作成" className="w-full" />
+                    <Button label="スペースを作成" className="w-full" />
                 </section>
             </form>
         </>
