@@ -1,8 +1,8 @@
-import Button from "../../../components/Button";
-import Image from "../../../components/Image";
-import Input from "../../../components/Input";
-import Select from "../../../components/Select";
-import Textarea from "../../../components/Textarea";
+import Button from "../../components/Button";
+import Image from "../../components/Image";
+import Input from "../../components/Input";
+import Select from "../../components/Select";
+import Textarea from "../../components/Textarea";
 
 const Registration = () => {
     return (

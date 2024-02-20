@@ -5,7 +5,7 @@ import { user_menus } from "../menu";
 import Header from '../Header';
 import Profile from '../User/Profile';
 import Registration from './Profile/Registration';
-import Info from './Project/Info';
+import Info from '../Project/Info';
 
 const UserLayout = () => {
     return (

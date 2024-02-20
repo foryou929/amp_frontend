@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 
 import Profile from './Profile';
-import ProjectRegistration from './Project/Registration'
+import ProjectRegistration from '../Project/Registration'
 
 import Header from '../Header';
 
