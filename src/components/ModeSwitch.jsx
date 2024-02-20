@@ -10,7 +10,7 @@ const ModeSwitch = ({ label1, label2, onChange, ...rest }) => {
         <div {...rest}>
             <div className="flex items-end">
                 <div
-                    className={`w-1/2 border border-gray-300 rounded rounded-br-none flex justify-center items-end ${!flag ? "h-12" : "rounded-tr-none h-10 bg-gray-300"}`}
+                    className={`w-1/2 border border-gray-300 rounded rounded-br-none flex justify-center items-end cursor-pointer ${!flag ? "h-12" : "rounded-tr-none h-10 bg-gray-300"}`}
                     onClick={() => setFlag(false)}
                 >
                     {
@@ -18,7 +18,7 @@ const ModeSwitch = ({ label1, label2, onChange, ...rest }) => {
                     }
                 </div>
                 <div
-                    className={`w-1/2 border border-gray-300 rounded rounded-bl-none flex justify-center items-end ${flag ? "h-12" : "rounded-tl-none h-10 bg-gray-300"}`}
+                    className={`w-1/2 border border-gray-300 rounded rounded-bl-none flex justify-center items-end cursor-pointer ${flag ? "h-12" : "rounded-tl-none h-10 bg-gray-300"}`}
                     onClick={() => setFlag(true)}
                 >
                     {

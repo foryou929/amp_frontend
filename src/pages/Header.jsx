@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import Avatar from "../components/Avatar";
 
 const Header = ({ avatar, name, subname, menu, children }) => {
-    const navigate = useNavigate()
-
     const [open, setOpen] = useState(false);
     return (
         <div className={`w-full shadow ${open && "fixed"}`}>
             <div className="w-full h-20 py-4 flex justify-between bg-white">
-                <div className="w-36 flex-none flex justify-center items-center">
-                    <img src="/img/logo.png" />
-                </div>
+                <NavLink
+                    to="/"
+                    className="w-36 flex-none flex justify-center items-center"
+                >
+                    <img src="/logo512.png" className="h-12"/>
+                </NavLink>
                 <div className="flex-grow flex justify-center items-end">
                     {
                         children
@@ -38,7 +39,7 @@ const Header = ({ avatar, name, subname, menu, children }) => {
             <div className={`bg-white transition-all overflow-hidden h-[calc(100vh-80px)] p-5 ${open ? "block" : "hidden"}`}>
                 <div className="h-12 flex items-center gap-2">
                     <div className="w-12">
-                        <Avatar src={avatar} circle/>
+                        <Avatar src={avatar} circle />
                     </div>
                     <div className="flex-grow">
                         {name}
