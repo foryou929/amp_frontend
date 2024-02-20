@@ -35,7 +35,9 @@ const Home = () => {
     return (
         <>
             <Header
+                avatar={"/1"}
                 menu={mode ? client_menus : user_menus}
+                name={"123"}
                 subname={mode ? "クライアントメニュー" : "ユーザーメニュー"}
             >
                 <ModeSwitch

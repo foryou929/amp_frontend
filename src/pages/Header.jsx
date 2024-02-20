@@ -36,15 +36,15 @@ const Header = ({ avatar, name, subname, menu, children }) => {
                 </div>
             </div>
             <div className={`bg-white transition-all overflow-hidden h-[calc(100vh-80px)] p-5 ${open ? "block" : "hidden"}`}>
-                <div className="h-12 flex">
+                <div className="h-12 flex items-center gap-2">
                     <div className="w-12">
-                        <Avatar src={avatar} />
+                        <Avatar src={avatar} circle/>
                     </div>
                     <div className="flex-grow">
                         {name}
                     </div>
                 </div>
-                <div className="text-gray-400">
+                <div className="text-gray-400 mt-4">
                     {subname}
                 </div>
                 {
