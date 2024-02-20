@@ -11,13 +11,14 @@ const ClientLayout = () => {
     return (
         <>
             <Header
+                avatar={"/1"}
                 name={"クライアントモードに切り替え"}
                 subname={"クライアントメニュー"}
                 menu={client_menus}
             />
             <div className="container">
                 <Routes>
-                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile/view" element={<Profile />} />
                     <Route path="/project/registration" element={<ProjectRegistration />} />
                 </Routes>
             </div>

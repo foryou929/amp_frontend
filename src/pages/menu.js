@@ -5,10 +5,10 @@ import { MdHome, MdSpaceDashboard } from "react-icons/md";
 
 export const user_menus = [
     [
-        { icon: <MdHome className='w-full h-full' />, href: "/", content: "マイページ" },
-        { icon: <IoDocumentText className='w-full h-full' />, href: "/user/profile", content: "プロフィール" },
-        { icon: <IoMdBriefcase className='w-full h-full' />, href: "/user/profile/registration", content: "プロジェクト管理" },
-        { icon: <IoDocumentText className='w-full h-full' />, href: "/user/project/find", content: "仕事•案件を探す" },
+        { icon: <MdHome className='w-full h-full' />, href: "/user/profile/view", content: "マイページ" },
+        { icon: <IoDocumentText className='w-full h-full' />, href: "/user/profile/registration", content: "プロフィール" },
+        { icon: <IoMdBriefcase className='w-full h-full' />, href: "/user/project/manage", content: "プロジェクト管理" },
+        { icon: <IoDocumentText className='w-full h-full' />, href: "/user/job/find", content: "仕事•案件を探す" },
     ],
     [
         { icon: <MdSpaceDashboard className='w-full h-full' />, href: "/user/space/manage", content: "貸出スペース管理" },
@@ -25,10 +25,10 @@ export const user_menus = [
 
 export const client_menus = [
     [
-        { icon: <MdHome className='w-full h-full' />, href: "/", content: "マイページ" },
-        { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/profile", content: "プロジェクト管理" },
-        { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/profile/registration", content: "プロジェクトを作成" },
-        { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/project/manage", content: "スカウトー覧" },
+        { icon: <MdHome className='w-full h-full' />, href: "/client/profile/view", content: "マイページ" },
+        { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/project/manage", content: "プロジェクト管理" },
+        { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/project/registration", content: "プロジェクトを作成" },
+        { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/project/scout", content: "スカウトー覧" },
     ],
     [
         { icon: <MdSpaceDashboard className='w-full h-full' />, href: "/client/space/find", content: "スペースを探す" },

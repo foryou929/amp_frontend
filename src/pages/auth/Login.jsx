@@ -22,7 +22,9 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
                 <section className="py-2">
                     <label>Username:</label>
-                    <Input onChange={(e) => setUserName(e.target.value)} />
+                    <div>
+                        <Input onChange={(e) => setUserName(e.target.value)} />
+                    </div>
                 </section>
                 <section className="py-2">
                     <label>Password:</label>

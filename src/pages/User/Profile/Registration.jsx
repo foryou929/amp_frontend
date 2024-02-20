@@ -46,7 +46,9 @@ const Registration = () => {
             <form onSubmit={handleSubmit}>
                 <section className="py-2">
                     <label className="py-0.5">ユーザー名</label>
-                    <Input name="username" onChange={(e) => onChange(e.target)} />
+                    <div>
+                        <Input name="username" onChange={(e) => onChange(e.target)} />
+                    </div>
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">種別</label>
@@ -107,7 +109,9 @@ const Registration = () => {
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">フォロワー数の目安</label>
-                    <Input name="follower_count" onChange={(e) => onChange(e.target)} />
+                    <div>
+                        <Input name="follower_count" onChange={(e) => onChange(e.target)} />
+                    </div>
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">使用頻度</label>
