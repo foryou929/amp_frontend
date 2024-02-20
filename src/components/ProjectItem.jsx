@@ -19,7 +19,7 @@ const ProjectItem = (props) => {
                     {props.detail ? <div className="mt-1 p-2 bg-[#F8F9FA] text-sm">{props.detail}</div> : <></>}
                 </div>
             </div>
-            <div className="flex-none">
+            <div className="flex-none cursor-pointer px-2">
                 <img className="w-2 h-4 text-gray" src="/img/line-angle-right-icon.svg" />
             </div>
         </div>
