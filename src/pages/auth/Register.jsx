@@ -30,11 +30,15 @@ const Register = () => {
             <form onSubmit={handleSubmit}>
                 <section className="py-2">
                     <label>Username:</label>
-                    <Input onChange={(e) => setUserName(e.target.value)} />
+                    <div>
+                        <Input onChange={(e) => setUserName(e.target.value)} />
+                    </div>
                 </section>
                 <section className="py-2">
                     <label>Email:</label>
-                    <Input onChange={(e) => setEmail(e.target.value)} />
+                    <div>
+                        <Input onChange={(e) => setEmail(e.target.value)} />
+                    </div>
                 </section>
                 <section className="py-2">
                     <label>Password:</label>
