@@ -60,7 +60,7 @@ const Profile = () => {
                     ]}
                 />
                 <div className="p-4">
-                    <Button label={"募集中のプロジェクtI-覧"} className={"w-full"} />
+                    <Button label={"募集中のプロジェクト-覧"} className={"w-full"} />
                 </div>
             </div>
             <div className="w-full my-4">

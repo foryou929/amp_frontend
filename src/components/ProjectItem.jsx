@@ -4,7 +4,7 @@ const ProjectItem = (props) => {
     return (
         <div className="flex items-center gap-4">
             <div className="flex-grow flex gap-4 items-start">
-                <div className="flex-grow-0 w-12">
+                <div className="flex-none w-12">
                     <Avatar src={props.img} />
                 </div>
                 <div className="flex-grow flex flex-col justify-center">
@@ -16,9 +16,10 @@ const ProjectItem = (props) => {
                     {props.subtitle ? <p className="mt-1">{props.subtitle}</p> : <></>}
                     <p className="font-bold text-sm mt-1">{props.point}</p>
                     <p className="text-gray-400 text-sm mt-1">{props.type}</p>
+                    {props.detail ? <div className="mt-1 p-2 bg-[#F8F9FA] text-sm">{props.detail}</div> : <></>}
                 </div>
             </div>
-            <div className="flex-grow-0">
+            <div className="flex-none">
                 <img className="w-2 h-4 text-gray" src="/img/line-angle-right-icon.svg" />
             </div>
         </div>

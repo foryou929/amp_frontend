@@ -7,16 +7,7 @@ import ProjectItem from "../../../components/ProjectItem";
 const Profile = () => {
     return (
         <>
-            <h1 className="text-2xl font-bold">マイページ</h1>
-            <div className="w-full my-4">
-                <h2 className="text-xl font-bold">ポイント</h2>
-                <div className="bg-[#F0F2F8] rounded-lg p-6 flex justify-between items-center my-2">
-                    <p className="text-xl font-bold text-[#00146E]">
-                        20,000pt
-                    </p>
-                    <Button label={"ポイント購入"} />
-                </div>
-            </div>
+            <h1 className="text-2xl font-bold">ユーザーマイページ</h1>
             <div className="w-full my-8">
                 <h2 className="text-xl font-bold">進行中のプロジェクト</h2>
                 <List
@@ -41,30 +32,30 @@ const Profile = () => {
                 </div>
             </div>
             <div className="w-full my-4">
-                <h2 className="text-xl font-bold">募集中のプロジェクト</h2>
+                <h2 className="text-xl font-bold">応募•招待</h2>
                 <List
                     className="my-4"
                     items={[
                         {
                             key: 0,
-                            content: <ProjectItem img={"/1"} date={"2023年10月20日"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} />
+                            content: <ProjectItem img={"/1"} status={"広告物発送"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} detail={"提案数:4人 当選者:1人 募集:あと10日"} />
                         },
                         {
                             key: 1,
-                            content: <ProjectItem img={"/1"} date={"2023年10月20日"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} />
+                            content: <ProjectItem img={"/1"} status={"広告物発送"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} detail={"提案数:4人 当選者:1人 募集:あと10日"} />
                         },
                         {
                             key: 2,
-                            content: <ProjectItem img={"/1"} date={"2023年10月20日"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} />
+                            content: <ProjectItem img={"/1"} status={"広告物発送"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} detail={"提案数:4人 当選者:1人 募集:あと10日"} />
                         }
                     ]}
                 />
                 <div className="p-4">
-                    <Button label={"募集中のプロジェクtI-覧"} className={"w-full"} />
+                    <Button label={"応募•スカウトー覧"} className={"w-full"} />
                 </div>
             </div>
             <div className="w-full my-4">
-                <h2 className="text-xl font-bold">依頼中のスペース</h2>
+                <h2 className="text-xl font-bold">スペース</h2>
                 <List
                     className="my-4"
                     items={[
@@ -91,12 +82,12 @@ const Profile = () => {
                 <div className="py-4">
                     <Avatar src={"/1"} circle className={"w-16 h-16"} />
                 </div>
-                <h2 className="text-lg font-bold">PRcash</h2>
+                <h2 className="text-lg font-bold">supe-su</h2>
                 <p className="text-gray-400">東京都</p>
                 <p className="text-gray-400">企業</p>
                 <div className="w-full mt-4">
                     <div className="my-2">
-                        <h3 className="text-lg font-bold my-2">用な人 ビスなど</h3>
+                        <h3 className="text-lg font-bold my-2">自己紹介</h3>
                         <p>企業店舗はもちろん、一般の方でも空きスペー スを PR 広告に貸し出したり、 商品使用をして報 酬を得られ、広告主もダイレクトに安価にPR可 能にできるスペースマッチングサービスを展開 しております。</p>
                         <p>•主なPR対象エリア：日本（エリア指定な し）</p>
                         <p>•インド（ムンバイ近郊）</p>
@@ -105,17 +96,63 @@ const Profile = () => {
                         <p>PRや看板を使用したい企業や店舗団体の方 や、スペースを貸し出して報酬を得たい一般 ユーザー様を募集しております。</p>
                     </div>
                     <div className="my-2">
-                        <h3 className="text-lg font-bold my-2">主なPR対象</h3>
+                        <h3 className="text-lg font-bold my-2">活動範囲と頻度</h3>
                         <p>PRや看板を使用したい企業や店舗団体の方や、 スペースを貸し出して報酬を得たい一般ユー ザー様を募集しております。</p>
                     </div>
                     <div className="my-2">
-                        <h3 className="text-lg font-bold my-2">メッセージ</h3>
-                        <p>現在多くの皆様にご応募をいただいておりま す。これからもよろしくおねがいいたします。 定員に達しているプロジェクトに関しては、お 気に入りプロジェクトに入れていただくと、募 集再開通知が送信されますので、ぜひお気に入 りプロジェクトへの追加をお願いいたします。</p>
+                        <h3 className="text-lg font-bold my-2">詳細</h3>
+                        <div className="p-1">
+                            <div className="flex border-b border-b-gray-200 py-3">
+                                <div className="w-5/12">
+                                    所有スペース
+                                </div>
+                                <div className="w-7/12">
+                                    車の窓•車の車体•自転車•集合住宅•ノベルティーグッズの使用•WEB SNS•他
+                                </div>
+                            </div>
+                            <div className="flex border-b border-b-gray-200 py-3">
+                                <div className="w-5/12">
+                                    年代
+                                </div>
+                                <div className="w-7/12">
+                                    30代
+                                </div>
+                            </div>
+                            <div className="flex border-b border-b-gray-200 py-3">
+                                <div className="w-5/12">
+                                    職業
+                                </div>
+                                <div className="w-7/12">
+                                    就業者
+                                </div>
+                            </div>
+                            <div className="flex border-b border-b-gray-200 py-3">
+                                <div className="w-5/12">
+                                    居住形態等
+                                </div>
+                                <div className="w-7/12">
+                                    集合住宅
+                                </div>
+                            </div>
+                            <div className="flex border-b border-b-gray-200 py-3">
+                                <div className="w-5/12">
+                                    主な移動手段
+                                </div>
+                                <div className="w-7/12">
+                                    徒歩•車•バイク•他（飛行機 移動多め）
+                                </div>
+                            </div>
+                            <div className="flex border-b border-b-gray-200 py-3">
+                                <div className="w-5/12">
+                                    WEBSNS利用頻度
+                                </div>
+                                <div className="w-7/12">
+                                    インスタのフォロワーは10万 人 更新頻度も多めです。
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="my-2">
-                        <h3 className="text-lg font-bold my-2">ホームページURL</h3>
-                        <Link to="https://hogehoge.com">https://hogehoge.com</Link>
-                    </div>
+
                     <div className="p-4">
                         <Button label={"プロフィール編集"} className={"w-full"} />
                     </div>
