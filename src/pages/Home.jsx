@@ -34,7 +34,10 @@ const Home = () => {
     const [mode, setMode] = useState();
     return (
         <>
-            <Header menu={mode ? client_menus : user_menus}>
+            <Header
+                menu={mode ? client_menus : user_menus}
+                subname={mode ? "クライアントメニュー" : "ユーザーメニュー"}
+            >
                 <ModeSwitch
                     className="w-40"
                     label1={

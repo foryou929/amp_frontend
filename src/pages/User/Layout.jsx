@@ -17,7 +17,7 @@ const UserLayout = () => {
             />
             <div className="container">
                 <Routes>
-                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile/view" element={<Profile />} />
                     <Route path="/profile/registration" element={<Registration />} />
                     <Route path="/project/info" element={<Info />} />
                 </Routes>

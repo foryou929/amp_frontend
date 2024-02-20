@@ -9,7 +9,7 @@ const Avatar = ({ src, fallbackSrc, alt, className, circle, ...props }) => {
         }
     };
 
-    return <img className={`${className || "w-full h-full"} ${circle && 'rounded-full'}`} src={imageSrc} alt={alt} onError={onError} {...props} />;
+    return <img className={`${className || "w-full h-full"} ${circle ? 'rounded-full' : ''}`} src={imageSrc} alt={alt} onError={onError} {...props} />;
 };
 
 export default Avatar;

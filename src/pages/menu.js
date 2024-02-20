@@ -6,7 +6,7 @@ import { MdHome, MdSpaceDashboard } from "react-icons/md";
 export const user_menus = [
     [
         { icon: <MdHome className='w-full h-full' />, href: "/", content: "マイページ" },
-        { icon: <IoDocumentText className='w-full h-full' />, href: "/user/profile", content: "プロフィール" },
+        { icon: <IoDocumentText className='w-full h-full' />, href: "/user/profile/view", content: "プロフィール" },
         { icon: <IoMdBriefcase className='w-full h-full' />, href: "/user/profile/registration", content: "プロジェクト管理" },
         { icon: <IoDocumentText className='w-full h-full' />, href: "/user/project/find", content: "仕事•案件を探す" },
     ],
@@ -26,7 +26,7 @@ export const user_menus = [
 export const client_menus = [
     [
         { icon: <MdHome className='w-full h-full' />, href: "/", content: "マイページ" },
-        { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/profile", content: "プロジェクト管理" },
+        { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/profile/view", content: "プロジェクト管理" },
         { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/profile/registration", content: "プロジェクトを作成" },
         { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/project/manage", content: "スカウトー覧" },
     ],

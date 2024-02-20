@@ -1,5 +1,6 @@
 import Avatar from "../../../components/Avatar";
 import Button from "../../../components/Button";
+import Link from "../../../components/Link";
 import List from "../../../components/List";
 import ProjectItem from "../../../components/ProjectItem";
 
@@ -113,7 +114,7 @@ const Profile = () => {
                     </div>
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">ホームページURL</h3>
-                        <a href="https://anesup.com">https://hogehoge.com</a>
+                        <Link to="https://hogehoge.com">https://hogehoge.com</Link>
                     </div>
                     <div className="p-4">
                         <Button label={"プロフィール編集"} className={"w-full"} />
