@@ -1,6 +1,5 @@
 import Avatar from "../../../components/Avatar";
 import Button from "../../../components/Button";
-import Link from "../../../components/Link";
 import List from "../../../components/List";
 import ProjectItem from "../../../components/ProjectItem";
 
