@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import Avatar from "../components/Avatar";
 
@@ -52,13 +52,10 @@ const Header = ({ avatar, name, subname, menu, children }) => {
                         <div key={index} className="border-b py-4">
                             {
                                 submenu.map((menuitem, index) => (
-                                    <div
+                                    <NavLink
                                         key={index}
                                         className="flex ml-4 p-2 items-center"
-                                        onClick={() => {
-                                            navigate(menuitem.href);
-                                            setOpen(false);
-                                        }}
+                                        to={menuitem.href}
                                     >
                                         <div className="w-8 h-8 p-1">
                                             {
@@ -70,7 +67,7 @@ const Header = ({ avatar, name, subname, menu, children }) => {
                                                 menuitem.content
                                             }
                                         </div>
-                                    </div>
+                                    </NavLink>
                                 ))
                             }
                         </div>

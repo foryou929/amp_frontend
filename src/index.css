@@ -17,11 +17,31 @@ code {
 }
 
 .container {
-  padding-left: 18px;
-  padding-right: 18px;
+  padding: 16px;
   max-width: 100%;
   height: calc(100vh - 80px);
   overflow-y: scroll;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    padding-left: 128px;
+    padding-right: 128px;
+  }
 }
 
 /* width */
