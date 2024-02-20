@@ -45,8 +45,8 @@ const Registration = () => {
                 </section>
                 <section className="my-4">
                     <h6>年代指定</h6>
-                    <input type="radio" className="border border-ltgray" /> なし<br />
-                    <input type="radio" className="border border-ltgray" /> あり<br />
+                    <input name="year" type="radio" className="border border-ltgray" id="no" checked onChange={() => { }} /> <label htmlFor="no">なし</label><br />
+                    <input name="year" type="radio" className="border border-ltgray" id="yes" onChange={() => { }} /> <label htmlFor="yes">あり</label><br />
                 </section>
                 <section className="my-4">
                     <h6>募集数</h6>
@@ -70,8 +70,8 @@ const Registration = () => {
                     <h6>コンテンツ見本画像</h6>
                     <div className="flex gap-2 overflow-x-scroll">
                         {
-                            Array.from({ length: 3 }).map(() => (
-                                <div className="flex-none justify-center bg-[#F8F9FA]">
+                            Array.from({ length: 3 }).map((_, index) => (
+                                <div key={index} className="flex-none justify-center bg-[#F8F9FA]">
                                     <div className="w-28 flex flex-wrap justify-center p-4">
                                         <Image src="/1" />
                                         <p>画像を追加</p>
