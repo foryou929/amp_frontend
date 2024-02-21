@@ -30,8 +30,7 @@ function App() {
     const access_token = getAccessToken();
     if (access_token) {
       query.auth.get("/api/auth/loginWithToken", (data) => {
-        console.log(data);
-        // dispatch(login(data))
+        dispatch(login(data))
       })
     }
   }, [])
