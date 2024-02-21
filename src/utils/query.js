@@ -18,7 +18,7 @@ const request = async (method, url, data, success, error, auth = false, access =
             success(result.data)
         return result.data
     } catch (err) {
-        if (access == false && err.response.status == 401) {
+        if (access == false && err?.response?.status == 401) {
             try {
                 const { data } = await axios.request({ method: "post", url: "/api/token/refresh/", data: { refresh: getRefreshToken() } });
                 saveAccessToken(data.access);
