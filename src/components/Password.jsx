@@ -21,9 +21,8 @@ const Password = ({ className, showStrength, ...rest }) => {
         });
     }, [password]);
     return (
-        <div className={className}>
-            <input type="password" className={`w-full p-2 border border-[#DEE2E6]`} {...rest} onChange={(e) => setPassword(e.target.value)}>
-            </input>
+        <>
+            <input type="password" className={`p-2 border border-[#DEE2E6] focus:shadow outline-none ${className}`} {...rest} onChange={(e) => setPassword(e.target.value)} />
             {
                 showStrength &&
                 <div className="flex gap-2 mt-2">
@@ -34,7 +33,7 @@ const Password = ({ className, showStrength, ...rest }) => {
                     <div className={`h-1 flex-grow bg-gray-200 ${strength.length && 'bg-green-400'}`}></div>
                 </div>
             }
-        </div>
+        </>
     )
 }
 

@@ -15,7 +15,7 @@ const request = async (method, url, data, success, error, auth = false) => {
         if (result.data?.message)
             NotificationManager.success(i18next.t(result.data?.message))
         if (success)
-            success(result.data)
+            success(JSON.parse(result.data))
         return result.data
     } catch (err) {
         NotificationManager.error(i18next.t(err.response?.data?.message) || err.message)

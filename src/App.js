@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
@@ -11,9 +13,29 @@ import Register from './pages/auth/Register';
 import UserLayout from './pages/User/Layout';
 import ClientLayout from './pages/Client/Layout';
 
+import query from './utils/query';
+
+import { getAccessToken } from './app/auth';
+
+import { login } from './common/userSlice';
+
 initializeApp();
 
 function App() {
+  const dispatch = useDispatch()
+
+  const user = useSelector(state => state.user)
+
+  useEffect(() => {
+    const access_token = getAccessToken();
+    if (access_token) {
+      query.auth.get("/api/auth/loginWithToken", (data) => {
+        console.log(data);
+        // dispatch(login(data))
+      })
+    }
+  }, [])
+
   return (
     <>
       <Router>
