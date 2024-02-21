@@ -2,9 +2,9 @@ import axios from 'axios'
 import { NotificationManager } from 'react-notifications'
 import i18next from 'i18next'
 import _ from 'lodash'
-import { getAccessToken } from "../app/auth"
+import { getAccessToken, getRefreshToken, saveAccessToken } from "../app/auth"
 
-const request = async (method, url, data, success, error, auth = false) => {
+const request = async (method, url, data, success, error, auth = false, access = false) => {
     const token = getAccessToken();
     const headers = {};
     if (auth && token) {
@@ -18,9 +18,19 @@ const request = async (method, url, data, success, error, auth = false) => {
             success(result.data)
         return result.data
     } catch (err) {
-        NotificationManager.error(i18next.t(err.response?.data?.message) || err.message)
-        if (error)
-            error(err.response?.data)
+        if (access == false && err.response.status == 401) {
+            try {
+                const { data } = await axios.request({ method: "post", url: "/api/token/refresh/", data: { refresh: getRefreshToken() } });
+                saveAccessToken(data.access);
+                await request(method, url, data, success, error, auth, true);
+            } catch (err) {
+                throw err;
+            }
+        } else {
+            NotificationManager.error(i18next.t(err.response?.data?.message) || err.message)
+            if (error)
+                error(err.response?.data)
+        }
     }
 }
 

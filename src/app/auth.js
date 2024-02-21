@@ -8,6 +8,10 @@ export const saveTokens = ({ access, refresh }) => {
     localStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, refresh);
 };
 
+export const saveAccessToken = (access) => {
+    localStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, access);
+};
+
 export const getAccessToken = () => {
     return localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
 };

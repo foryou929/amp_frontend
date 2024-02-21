@@ -23,12 +23,12 @@ const Login = () => {
                 <section className="py-2">
                     <label>Username:</label>
                     <div>
-                        <Input onChange={(e) => setUserName(e.target.value)} />
+                        <Input className="w-full" onChange={(e) => setUserName(e.target.value)} />
                     </div>
                 </section>
                 <section className="py-2">
                     <label>Password:</label>
-                    <Password onChange={(e) => setPassword(e.target.value)} />
+                    <Password className="w-full" onChange={(e) => setPassword(e.target.value)} />
                 </section>
                 <section className="py-2 flex gap-2">
                     <Button label={"Login"} className="flex-grow" />
