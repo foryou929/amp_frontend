@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
+
 import Avatar from "./Avatar";
+import { getMode } from "../utils/storage";
 
 const ProjectItem = ({ project }) => {
+    const [mode, setMode] = useState(getMode())
     return (
-        <NavLink to={`/${localStorage.getItem("mode")}/project/project?id=${project?.id}`} className="flex items-center gap-2">
+        <NavLink to={`/${mode}/project/project?id=${project?.id}`} className="flex items-center gap-2">
             <div className="flex-grow flex gap-4 items-start">
                 <div className="flex-none w-12">
                     <Avatar src={project?.img} />

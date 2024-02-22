@@ -7,8 +7,10 @@ import ProjectItem from "../../components/ProjectItem";
 
 import { FINISH, PROGRESSING, RECRUITING } from "../../utils/constants";
 import query from "../../utils/query";
+import { getMode } from "../../utils/storage";
 
 const Manage = () => {
+    const [mode, setMode] = useState(getMode());
     const [queryParameters] = useSearchParams();
 
     const page = queryParameters.get("page") || 1;
@@ -17,26 +19,27 @@ const Manage = () => {
     const [projects, setProjects] = useState([]);
 
     useEffect(() => {
-        query.auth.get("/api/project", (res) => setProjects(res));
+        query.auth.get(`/api/${mode}/project`, (res) => setProjects(res));
     }, [page]);
+
 
     return (
         <>
             <h1 className="text-2xl font-bold">プロジェクト</h1>
             <div className="flex justify-between mt-4">
                 <p>{projects[RECRUITING]?.length + projects[PROGRESSING]?.length + projects[FINISH]?.length}件</p>
-                {type == FINISH ? <></> : <Link to={`/client/project/manage?type=${FINISH}`} >終了したプロジェクト&gt;</Link>}
+                {type == FINISH ? <></> : <Link to={`/${mode}/project/manage?type=${FINISH}`} >終了したプロジェクト&gt;</Link>}
             </div>
             {
                 type == FINISH ? <></>
                     : (
                         <div className="flex mt-4">
-                            <NavLink to={`/client/project/manage?type=${PROGRESSING}`} className={`w-1/2 py-2 text-center ${type == PROGRESSING ? "bg-[#00146E] text-white" : "bg-[#F8F9FA] border border-gray-200"}`}>
-                                <p>進行中</p>
+                            <NavLink to={`/${mode}/project/manage?type=${PROGRESSING}`} className={`w-1/2 py-2 text-center ${type == PROGRESSING ? "bg-[#00146E] text-white" : "bg-[#F8F9FA] border border-gray-200"}`}>
+                                <p>{mode == "user" ? "応募•招待" : "進行中"}</p>
                                 <p className="text-gray-400">{projects[PROGRESSING]?.length}件</p>
                             </NavLink>
-                            <NavLink to={`/client/project/manage?type=${RECRUITING}`} className={`w-1/2 py-2 text-center ${type == RECRUITING ? "bg-[#00146E] text-white" : "bg-[#F8F9FA] border border-gray-200"}`}>
-                                <p>募集中</p>
+                            <NavLink to={`/${mode}/project/manage?type=${RECRUITING}`} className={`w-1/2 py-2 text-center ${type == RECRUITING ? "bg-[#00146E] text-white" : "bg-[#F8F9FA] border border-gray-200"}`}>
+                                <p>{mode == "user" ? "進行中" : "募集中"}</p>
                                 <p className="text-gray-400">{projects[RECRUITING]?.length}件</p>
                             </NavLink>
                         </div>
