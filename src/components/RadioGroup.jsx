@@ -4,7 +4,7 @@ const RadioGroup = ({ name, options, onChange, defaultValue, ...props }) => {
     const [value, setValue] = useState(defaultValue || 0);
     useEffect(() => {
         if (onChange)
-            onChange(value);
+            onChange({ name, value });
     }, [value])
 
     return (
