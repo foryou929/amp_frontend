@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CiHeart } from "react-icons/ci";
 
@@ -8,8 +8,6 @@ import Link from "../components/Link";
 import Button from "../components/Button";
 import Select from "../components/Select";
 import Image from "../components/Image";
-
-import { user_menus, client_menus } from "./menu";
 
 
 const Item = () => {
@@ -31,16 +29,10 @@ const Item = () => {
 }
 
 const Home = () => {
-    const [mode, setMode] = useState();
     return (
         <>
-            <Header
-                avatar={"/1"}
-                menu={mode ? client_menus : user_menus}
-                name={"クライアントモードに切り替え"}
-                subname={mode ? "クライアントメニュー" : "ユーザーメニュー"}
-            >
-                <ModeSwitch
+            <Header>
+                {/* <ModeSwitch
                     className="w-40"
                     label1={
                         <div>
@@ -57,7 +49,7 @@ const Home = () => {
                     onChange={(v) => {
                         setMode(v)
                     }}
-                />
+                /> */}
             </Header>
             <main>
                 <div className="container">

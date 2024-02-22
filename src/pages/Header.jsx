@@ -1,10 +1,32 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 import Avatar from "../components/Avatar";
 
-const Header = ({ avatar, name, subname, menu, children }) => {
+import { user_menus, client_menus } from "./menu";
+
+const Header = ({ children }) => {
     const [open, setOpen] = useState(false);
+
+    const location = useLocation();
+
+    useEffect(() => {
+        setOpen(false);
+    }, [location]);
+
+    const [mode, setMode] = useState(localStorage.getItem("mode") == "client");
+    const [menu, setMenu] = useState([]);
+
+    useEffect(() => {
+        if (mode) {
+            localStorage.setItem("mode", "client");
+            setMenu(client_menus);
+        } else {
+            localStorage.setItem("mode", "user");
+            setMenu(user_menus);
+        }
+    }, [mode]);
+
     return (
         <div className={`w-full shadow ${open && "fixed"}`}>
             <div className="w-full h-20 py-4 flex justify-between bg-white">
@@ -12,7 +34,7 @@ const Header = ({ avatar, name, subname, menu, children }) => {
                     to="/"
                     className="w-36 flex-none flex justify-center items-center"
                 >
-                    <img src="/logo512.png" className="h-12"/>
+                    <img src="/logo512.png" className="h-12" />
                 </NavLink>
                 <div className="flex-grow flex justify-center items-end">
                     {
@@ -39,14 +61,14 @@ const Header = ({ avatar, name, subname, menu, children }) => {
             <div className={`bg-white transition-all overflow-hidden h-[calc(100vh-80px)] p-5 ${open ? "block" : "hidden"}`}>
                 <div className="h-12 flex items-center gap-2">
                     <div className="w-12">
-                        <Avatar src={avatar} circle />
+                        <Avatar src={"/"} circle />
                     </div>
-                    <div className="flex-grow">
-                        {name}
+                    <div className="flex-grow" onClick={() => setMode(!mode)}>
+                        {mode ? "ユーザーに切り替え" : "クライアントモードに切り替え"}
                     </div>
                 </div>
                 <div className="text-gray-400 mt-4">
-                    {subname}
+                    {mode ? "クライアントメニュー" : "ユーザーメニュー"}
                 </div>
                 {
                     menu?.map((submenu, index) => (
