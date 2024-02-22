@@ -1,10 +1,16 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 import Avatar from "../components/Avatar";
 
 const Header = ({ avatar, name, subname, menu, children }) => {
     const [open, setOpen] = useState(false);
+
+    const location = useLocation();
+
+    useEffect(() => {
+        setOpen(false);
+    }, [location]);
     return (
         <div className={`w-full shadow ${open && "fixed"}`}>
             <div className="w-full h-20 py-4 flex justify-between bg-white">
@@ -12,7 +18,7 @@ const Header = ({ avatar, name, subname, menu, children }) => {
                     to="/"
                     className="w-36 flex-none flex justify-center items-center"
                 >
-                    <img src="/logo512.png" className="h-12"/>
+                    <img src="/logo512.png" className="h-12" />
                 </NavLink>
                 <div className="flex-grow flex justify-center items-end">
                     {
