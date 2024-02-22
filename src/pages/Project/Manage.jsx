@@ -12,6 +12,7 @@ const Manage = () => {
 
     const [active, setActive] = useState(1);
     const [page, setPage] = useState(1);
+    const [projects, setProjects] = useState([]);
 
     useEffect(() => {
         const page = queryParameters.get("page");
@@ -20,9 +21,7 @@ const Manage = () => {
     }, [queryParameters]);
 
     useEffect(() => {
-        query.auth.get("/api/project", (res) => {
-            alert(1);
-        });
+        query.auth.get("/api/project", (res) => setProjects(res));
     }, [page]);
 
     return (
@@ -42,16 +41,13 @@ const Manage = () => {
                     <p className="text-gray-400">8件</p>
                 </div>
             </div>
-            <List items={[
-                {
-                    key: 0,
-                    content: <ProjectItem img={"/1"} status={"広告物発送"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} detail={"提案数:4 募集数:1 期間:あと10日"} />
-                },
-                {
-                    key: 0,
-                    content: <ProjectItem img={"/1"} status={"広告物発送"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} detail={"提案数:4 募集数:1 期間:あと10日"} />
+            <List items={projects.map((project) => {
+                return {
+                    key: project.id,
+                    content: <ProjectItem img={"/1"} status={"広告物発送"} title={project.name} point={`${project.points}/1日〜`} type={"車広告"} detail={"提案数:4 募集数:1 期間:あと10日"} />
                 }
-            ]} />
+            })}
+            />
         </>
     )
 }
