@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import Button from "../../../components/Button";
 import query from "../../../utils/query";
 
-const Progress = ({ id }) => {
+const Progress = ({ mode, id }) => {
     const [steps, setSteps] = useState(
         [
             { label: "提案" },
             { label: "選定" },
             { label: "承諾" },
-            { label: "仮払い", content: '2023年10月10日:株式会社ホゲホがんが仮払いをおこないました' },
-            { label: "広告物発送", content: '2023年10月11日:株式会社ホゲホゲさんが広告物を発送しました' },
-            { label: "広告物受け取り", content: '2023年10月12日:佐藤太郎さんが広告物を愛け取りました' },
-            { label: "開始報告", content: "2023年如月U日:佐蔽太郎さんが開始報歹おこないました" },
+            { label: "仮払い" },
+            { label: "広告物発送" },
+            { label: "広告物受け取り" },
+            { label: "開始報告" },
             { label: "経過報告" },
             { label: "終了報告" },
             { label: "報酬受取" },
@@ -19,10 +19,14 @@ const Progress = ({ id }) => {
         ]
     )
 
+    const [progress, setProgress] = useState(1);
+
     useEffect(() => {
-        query.auth.get(`/api/message/${id}`, res => {
-            
-        });
+        query.auth.get(`/api/${mode}/message/${id}`,
+            res => {
+
+            }
+        );
     }, [])
 
     return (
@@ -43,10 +47,32 @@ const Progress = ({ id }) => {
                         <li key={index} className="border-b border-[#DEE2E6] py-4">
                             <div className="flex items-center">
                                 <div className="w-[48px] px-2">
-                                    <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
-                                        <circle cx="16" cy="16" r="15" stroke="#21AD8B" strokeWidth="1" fill="none" />
-                                        <path d="M10 16 L 14 20 22 12" stroke="#21AD8B" strokeWidth="1" fill="none" />
-                                    </svg>
+                                    {
+                                        index < progress - 1 ? (
+                                            <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                                                <circle cx="16" cy="16" r="15" stroke="#21AD8B" strokeWidth="1" fill="none" />
+                                                <path d="M10 16 L 14 20 22 12" stroke="#21AD8B" strokeWidth="1" fill="none" />
+                                            </svg>
+                                        ) : index == progress - 1 ? (
+                                            <div className="relative">
+                                                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                                                    <circle cx="16" cy="16" r="15" stroke="none" fill="#00146E" />
+                                                </svg>
+                                                <div className="absolute left-0 top-0 w-full h-full text-white flex justify-center items-center">
+                                                    <span>{index + 1}</span>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="relative">
+                                                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                                                    <circle cx="16" cy="16" r="15" stroke="#DEE2E6" strokeWidth="1" fill="none" />
+                                                </svg>
+                                                <div className="absolute left-0 top-0 w-full h-full text-gray-400 flex justify-center items-center">
+                                                    <span>{index + 1}</span>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                                 <div className="flex-grow">
                                     {step.label}
