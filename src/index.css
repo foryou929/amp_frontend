@@ -50,11 +50,6 @@ code {
   height: 5px;
 }
 
-/* Track */
-/* ::-webkit-scrollbar-track {
-
-} */
-
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #8884;

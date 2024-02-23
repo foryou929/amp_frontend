@@ -91,7 +91,7 @@ const Profile = () => {
                 <div className="py-4">
                     <Avatar src={"/1"} circle className={"w-16 h-16"} />
                 </div>
-                <h2 className="text-lg font-bold">PRcash</h2>
+                <h3 className="text-lg font-bold">PRcash</h3>
                 <p className="text-gray-400">東京都</p>
                 <p className="text-gray-400">企業</p>
                 <div className="w-full mt-4">
