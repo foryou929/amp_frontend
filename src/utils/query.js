@@ -24,7 +24,6 @@ const request = async (method, url, data, success, error, auth = false, access =
                 saveAccessToken(data.access);
                 await request(method, url, data, success, error, auth, true);
             } catch (err) {
-                throw err;
             }
         } else {
             if (error)
