@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 
 import Avatar from "../components/Avatar";
 
 import { user_menus, client_menus } from "./menu";
+import { clear } from "../common/messageSlice";
 
 const Header = ({ children }) => {
+    const dispatch = useDispatch();
+
     const [open, setOpen] = useState(false);
 
     const location = useLocation();
@@ -16,6 +20,8 @@ const Header = ({ children }) => {
 
     const [mode, setMode] = useState(localStorage.getItem("mode") == "client");
     const [menu, setMenu] = useState([]);
+
+    const message = useSelector(state => state.message);
 
     useEffect(() => {
         if (mode) {
@@ -97,6 +103,18 @@ const Header = ({ children }) => {
                     ))
                 }
             </div>
+            {
+                message.type > 0 && (
+                    <div className="px-8 relative text-center">
+                        <p className="py-1">{message.content}</p>
+                        <div className="absolute w-4 right-2 top-0 text-xl cursor-pointer" onClick={() => {
+                            dispatch(clear());
+                        }}>
+                            &times;
+                        </div>
+                    </div>
+                )
+            }
         </div >
     )
 }

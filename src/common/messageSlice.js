@@ -10,20 +10,20 @@ export const messageSlice = createSlice({
     name: 'message',
     initialState: {
         type: 0,
-        message: ""
+        content: ""
     },
     reducers: {
         success: (state, action) => {
             state.type = 1;
-            state.message = action.payload;
+            state.content = action.payload;
         },
         warning: (state, action) => {
             state.type = 2;
-            state.message = action.payload;
+            state.content = action.payload;
         },
         danger: (state, action) => {
             state.type = 3;
-            state.message = action.payload;
+            state.content = action.payload;
         },
         clear: (state, action) => {
             state.type = 0;
