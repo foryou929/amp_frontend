@@ -26,16 +26,14 @@ const Progress = ({ mode, id }) => {
 
     useEffect(() => {
         const get = async () => {
-            const messages = await query.auth.get(`/api/${mode}/message/${id}`, () => {
-
-            }, () => { });
+            const section = await query.auth.get(`/api/user/section/${id}`, null, () => { });
         }
         get();
     }, [])
 
     const handleClick = () => {
         if (progress == 0) {
-            query.auth.post(`/api/${mode}/message/${id}/apply`);
+            query.auth.post(`/api/user/section/${id}`, {}, null, () => { });
         }
     }
 
@@ -50,7 +48,7 @@ const Progress = ({ mode, id }) => {
                     あなたが開始報告をおこないました。業務 を開始して、〇月〇日になったら経過報告 をおこなってください。
                 </p>
                 <Textarea className="mt-4 min-h-40" />
-                <Button label={steps[progress].button} className="mt-4" onClick={handleClick}/>
+                <Button label={steps[progress].button} className="mt-4" onClick={handleClick} />
             </div>
             <ul>
                 {
