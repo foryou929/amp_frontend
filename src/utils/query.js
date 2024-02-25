@@ -24,12 +24,12 @@ const request = async (method, url, data, success, error, auth = false, access =
                 saveAccessToken(data.access);
                 await request(method, url, data, success, error, auth, true);
             } catch (err) {
-                throw err;
             }
         } else {
-            NotificationManager.error(i18next.t(err.response?.data?.message) || err.message)
             if (error)
                 error(err.response?.data)
+            else
+                NotificationManager.error(i18next.t(err.response?.data?.message) || err.message)
         }
     }
 }

@@ -28,7 +28,7 @@ const Header = ({ children }) => {
     }, [mode]);
 
     return (
-        <div className={`w-full shadow ${open && "fixed"}`}>
+        <div className={`w-full shadow ${open && "fixed z-50"}`}>
             <div className="w-full h-20 py-4 flex justify-between bg-white">
                 <NavLink
                     to="/"

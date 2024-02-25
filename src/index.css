@@ -43,20 +43,3 @@ code {
     padding-right: 128px;
   }
 }
-
-/* width */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #8884;
-  border-radius: 8px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #6664;
-}
