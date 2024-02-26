@@ -7,29 +7,42 @@ import Textarea from "../../../components/Textarea";
 import query from "../../../utils/query";
 import { SECTION } from "../../../utils/constants";
 
-import { danger } from "../../../common/messageSlice";
-
-const Progress = ({ mode, id }) => {
+const Progress = ({ mode, id, section_id }) => {
     const dispatch = useDispatch();
-    const { user } = useSelector(state => state.user)
+    // const { user } = useSelector(state => state.user)
 
     const [section, setSection] = useState({ step: 0 });
     const [content, setContent] = useState("");
 
     const [steps, setSteps] = useState(
-        [
-            { label: "提案", btn_label: "応募する" },
-            { label: "選定" },
-            { label: "承諾" },
-            { label: "仮払い" },
-            { label: "広告物発送" },
-            { label: "広告物受け取り" },
-            { label: "開始報告", btn_label: "報告する" },
-            { label: "経過報告", btn_label: "報告する" },
-            { label: "終了報告", btn_label: "報告する" },
-            { label: "報酬受取" },
-            { label: "レビュー" },
-        ]
+        {
+            client: [
+                { label: "提案" },
+                { label: "選定", btn_label: "選定する" },
+                { label: "承諾", btn_label: "承諾する" },
+                { label: "仮払い" },
+                { label: "広告物発送" },
+                { label: "広告物受け取り" },
+                { label: "開始報告" },
+                { label: "経過報告" },
+                { label: "終了報告" },
+                { label: "報酬受取" },
+                { label: "レビュー" },
+            ],
+            user: [
+                { label: "提案", btn_label: "応募する" },
+                { label: "選定" },
+                { label: "承諾" },
+                { label: "仮払い" },
+                { label: "広告物発送" },
+                { label: "広告物受け取り" },
+                { label: "開始報告", btn_label: "報告する" },
+                { label: "経過報告", btn_label: "報告する" },
+                { label: "終了報告", btn_label: "報告する" },
+                { label: "報酬受取" },
+                { label: "レビュー" },
+            ]
+        }
     )
 
     const handleClick = () => {
@@ -37,8 +50,19 @@ const Progress = ({ mode, id }) => {
             case 0:
                 query.auth.post(`/api/user/section/${id}`, {}, (section) => {
                     setSection(section);
-                    query.auth.post(`/api/message/${section.id}`, { content, type: SECTION.APPLY }, (err) => {
-                        dispatch(danger(err.message));
+                    query.auth.post(`/api/message/${section.id}`, { content, type: SECTION.APPLY });
+                });
+                break;
+            case 1:
+                query.auth.post(`/api/message/${section.id}`, { content, type: SECTION.CHOOSE }, () => {
+                    query.auth.put(`/api/client/section/${section.id}`, { ...section, step: section.step + 1 }, (section) => {
+                        setSection(section);
+                    });
+                });
+            case 2:
+                query.auth.post(`/api/message/${section.id}`, { content, type: SECTION.AGREE }, () => {
+                    query.auth.put(`/api/client/section/${section.id}`, { ...section, step: section.step + 1 }, (section) => {
+                        setSection(section);
                     });
                 });
                 break;
@@ -46,9 +70,15 @@ const Progress = ({ mode, id }) => {
     }
 
     useEffect(() => {
-        query.auth.get(`/api/user/section/${id}`, (res) => {
-            setSection(res);
-        }, () => { });
+        if (mode == "client") {
+            query.auth.get(`/api/section/${section_id}`, (res) => {
+                setSection(res);
+            });
+        } else {
+            query.auth.get(`/api/user/section/${id}`, (res) => {
+                setSection(res);
+            }, () => { });
+        }
     }, [])
 
     const handleChange = (e) => {
@@ -61,21 +91,21 @@ const Progress = ({ mode, id }) => {
                 プロジェクト進榜状況
             </h1>
             <div className="rounded p-4 bg-[#F0F2F8] mt-2">
-                <h2 className="text-xl font-bold text-[#00146E]">{steps[section.step]?.label}</h2>
+                <h2 className="text-xl font-bold text-[#00146E]">{steps[mode][section.step]?.label}</h2>
                 <p className="mt-2">
-                    {steps[section.step]?.content}
+                    {steps[mode][section.step]?.content}
                 </p>
                 {
-                    steps[section.step]?.btn_label &&
+                    steps[mode][section.step]?.btn_label &&
                     <>
                         <Textarea className="mt-4 min-h-40" name="content" onChange={handleChange} />
-                        <Button label={steps[section.step]?.btn_label} className="mt-4" onClick={handleClick} />
+                        <Button label={steps[mode][section.step]?.btn_label} className="mt-4" onClick={handleClick} />
                     </>
                 }
             </div>
             <ul>
                 {
-                    steps.map((step, index) => (
+                    steps[mode].map((step, index) => (
                         <li key={index} className="border-b border-[#DEE2E6] py-4">
                             <div className="flex items-center">
                                 <div className="w-[48px] px-2">
