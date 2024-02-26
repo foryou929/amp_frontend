@@ -1,40 +1,58 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "../../../components/Button";
 import Textarea from "../../../components/Textarea";
 
 import query from "../../../utils/query";
+import { SECTION } from "../../../utils/constants";
+
+import { danger } from "../../../common/messageSlice";
 
 const Progress = ({ mode, id }) => {
+    const dispatch = useDispatch();
+    const { user } = useSelector(state => state.user)
+
+    const [section, setSection] = useState({ step: 0 });
+    const [content, setContent] = useState("");
+
     const [steps, setSteps] = useState(
         [
-            { label: "提案", title: "提案", button: "提案する" },
-            { label: "選定", title: "" },
-            { label: "承諾", title: "" },
-            { label: "仮払い", title: "" },
-            { label: "広告物発送", title: "" },
-            { label: "広告物受け取り", title: "" },
-            { label: "開始報告", title: "" },
-            { label: "経過報告", title: "" },
-            { label: "終了報告", title: "" },
-            { label: "報酬受取", title: "" },
-            { label: "レビュー", title: "" },
+            { label: "提案", btn_label: "応募する" },
+            { label: "選定" },
+            { label: "承諾" },
+            { label: "仮払い" },
+            { label: "広告物発送" },
+            { label: "広告物受け取り" },
+            { label: "開始報告", btn_label: "報告する" },
+            { label: "経過報告", btn_label: "報告する" },
+            { label: "終了報告", btn_label: "報告する" },
+            { label: "報酬受取" },
+            { label: "レビュー" },
         ]
     )
 
-    const [progress, setProgress] = useState(0);
+    const handleClick = () => {
+        switch (section.step) {
+            case 0:
+                query.auth.post(`/api/user/section/${id}`, {}, (section) => {
+                    setSection(section);
+                    query.auth.post(`/api/message/${section.id}`, { content, type: SECTION.APPLY }, (err) => {
+                        dispatch(danger(err.message));
+                    });
+                });
+                break;
+        }
+    }
 
     useEffect(() => {
-        const get = async () => {
-            const section = await query.auth.get(`/api/user/section/${id}`, null, () => { });
-        }
-        get();
+        query.auth.get(`/api/user/section/${id}`, (res) => {
+            setSection(res);
+        }, () => { });
     }, [])
 
-    const handleClick = () => {
-        if (progress == 0) {
-            query.auth.post(`/api/user/section/${id}`, {}, null, () => { });
-        }
+    const handleChange = (e) => {
+        setContent(e.target.value);
     }
 
     return (
@@ -43,12 +61,17 @@ const Progress = ({ mode, id }) => {
                 プロジェクト進榜状況
             </h1>
             <div className="rounded p-4 bg-[#F0F2F8] mt-2">
-                <h2 className="text-xl font-bold text-[#00146E]">{steps[progress].title}</h2>
+                <h2 className="text-xl font-bold text-[#00146E]">{steps[section.step]?.label}</h2>
                 <p className="mt-2">
-                    あなたが開始報告をおこないました。業務 を開始して、〇月〇日になったら経過報告 をおこなってください。
+                    {steps[section.step]?.content}
                 </p>
-                <Textarea className="mt-4 min-h-40" />
-                <Button label={steps[progress].button} className="mt-4" onClick={handleClick} />
+                {
+                    steps[section.step]?.btn_label &&
+                    <>
+                        <Textarea className="mt-4 min-h-40" name="content" onChange={handleChange} />
+                        <Button label={steps[section.step]?.btn_label} className="mt-4" onClick={handleClick} />
+                    </>
+                }
             </div>
             <ul>
                 {
@@ -57,12 +80,12 @@ const Progress = ({ mode, id }) => {
                             <div className="flex items-center">
                                 <div className="w-[48px] px-2">
                                     {
-                                        index < progress ? (
-                                            <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" filRule="evenodd" clipRule="evenodd">
+                                        index < section.step ? (
+                                            <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd">
                                                 <circle cx="16" cy="16" r="15" stroke="#21AD8B" strokeWidth="1" fill="none" />
                                                 <path d="M10 16 L 14 20 22 12" stroke="#21AD8B" strokeWidth="1" fill="none" />
                                             </svg>
-                                        ) : index == progress ? (
+                                        ) : index == section.step ? (
                                             <div className="relative">
                                                 <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd">
                                                     <circle cx="16" cy="16" r="15" stroke="none" fill="#00146E" />
