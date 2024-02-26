@@ -19,7 +19,7 @@ const ProjectItem = ({ project }) => {
                         </div>
                         {project?.date ? <p>{project?.date}</p> : <></>}
                     </div>
-                    <p className="text-[#00146E] text-lg font-bold mt-1">{project?.name}</p>
+                    <h3 className="text-[#00146E] text-lg font-bold mt-1">{project?.name}</h3>
                     {project?.subtitle ? <p className="mt-1">{project?.subtitle}</p> : <></>}
                     <p className="font-bold text-sm mt-1">{project?.points}pt</p>
                     <p className="text-gray-400 text-sm mt-1">{project?.type}</p>

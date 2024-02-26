@@ -7,11 +7,11 @@ const Summary = ({ project }) => {
 
                 </div>
                 <div className="flex-grow">
-                    <h3 className="text-xl font-bold">{project.name}</h3>
+                    <h2 className="text-xl font-bold">{project.name}</h2>
                     <p className="font-bold">{project.points}pt / 1日~</p>
                 </div>
             </div>
-            <h3 className="text-xl font-bold mt-4">説明</h3>
+            <h2 className="text-xl font-bold mt-4">説明</h2>
             <p>{project.description}</p>
             <h2 className="text-xl font-bold mt-4">プロジェクト詳細</h2>
             <ul className="mt-2">

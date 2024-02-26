@@ -11,9 +11,9 @@ const Profile = () => {
             <div className="w-full my-4">
                 <h2 className="text-xl font-bold">ポイント</h2>
                 <div className="bg-[#F0F2F8] rounded-lg p-6 flex justify-between items-center my-2">
-                    <p className="text-xl font-bold text-[#00146E]">
+                    <h2 className="text-xl font-bold text-[#00146E]">
                         20,000pt
-                    </p>
+                    </h2>
                     <Button label={"ポイント購入"} />
                 </div>
             </div>

@@ -133,7 +133,7 @@ const Home = () => {
                     </div>
                     <div className="w-full overflow-x-scroll">
                         <div className="w-full flex justify-between items-end">
-                            <p className="ml-4 font-bold text-lg">おすすめプロジェクト</p>
+                            <h3 className="ml-4 font-bold text-lg">おすすめプロジェクト</h3>
                             <Link to="/5">すべて⾒る</Link>
                         </div>
                         <div className="flex overflow-x-scroll">
@@ -146,7 +146,7 @@ const Home = () => {
                     </div>
                     <div className="w-full">
                         <div className="w-full flex justify-between items-end">
-                            <p className="ml-4 font-bold text-lg">ステッカー・シール</p>
+                            <h3 className="ml-4 font-bold text-lg">ステッカー・シール</h3>
                             <Link to="/6">すべて⾒る</Link>
                         </div>
                         <div className="flex overflow-x-scroll">
