@@ -6,13 +6,12 @@ import Progress from "./components/Progress";
 import Summary from "./components/Summary"
 
 import query from "../../utils/query";
-import { getMode } from "../../utils/storage";
 
-const Info = () => {
-    const [mode, setMode] = useState(getMode());
-
+const Info = ({ mode }) => {
     const [queryParameters] = useSearchParams();
+
     const id = queryParameters.get("id");
+    const section_id = queryParameters.get("section_id");
 
     const [project, setProject] = useState({});
 
@@ -32,7 +31,7 @@ const Info = () => {
                         {
                             title: '進推•概要', content: (
                                 <>
-                                    <Progress mode={mode} id={id} />
+                                    <Progress mode={mode} id={id} section_id={section_id} />
                                     <Summary project={project} />
                                 </>
                             )
