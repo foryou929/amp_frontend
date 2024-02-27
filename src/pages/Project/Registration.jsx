@@ -29,7 +29,6 @@ const Registration = () => {
         const newProject = { ...project };
         newProject[target?.name] = target?.value;
         setProject(newProject);
-        console.log(newProject)
     }
 
     const handleSubmit = (e) => {
