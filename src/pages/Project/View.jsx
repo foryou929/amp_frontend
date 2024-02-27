@@ -7,7 +7,7 @@ import ProjectItem from "../../components/ProjectItem";
 import query from "../../utils/query";
 // import { getMode } from "../../utils/storage";
 
-const View = () => {
+const View = ({ mode }) => {
     // const [mode, setMode] = useState(getMode());
 
     const [queryParameters] = useSearchParams();
@@ -25,7 +25,7 @@ const View = () => {
             <List className="mt-4" items={projects.map((project) => {
                 return {
                     key: project.id,
-                    content: <ProjectItem project={project} />
+                    content: <ProjectItem mode={mode} project={project} />
                 }
             })}
             />
