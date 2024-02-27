@@ -1,88 +1,135 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 
 import Button from "../../../components/Button";
 import Textarea from "../../../components/Textarea";
+import Input from "../../../components/Input";
 
 import query from "../../../utils/query";
-import { SECTION } from "../../../utils/constants";
+import { SECTION, PROGRESS } from "../../../utils/constants";
 
-const Progress = ({ mode, id, section_id }) => {
-    const dispatch = useDispatch();
+const Progress = ({ mode, project, section_id }) => {
+    // const dispatch = useDispatch();
     // const { user } = useSelector(state => state.user)
 
     const [section, setSection] = useState({ step: 0 });
     const [content, setContent] = useState("");
+    const [point, setPoint] = useState(0);
+
+    const children = [
+        <Textarea className="mt-4 min-h-40" name="content" onChange={(e) => setContent(e.target.value)} />,
+        <div className="flex items-center mt-4">
+            <Input className="flex-grow" defaultValue={point} onChange={(e) => setPoint(e.target.value)} />&nbsp;pt
+        </div>,
+    ]
 
     const [steps, setSteps] = useState(
         {
             client: [
-                { label: "提案" },
-                { label: "選定", btn_label: "選定する" },
-                { label: "承諾", btn_label: "承諾する" },
-                { label: "仮払い" },
-                { label: "広告物発送" },
-                { label: "広告物受け取り" },
-                { label: "開始報告" },
-                { label: "経過報告" },
-                { label: "終了報告" },
-                { label: "報酬受取" },
-                { label: "レビュー" },
+                {},
+                { btn_label: "選定する", child: 0 },
+                { btn_label: "承諾する", child: 0 },
+                { btn_label: "仮払いする", child: 1 },
+                { btn_label: "広告物発送する" },
+                {},
+                {},
+                {},
+                {},
+                {},
+                { btn_label: "レビューする", child: 0 },
             ],
             user: [
-                { label: "提案", btn_label: "応募する" },
-                { label: "選定" },
-                { label: "承諾" },
-                { label: "仮払い" },
-                { label: "広告物発送" },
-                { label: "広告物受け取り" },
-                { label: "開始報告", btn_label: "報告する" },
-                { label: "経過報告", btn_label: "報告する" },
-                { label: "終了報告", btn_label: "報告する" },
-                { label: "報酬受取" },
-                { label: "レビュー" },
+                { btn_label: "応募する", child: 1 },
+                {},
+                {},
+                {},
+                {},
+                { btn_label: "広告物受け取りする", child: 0 },
+                { btn_label: "報告する", child: 0 },
+                { btn_label: "報告する", child: 0 },
+                { btn_label: "報告する", child: 0 },
+                { btn_label: "報酬受取" },
+                { btn_label: "レビューする", child: 0 },
             ]
         }
     )
 
-    const handleClick = () => {
-        switch (section.step) {
-            case 0:
-                query.auth.post(`/api/user/section/${id}`, {}, (section) => {
-                    setSection(section);
-                    query.auth.post(`/api/message/${section.id}`, { content, type: SECTION.APPLY });
-                });
-                break;
-            case 1:
-                query.auth.post(`/api/message/${section.id}`, { content, type: SECTION.CHOOSE }, () => {
-                    query.auth.put(`/api/client/section/${section.id}`, { ...section, step: section.step + 1 }, (section) => {
-                        setSection(section);
-                    });
-                });
-            case 2:
-                query.auth.post(`/api/message/${section.id}`, { content, type: SECTION.AGREE }, () => {
-                    query.auth.put(`/api/client/section/${section.id}`, { ...section, step: section.step + 1 }, (section) => {
-                        setSection(section);
-                    });
-                });
-                break;
-        }
-    }
+    const [payment, setPayment] = useState({});
+    const [advert, setAdvert] = useState({});
+    const [startReport, setStartReport] = useState({});
+    const [progressReport, setProgressReport] = useState({});
+    const [endReport, setEndReport] = useState({});
 
     useEffect(() => {
+        const onSuccess = (section) => {
+            query.auth.get(`/api/section/${section.id}/payment`, payment => setPayment(payment));
+            query.auth.get(`/api/section/${section.id}/advert`, advert => setAdvert(advert));
+            query.auth.get(`/api/section/${section.id}/message/type/${SECTION.START_REPORT}`, message => setStartReport(message));
+            query.auth.get(`/api/section/${section.id}/message/type/${SECTION.PROGRESS_REPORT}`, message => setProgressReport(message));
+            query.auth.get(`/api/section/${section.id}/message/type/${SECTION.END_REPORT}`, message => setEndReport(message));
+        }
         if (mode == "client") {
-            query.auth.get(`/api/section/${section_id}`, (res) => {
-                setSection(res);
+            query.auth.get(`/api/section/${section_id}`, (section) => {
+                setSection(section);
+                onSuccess(section);
             });
         } else {
-            query.auth.get(`/api/user/section/${id}`, (res) => {
-                setSection(res);
-            }, () => { });
+            if (project.id) {
+                query.auth.get(`/api/project/${project.id}/section`, (section) => {
+                    setSection(section);
+                    onSuccess(section);
+                }, () => { });
+            }
         }
-    }, [])
+    }, [project, section_id])
 
-    const handleChange = (e) => {
-        setContent(e.target.value);
+    const handleClick = async () => {
+        try {
+            const onSuccess = async () => {
+                setSection(await query.auth.patch(`/api/client/section/${section.id}`, { step: section.step + 1 }));
+            }
+            switch (section.step) {
+                case 0:
+                    setSection(await query.auth.post(`/api/user/section/${project.id}`));
+                    await query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.APPLY });
+                    break;
+                default:
+                    switch (section.step) {
+                        case 1:
+                            await query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.CHOOSE }, onSuccess);
+                            break;
+                        case 2:
+                            await query.auth.post(`/api/section/${section.id}`, { content, type: SECTION.AGREE }, onSuccess);
+                            break;
+                        case 3:
+                            const payment = await query.auth.post(`/api/section/${section.id}/payment`, { point }, onSuccess);
+                            setPayment(payment);
+                            break;
+                        case 4:
+                            await query.auth.post(`/api/section/${section.id}/advert`, null, onSuccess);
+                            break;
+                        case 5:
+                            await query.auth.patch(`/api/section/${section.id}/advert`, { is_received: true }, onSuccess);
+                            break;
+                        case 6:
+                            await query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.START_REPORT }, onSuccess);
+                            break;
+                        case 7:
+                            await query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.PROGRESS_REPORT }, onSuccess);
+                            break;
+                        case 8:
+                            await query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.END_REPORT }, onSuccess);
+                            break;
+                        case 9:
+                            await query.auth.patch(`/api/section/${section.id}/payment`, { is_paid: true }, onSuccess);
+                            break;
+                    }
+                    break;
+            }
+        } catch (err) {
+
+        }
     }
 
     return (
@@ -91,18 +138,18 @@ const Progress = ({ mode, id, section_id }) => {
                 プロジェクト進榜状況
             </h1>
             <div className="rounded p-4 bg-[#F0F2F8] mt-2">
-                <h2 className="text-xl font-bold text-[#00146E]">{steps[mode][section.step]?.label}</h2>
+                <h2 className="text-xl font-bold text-[#00146E]">{PROGRESS[mode][section.step]}</h2>
                 <p className="mt-2">
                     {steps[mode][section.step]?.content}
                 </p>
                 {
                     steps[mode][section.step]?.btn_label &&
                     <>
-                        <Textarea className="mt-4 min-h-40" name="content" onChange={handleChange} />
+                        {children[steps[mode][section.step]?.child]}
                         <Button label={steps[mode][section.step]?.btn_label} className="mt-4" onClick={handleClick} />
                     </>
                 }
-            </div>
+            </div >
             <ul>
                 {
                     steps[mode].map((step, index) => (
@@ -141,9 +188,12 @@ const Progress = ({ mode, id, section_id }) => {
                                 </div>
                             </div>
                             <div className="ml-[48px] text-sm text-[#757D85] pr-4">
-                                {
-                                    step.content
-                                }
+                                {index == 3 && payment.id ? `${moment(payment.created_at).format("YYYY年MM月DD日")}: ${project.creator.username}さんが仮払いをおこないました` : ""}
+                                {index == 4 && advert.id ? `${moment(advert.created_at).format("YYYY年MM月DD日")}: ${project.creator.username}さんが広告物を発送しました` : ""}
+                                {index == 5 && advert.id && advert.is_received ? `${moment(advert.updated_at).format("YYYY年MM月DD日")}: ${section.user.username}さんが広告物を受け取りました` : ""}
+                                {index == 6 && startReport.id ? `${moment(startReport.updated_at).format("YYYY年MM月DD日")}: ${section.user.username}さんが開始報告をおこないました` : ""}
+                                {index == 7 && progressReport.id ? `${moment(progressReport.updated_at).format("YYYY年MM月DD日")}: ${section.user.username}さんが経過報告をおこないました` : ""}
+                                {index == 8 && endReport.id ? `${moment(endReport.updated_at).format("YYYY年MM月DD日")}: ${section.user.username}さんが終了報告をおこないました` : ""}
                             </div>
                         </li>
                     ))
