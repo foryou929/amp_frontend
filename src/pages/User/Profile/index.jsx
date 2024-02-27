@@ -1,12 +1,15 @@
+import { useEffect } from "react";
 import Avatar from "../../../components/Avatar";
 import Button from "../../../components/Button";
 import List from "../../../components/List";
 import ProjectItem from "../../../components/ProjectItem";
 
+import query from "../../../utils/query";
+
 const Profile = () => {
     return (
         <>
-            <h1 className="text-2xl font-bold">ユーザーマイページ</h1>
+            <h1 className="text-2xl font-bold">マイページ</h1>
             <div className="w-full my-8">
                 <h2 className="text-xl font-bold">進行中のプロジェクト</h2>
                 <List

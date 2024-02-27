@@ -23,7 +23,8 @@ const ClientLayout = () => {
             />
             <div className="container">
                 <Routes>
-                    <Route path="/profile/view" element={<Profile />} />
+                    <Route path="/profile/view" element={<Profile mode="client" />} />
+
                     <Route path="/project/manage" element={<ProjectManage mode="client" />} />
                     <Route path="/project/registration" element={<ProjectRegistration mode="client" />} />
                     <Route path="/project/info" element={<ProjectInfo mode="client" />} />

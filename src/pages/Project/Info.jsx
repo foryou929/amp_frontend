@@ -31,7 +31,7 @@ const Info = ({ mode }) => {
                         {
                             title: '進推•概要', content: (
                                 <>
-                                    <Progress mode={mode} id={id} section_id={section_id} />
+                                    <Progress mode={mode} project={project} section_id={section_id} />
                                     <Summary project={project} />
                                 </>
                             )
