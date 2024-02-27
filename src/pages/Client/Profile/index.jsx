@@ -1,10 +1,17 @@
+import { useEffect, useState } from "react";
 import Avatar from "../../../components/Avatar";
 import Button from "../../../components/Button";
 import Link from "../../../components/Link";
 import List from "../../../components/List";
 import ProjectItem from "../../../components/ProjectItem";
 
-const Profile = () => {
+import query from "../../../utils/query";
+
+const Profile = ({ mode }) => {
+    const [progressingSections, setProgressingSections] = useState([]);
+    useEffect(() => {
+        query.auth.get("/api/section/step/4/10", (projects) => setProgressingSections(projects));
+    }, []);
     return (
         <>
             <h1 className="text-2xl font-bold">マイページ</h1>
@@ -21,20 +28,14 @@ const Profile = () => {
                 <h2 className="text-xl font-bold">進行中のプロジェクト</h2>
                 <List
                     className="my-4"
-                    items={[
-                        {
-                            key: 0,
-                            content: <ProjectItem img={"/1"} status={"広告物発送"} date={"2023年10月20日"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} />
-                        },
-                        {
-                            key: 1,
-                            content: <ProjectItem img={"/1"} status={"広告物発送"} date={"2023年10月20日"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} />
-                        },
-                        {
-                            key: 2,
-                            content: <ProjectItem img={"/1"} status={"広告物発送"} date={"2023年10月20日"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} />
-                        }
-                    ]}
+                    items={
+                        progressingSections.map((section) => {
+                            return {
+                                key: 0,
+                                content: <ProjectItem mode={mode} project={section.project} section={section} />
+                            }
+                        })
+                    }
                 />
                 <div className="p-4">
                     <Button label={"プロジェクトー覧"} className={"w-full"} />
