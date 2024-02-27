@@ -1,11 +1,10 @@
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import Avatar from "./Avatar";
-import { getMode } from "../utils/storage";
+import { PROGRESS } from "../utils/constants";
+import moment from "moment";
 
-const ProjectItem = ({ project }) => {
-    const [mode, setMode] = useState(getMode())
+const ProjectItem = ({ mode, project, section }) => {
     return (
         <NavLink to={`/${mode}/project/info?id=${project?.id}`} className="flex items-center gap-2">
             <div className="flex-grow flex gap-4 items-start">
@@ -14,17 +13,21 @@ const ProjectItem = ({ project }) => {
                 </div>
                 <div className="flex-grow flex flex-col justify-center">
                     <div className="w-full flex gap-2 items-center">
-                        <div className={`px-4 py-2 font-bold ${project?.progress == 1 && "bg-[#E9ECEF] text-[#212529]"}`}>
-                            {project?.progress_choice}
-                        </div>
-                        {project?.date ? <p>{project?.date}</p> : <></>}
+                        {
+                            section?.step ? (
+                                <div className={`p-2 font-bold rounded ${section.step == 5 || section.step == 6 ? "bg-[#F08E1B] text-white" : "bg-[#E9ECEF] text-[#212529]"}`}>
+                                    {PROGRESS[mode][section.step]}
+                                </div>
+                            ) : <></>
+                        }
+                        {section?.updated_at ? <p>{moment(section.updated_at).format("YYYY年MM月DD日")}</p> : <></>}
                     </div>
                     <h3 className="text-[#00146E] text-lg font-bold mt-1">{project?.name}</h3>
                     {project?.subtitle ? <p className="mt-1">{project?.subtitle}</p> : <></>}
                     <p className="font-bold text-sm mt-1">{project?.points}pt</p>
                     <p className="text-gray-400 text-sm mt-1">{project?.type}</p>
                     <div className="mt-1 p-2 bg-[#F8F9FA] text-sm flex justify-between">
-                        <p>提案数:4</p> <p>募集数:{project?.recruitment_number}</p> <p>期間:あと10日</p>
+                        {section?.suggest_count && <p>提案数: {section.suggest_count}</p>} {project && <><p>募集数:{project.recruitment_number}</p> <p>期間:あと{moment(project.created_at).add(project.recruitment_period, 'days').diff(moment(project.current), 'days')}日</p></>}
                         {project?.detail}
                     </div>
                 </div>
