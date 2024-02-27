@@ -47,6 +47,10 @@ export default {
         return await request("put", url, data, success, error)
     },
 
+    patch: async (url, data, success, error) => {
+        return await request("patch", url, data, success, error)
+    },
+
     delete: async (url, success, error) => {
         return await request("delete", url, {}, success, error)
     },
@@ -69,6 +73,10 @@ export default {
 
         put: async (url, data, success, error) => {
             return await request("put", url, data, success, error, true)
+        },
+
+        patch: async (url, data, success, error) => {
+            return await request("patch", url, data, success, error, true)
         },
 
         delete: async (url, success, error) => {
