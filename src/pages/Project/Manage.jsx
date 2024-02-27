@@ -5,47 +5,51 @@ import Link from "../../components/Link";
 import List from "../../components/List";
 import ProjectItem from "../../components/ProjectItem";
 
-import { FINISH, PROGRESSING, RECRUITING } from "../../utils/constants";
+import { PROJECT_STATUS } from "../../utils/constants";
 import query from "../../utils/query";
-import { getMode } from "../../utils/storage";
 
-const Manage = () => {
-    const [mode, setMode] = useState(getMode());
+const Manage = ({ mode }) => {
+
     const [queryParameters] = useSearchParams();
+    const type = queryParameters.get("type") || PROJECT_STATUS.PROGRESSING;
 
-    const page = queryParameters.get("page") || 1;
-    const type = queryParameters.get("type") || PROGRESSING;
 
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState([[], [], []]);
 
     useEffect(() => {
-        query.auth.get(`/api/${mode}/project`, (res) => setProjects(res));
-    }, [page]);
+        query.auth.get(`/api/project`, (result) => {
+            const projects = [[], [], []];
+            result.forEach((project) => {
+                projects[project.status].push(project);
+            });
+            setProjects(projects);
+        });
+    }, []);
 
 
     return (
         <>
             <h1 className="text-2xl font-bold">プロジェクト</h1>
             <div className="flex justify-between mt-4">
-                <p>{projects[RECRUITING]?.length + projects[PROGRESSING]?.length + projects[FINISH]?.length}件</p>
-                {type == FINISH ? <></> : <Link to={`/${mode}/project/manage?type=${FINISH}`} >終了したプロジェクト&gt;</Link>}
+                <p>{type == 0 || type == 1 ? projects[0].length + projects[1].length : projects[2].length}件</p>
+                {type == PROJECT_STATUS.FINISH ? <></> : <Link to={`/${mode}/project/manage?type=${PROJECT_STATUS.FINISH}`} >終了したプロジェクト&gt;</Link>}
             </div>
             {
-                type == FINISH ? <></>
+                type == PROJECT_STATUS.FINISH ? <></>
                     : (
                         <div className="flex mt-4">
-                            <NavLink to={`/${mode}/project/manage?type=${PROGRESSING}`} className={`w-1/2 py-2 text-center ${type == PROGRESSING ? "bg-[#00146E] text-white" : "bg-[#F8F9FA] border border-gray-200"}`}>
+                            <NavLink to={`/${mode}/project/manage?type=${PROJECT_STATUS.PROGRESSING}`} className={`w-1/2 py-2 text-center ${type == PROJECT_STATUS.PROGRESSING ? "bg-[#00146E] text-white" : "bg-[#F8F9FA] border border-gray-200"}`}>
                                 <p>{mode == "user" ? "応募•招待" : "進行中"}</p>
-                                <p className="text-gray-400">{projects[PROGRESSING]?.length}件</p>
+                                <p className="text-gray-400">{projects[PROJECT_STATUS.PROGRESSING].length}件</p>
                             </NavLink>
-                            <NavLink to={`/${mode}/project/manage?type=${RECRUITING}`} className={`w-1/2 py-2 text-center ${type == RECRUITING ? "bg-[#00146E] text-white" : "bg-[#F8F9FA] border border-gray-200"}`}>
+                            <NavLink to={`/${mode}/project/manage?type=${PROJECT_STATUS.RECRUITING}`} className={`w-1/2 py-2 text-center ${type == PROJECT_STATUS.RECRUITING ? "bg-[#00146E] text-white" : "bg-[#F8F9FA] border border-gray-200"}`}>
                                 <p>{mode == "user" ? "進行中" : "募集中"}</p>
-                                <p className="text-gray-400">{projects[RECRUITING]?.length}件</p>
+                                <p className="text-gray-400">{projects[PROJECT_STATUS.RECRUITING].length}件</p>
                             </NavLink>
                         </div>
                     )
             }
-            <List className="mt-4" items={projects[type]?.map((project) => {
+            <List className="mt-4" items={projects[type].map((project) => {
                 return {
                     key: project.id,
                     content: <ProjectItem project={project} />
