@@ -65,7 +65,7 @@ const Header = ({ children }) => {
                 </div>
             </div>
             <div className={`bg-white transition-all overflow-hidden h-[calc(100vh-80px)] p-5 ${open ? "block" : "hidden"}`}>
-                <div className="h-12 flex items-center gap-2">
+                <div className="h-12 flex items-center gap-2 cursor-pointer">
                     <div className="w-12">
                         <Avatar src={"/"} circle />
                     </div>
