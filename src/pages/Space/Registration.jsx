@@ -111,7 +111,7 @@ const Registration = () => {
                     </div>
                 </section>
                 <section className="my-4">
-                    <Button label="スペースを作成" className="w-full" />
+                    <Button className="w-full">スペースを作成</Button>
                 </section>
             </form>
         </>

@@ -122,7 +122,7 @@ const Registration = () => {
                     <Textarea name="self_introduction" onChange={(e) => onChange(e.target)} />
                 </section>
                 <section className="py-2">
-                    <Button label={"保存"} className="w-full" />
+                    <Button className="w-full">保存</Button>
                 </section>
             </form>
         </>

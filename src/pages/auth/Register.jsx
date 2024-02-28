@@ -37,7 +37,7 @@ const Register = () => {
                 <section className="py-2">
                     <label>Email:</label>
                     <div>
-                    <Input className="w-full" onChange={(e) => setEmail(e.target.value)} />
+                        <Input className="w-full" onChange={(e) => setEmail(e.target.value)} />
                     </div>
                 </section>
                 <section className="py-2">
@@ -49,7 +49,7 @@ const Register = () => {
                     <Password className="w-full" onChange={(e) => setConfirmPassword(e.target.value)} />
                 </section>
                 <section className="py-2 flex gap-2">
-                    <Button label={"Register"} className="flex-grow" />
+                    <Button className="flex-grow">Register</Button>
                 </section>
                 <div className="py-2">
                     <p className="font-bold">Password Strength Guidelines:</p>

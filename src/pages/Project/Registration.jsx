@@ -122,7 +122,7 @@ const Registration = () => {
                     </div>
                 </section>
                 <section className="my-4">
-                    <Button label="プロジェクトを作成" className="w-full" />
+                    <Button className="w-full">プロジェクトを作成</Button>
                 </section>
             </form>
         </>
