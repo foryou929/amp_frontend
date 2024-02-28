@@ -21,7 +21,6 @@ export const SECTION = {
 
 export const PROGRESS = {
     client: [
-        "",
         "提案",
         "選定",
         "承諾",
@@ -35,7 +34,6 @@ export const PROGRESS = {
         "レビュー",
     ],
     user: [
-        "",
         "提案",
         "選定",
         "承諾",
