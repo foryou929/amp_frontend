@@ -6,7 +6,7 @@ import moment from "moment";
 
 const ProjectItem = ({ mode, project, section }) => {
     return (
-        <NavLink to={`/${mode}/project/info?id=${project?.id}`} className="flex items-center gap-2">
+        <div className="flex gap-2">
             <div className="flex-grow flex gap-4 items-start">
                 <div className="flex-none w-12">
                     <Avatar src={project?.img} />
@@ -32,10 +32,10 @@ const ProjectItem = ({ mode, project, section }) => {
                     </div>
                 </div>
             </div>
-            <div className="flex-none cursor-pointer px-2">
+            <NavLink to={mode == "user" ? `/${mode}/project/detail?id=${project?.id}` : `/${mode}/project/info?id=${project?.id}`} className="flex-none cursor-pointer px-2 flex items-center">
                 <img className="w-2 h-4 text-gray" src="/img/line-angle-right-icon.svg" />
-            </div>
-        </NavLink>
+            </NavLink>
+        </div >
     )
 }
 

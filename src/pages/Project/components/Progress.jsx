@@ -40,7 +40,7 @@ const Progress = ({ mode, project, section_id }) => {
                 { btn_label: "レビューする", child: 0 },
             ],
             user: [
-                { btn_label: "応募する", child: 1 },
+                { btn_label: "応募する", child: 0 },
                 {},
                 {},
                 {},
@@ -62,67 +62,77 @@ const Progress = ({ mode, project, section_id }) => {
     const [endReport, setEndReport] = useState({});
 
     useEffect(() => {
-        const onSuccess = (section) => {
-            query.auth.get(`/api/section/${section.id}/payment`, payment => setPayment(payment));
-            query.auth.get(`/api/section/${section.id}/advert`, advert => setAdvert(advert));
-            query.auth.get(`/api/section/${section.id}/message/type/${SECTION.START_REPORT}`, message => setStartReport(message));
-            query.auth.get(`/api/section/${section.id}/message/type/${SECTION.PROGRESS_REPORT}`, message => setProgressReport(message));
-            query.auth.get(`/api/section/${section.id}/message/type/${SECTION.END_REPORT}`, message => setEndReport(message));
-        }
         if (mode == "client") {
             query.auth.get(`/api/section/${section_id}`, (section) => {
-                setSection(section);
-                onSuccess(section);
+                setSection({ ...section, step: section.step || 0 });
             });
         } else {
             if (project.id) {
-                query.auth.get(`/api/project/${project.id}/section`, (section) => {
-                    setSection(section);
-                    onSuccess(section);
+                query.auth.get(`/api/section/project/${project.id}`, (section) => {
+                    setSection({ ...section, step: section.step || 0 });
                 }, () => { });
             }
         }
-    }, [project, section_id])
+    }, [project, section_id]);
 
-    const handleClick = async () => {
+    useEffect(() => {
+        if (section.id) {
+            query.auth.get(`/api/section/${section.id}/payment`, payment => setPayment(payment), () => { });
+            query.auth.get(`/api/section/${section.id}/advert`, advert => setAdvert(advert), () => { });
+            query.auth.get(`/api/section/${section.id}/message/type/${SECTION.START_REPORT}`, message => setStartReport(message), () => { });
+            query.auth.get(`/api/section/${section.id}/message/type/${SECTION.PROGRESS_REPORT}`, message => setProgressReport(message), () => { });
+            query.auth.get(`/api/section/${section.id}/message/type/${SECTION.END_REPORT}`, message => setEndReport(message), () => { });
+        }
+    }, [section]);
+
+    const handleClick = () => {
         try {
-            const onSuccess = async () => {
-                setSection(await query.auth.patch(`/api/client/section/${section.id}`, { step: section.step + 1 }));
+            const onSuccess = () => {
+                query.auth.patch(`/api/client/section/${section.id}`, { step: section.step + 1 }, (section) => {
+                    setSection(section);
+                });
             }
             switch (section.step) {
                 case 0:
-                    setSection(await query.auth.post(`/api/user/section/${project.id}`));
-                    await query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.APPLY });
+                    query.auth.post(`/api/section/project/${project.id}`, (section) => {
+                        setSection(section);
+                        query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.APPLY });
+                    });
                     break;
                 default:
                     switch (section.step) {
                         case 1:
-                            await query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.CHOOSE }, onSuccess);
+                            query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.CHOOSE }, onSuccess);
                             break;
                         case 2:
-                            await query.auth.post(`/api/section/${section.id}`, { content, type: SECTION.AGREE }, onSuccess);
+                            query.auth.post(`/api/section/${section.id}`, { content, type: SECTION.AGREE }, onSuccess);
                             break;
                         case 3:
-                            const payment = await query.auth.post(`/api/section/${section.id}/payment`, { point }, onSuccess);
-                            setPayment(payment);
+                            query.auth.post(`/api/section/${section.id}/payment`, { point }, (payment) => {
+                                setPayment(payment);
+                                onSuccess();
+                            });
                             break;
                         case 4:
-                            await query.auth.post(`/api/section/${section.id}/advert`, null, onSuccess);
+                            query.auth.post(`/api/section/${section.id}/advert`, null, onSuccess);
                             break;
                         case 5:
-                            await query.auth.patch(`/api/section/${section.id}/advert`, { is_received: true }, onSuccess);
+                            query.auth.patch(`/api/section/${section.id}/advert`, { is_received: true }, onSuccess);
                             break;
                         case 6:
-                            await query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.START_REPORT }, onSuccess);
+                            query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.START_REPORT }, onSuccess);
                             break;
                         case 7:
-                            await query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.PROGRESS_REPORT }, onSuccess);
+                            query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.PROGRESS_REPORT }, onSuccess);
                             break;
                         case 8:
-                            await query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.END_REPORT }, onSuccess);
+                            query.auth.post(`/api/section/${section.id}/message`, { content, type: SECTION.END_REPORT }, onSuccess);
                             break;
                         case 9:
-                            await query.auth.patch(`/api/section/${section.id}/payment`, { is_paid: true }, onSuccess);
+                            query.auth.patch(`/api/section/${section.id}/payment`, { is_paid: true }, (payment) => {
+                                setPayment(payment);
+                                onSuccess();
+                            });
                             break;
                     }
                     break;
@@ -146,7 +156,7 @@ const Progress = ({ mode, project, section_id }) => {
                     steps[mode][section.step]?.btn_label &&
                     <>
                         {children[steps[mode][section.step]?.child]}
-                        <Button label={steps[mode][section.step]?.btn_label} className="mt-4" onClick={handleClick} />
+                        <Button onClick={handleClick}>{steps[mode][section.step]?.btn_label}</Button>
                     </>
                 }
             </div >
@@ -184,7 +194,7 @@ const Progress = ({ mode, project, section_id }) => {
                                     }
                                 </div>
                                 <div className="flex-grow">
-                                    {step.label}
+                                    {PROGRESS[mode][index]}
                                 </div>
                             </div>
                             <div className="ml-[48px] text-sm text-[#757D85] pr-4">

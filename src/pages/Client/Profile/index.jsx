@@ -21,7 +21,7 @@ const Profile = ({ mode }) => {
                     <h2 className="text-xl font-bold text-[#00146E]">
                         20,000pt
                     </h2>
-                    <Button label={"ポイント購入"} />
+                    <Button>ポイント購入</Button>
                 </div>
             </div>
             <div className="w-full my-8">
@@ -38,7 +38,7 @@ const Profile = ({ mode }) => {
                     }
                 />
                 <div className="p-4">
-                    <Button label={"プロジェクトー覧"} className={"w-full"} />
+                    <Button className="w-full">プロジェクトー覧</Button>
                 </div>
             </div>
             <div className="w-full my-4">
@@ -61,7 +61,7 @@ const Profile = ({ mode }) => {
                     ]}
                 />
                 <div className="p-4">
-                    <Button label={"募集中のプロジェクト-覧"} className={"w-full"} />
+                    <Button className="w-full">募集中のプロジェクトー覧</Button>
                 </div>
             </div>
             <div className="w-full my-4">
@@ -84,7 +84,7 @@ const Profile = ({ mode }) => {
                     ]}
                 />
                 <div className="p-4">
-                    <Button label={"依頼中のス-覧"} className={"w-full"} />
+                    <Button className="w-full">依頼中のスー覧</Button>
                 </div>
             </div>
             <div className="w-full my-4">
@@ -118,7 +118,7 @@ const Profile = ({ mode }) => {
                         <Link to="https://hogehoge.com">https://hogehoge.com</Link>
                     </div>
                     <div className="p-4">
-                        <Button label={"プロフィール編集"} className={"w-full"} />
+                        <Button className="w-full">プロフィール編集</Button>
                     </div>
                 </div>
             </div >

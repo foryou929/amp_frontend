@@ -17,7 +17,7 @@ const Manage = ({ mode }) => {
     const [projects, setProjects] = useState([[], [], []]);
 
     useEffect(() => {
-        query.auth.get(`/api/project`, (result) => {
+        query.auth.get(`/api/project/${mode}`, (result) => {
             const projects = [[], [], []];
             result.forEach((project) => {
                 projects[project.status].push(project);
@@ -39,11 +39,11 @@ const Manage = ({ mode }) => {
                     : (
                         <div className="flex mt-4">
                             <NavLink to={`/${mode}/project/manage?type=${PROJECT_STATUS.PROGRESSING}`} className={`w-1/2 py-2 text-center ${type == PROJECT_STATUS.PROGRESSING ? "bg-[#00146E] text-white" : "bg-[#F8F9FA] border border-gray-200"}`}>
-                                <p>{mode == "user" ? "応募•招待" : "進行中"}</p>
+                                <p>{mode == "user" ? "応募•招待" : "募集中"}</p>
                                 <p className="text-gray-400">{projects[PROJECT_STATUS.PROGRESSING].length}件</p>
                             </NavLink>
                             <NavLink to={`/${mode}/project/manage?type=${PROJECT_STATUS.RECRUITING}`} className={`w-1/2 py-2 text-center ${type == PROJECT_STATUS.RECRUITING ? "bg-[#00146E] text-white" : "bg-[#F8F9FA] border border-gray-200"}`}>
-                                <p>{mode == "user" ? "進行中" : "募集中"}</p>
+                                <p>進行中</p>
                                 <p className="text-gray-400">{projects[PROJECT_STATUS.RECRUITING].length}件</p>
                             </NavLink>
                         </div>
@@ -52,7 +52,7 @@ const Manage = ({ mode }) => {
             <List className="mt-4" items={projects[type].map((project) => {
                 return {
                     key: project.id,
-                    content: <ProjectItem project={project} />
+                    content: <ProjectItem mode={mode} project={project} />
                 }
             })}
             />

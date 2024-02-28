@@ -106,7 +106,7 @@ const Home = () => {
                                 />
                             </div>
                             <div className="flex-none p-2">
-                                <Button label={"作成"} />
+                                <Button>作成</Button>
                             </div>
                         </div>
                     </div>

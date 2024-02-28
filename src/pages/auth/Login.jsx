@@ -33,7 +33,7 @@ const Login = () => {
                     <Password className="w-full" onChange={(e) => setPassword(e.target.value)} />
                 </section>
                 <section className="py-2 flex gap-2">
-                    <Button label={"Login"} className="flex-grow" />
+                    <Button className="flex-grow">Login</Button>
                 </section>
             </form>
         </>
