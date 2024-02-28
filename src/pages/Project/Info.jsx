@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import Tab from "../../components/Tab";
-import Progress from "./components/Progress";
-import Summary from "./components/Summary"
+import Button from "../../components/Button";
+import List from "../../components/List";
+import SectionItem from "../../components/SectionItem";
 
 import query from "../../utils/query";
 
@@ -11,7 +11,6 @@ const Info = ({ mode }) => {
     const [queryParameters] = useSearchParams();
 
     const id = queryParameters.get("id");
-    const section_id = queryParameters.get("section_id");
 
     const [project, setProject] = useState({});
 
@@ -24,32 +23,16 @@ const Info = ({ mode }) => {
     return (
         <>
             <h1 className="text-2xl font-bold">{project.name}</h1>
-            <Tab
-                className="mt-12"
-                tabs={
-                    [
-                        {
-                            title: '進推•概要', content: (
-                                <>
-                                    <Progress mode={mode} project={project} section_id={section_id} />
-                                    <Summary project={project} />
-                                </>
-                            )
-                        },
-                        {
-                            title: 'メッセージ', content: (
-                                <>
-                                </>
-                            )
-                        },
-                        {
-                            title: '契約•支払い', content: (
-                                <>
-                                </>
-                            )
-                        },
-                    ]}
-            />
+            <Button className="w-full mt-4">募集を終了する</Button>
+            <Button className="w-full mt-4">プロジェクトを終了する</Button>
+            <List
+                className="mt-8"
+                items={project.project_sections?.map(section => {
+                    return {
+                        key: section.id,
+                        content: <SectionItem mode={mode} section={section} />
+                    }
+                })} />
         </>
     )
 }
