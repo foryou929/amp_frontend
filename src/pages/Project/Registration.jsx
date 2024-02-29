@@ -104,7 +104,7 @@ const Registration = () => {
                 </section>
                 <section className="my-4">
                     <h6>説明文</h6>
-                    <Textarea name="description" onChange={(e) => onChange(e.target)} />
+                    <Textarea className="min-h-40" name="description" onChange={(e) => onChange(e.target)} />
                 </section>
                 <section className="my-4">
                     <h6>コンテンツ見本画像</h6>
