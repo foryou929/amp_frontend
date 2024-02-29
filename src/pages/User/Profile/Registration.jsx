@@ -1,31 +1,30 @@
-import { useState } from "react";
-import Input from "../../../components/Input";
-import DatePicker from "../../../components/DatePicker";
-import Select from "../../../components/Select";
-import Button from "../../../components/Button";
-import Textarea from "../../../components/Textarea";
-import CheckGroup from "../../../components/CheckGroup";
-import query from "../../../utils/query";
+import { useState, useEffect } from "react";
 import { NotificationManager } from "react-notifications";
+import { useDispatch, useSelector } from "react-redux";
+
+import Button from "../../../components/Button";
+import CheckGroup from "../../../components/CheckGroup";
+import DatePicker from "../../../components/DatePicker";
+import Input from "../../../components/Input";
+import Select from "../../../components/Select";
+import Textarea from "../../../components/Textarea";
+
+import query from "../../../utils/query";
+import { SPACE_TYPES, TRANSPORTATIONS } from "../../../utils/constants";
+
+import { login } from "../../../common/userSlice";
 
 const Registration = () => {
-    const [profile, setProfile] = useState(
-        {
-            username: '',
-            type: 0,
-            area: 0,
-            available_space: 0,
-            birthday: new Date(2001, 1, 1),
-            gendor: 0,
-            occupation: 0,
-            residence_type: 0,
-            primary_transportation: 0,
-            activity_scope: '',
-            follower_count: '',
-            usage_frequency: 0,
-            self_introduction: ''
-        }
-    );
+    const dispatch = useDispatch();
+
+    const { user } = useSelector(state => state.user);
+
+    const [profile, setProfile] = useState({});
+
+    useEffect(() => {
+        const { username, type, area, available_space, birthday, gendor, occupation, residence_type, primary_transportation, activity_scope, follower_count, usage_frequency, self_introduction } = user;
+        setProfile({ username, type, area, available_space, birthday, gendor, occupation, residence_type, primary_transportation, activity_scope, follower_count, usage_frequency, self_introduction })
+    }, [user])
 
     const onChange = (target) => {
         const newProfile = { ...profile };
@@ -35,9 +34,12 @@ const Registration = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.auth.post('/api/user/profile', profile, res => {
-            NotificationManager.success('Success');
-        });
+        if (user.id) {
+            query.auth.patch(`/api/user/${user.id}`, profile, (user) => {
+                dispatch(login(user));
+                NotificationManager.success('Success');
+            });
+        }
     }
 
     return (
@@ -47,79 +49,62 @@ const Registration = () => {
                 <section className="py-2">
                     <label className="py-0.5">ユーザー名</label>
                     <div>
-                        <Input name="username" onChange={(e) => onChange(e.target)} />
+                        <Input name="username" value={profile.username} onChange={(e) => onChange(e.target)} />
                     </div>
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">種別</label>
-                    <Select name="type" onChange={(e) => onChange(e.target)} />
+                    <Select name="type" value={profile.type} onChange={(e) => onChange(e.target)} />
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">エリア</label>
-                    <Select name="area" onChange={(e) => onChange(e.target)} />
+                    <Select name="area" value={profile.area} onChange={(e) => onChange(e.target)} />
                 </section>
                 <section className="py-2">
                     <CheckGroup label={"新有するスペース"} itemClassName={"py-1"}
-                        onChange={(target) => onChange(target)
-                        }
-                        items={[
-                            { label: "車の窓" },
-                            { label: "車の車体" },
-                            { label: "自転車" },
-                            { label: "バイク" },
-                            { label: "徒歩バックパック等" },
-                            { label: "一軒家" },
-                            { label: "集合住宅" },
-                            { label: "ノベルティーグッズの使用" },
-                            { label: "工事現場" },
-                            { label: "看板" },
-                            { label: "WEB SNS" },
-                            { label: "他" },
-                        ]} />
+                        name="available_space" value={profile.available_space}
+                        onChange={(target) => onChange(target)}
+                        items={SPACE_TYPES} />
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">生年月日</label>
-                    <DatePicker name="birthday" defaultDate={profile.birthday} onChange={(target) => onChange(target)} />
+                    <DatePicker name="birthday" value={profile.birthday} onChange={(target) => onChange(target)} />
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">性別</label>
-                    <Select name="gendor" options={[{ value: 0, label: '男性' }, { value: 1, label: '女性' }]} onChange={(e) => onChange(e.target)} />
+                    <Select name="gendor" value={profile.gendor} options={[{ value: 0, label: '男性' }, { value: 1, label: '女性' }]} onChange={(e) => onChange(e.target)} />
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">職業</label>
-                    <Select name="occupation" onChange={(e) => onChange(e.target)} />
+                    <Select name="occupation" value={profile.occupation} onChange={(e) => onChange(e.target)} />
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">居住形態等</label>
-                    <Select name="residence_type" onChange={(e) => onChange(e.target)} />
+                    <Select name="residence_type" value={profile.residence_type} onChange={(e) => onChange(e.target)} />
                 </section>
                 <section className="py-2">
                     <CheckGroup label={"主な移動手段"} itemClassName={"py-1"}
+                        name="primary_transportation" value={profile.primary_transportation}
                         onChange={(target) => onChange(target)}
-                        items={[
-                            { label: "徒歩" },
-                            { label: "車" },
-                            { label: "バイク" },
-                            { label: "その他" },
-                        ]} />
+                        items={TRANSPORTATIONS} />
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">活動範囲と頻度</label>
-                    <Textarea name="activity_scope" onChange={(e) => onChange(e.target)} />
+                    <Textarea name="activity_scope" value={profile.activity_scope} onChange={(e) => onChange(e.target)} />
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">フォロワー数の目安</label>
                     <div>
-                        <Input name="follower_count" onChange={(e) => onChange(e.target)} />
+                        <Input name="follower_count" value={profile.follower_count} onChange={(e) => onChange(e.target)} />
                     </div>
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">使用頻度</label>
-                    <Select name="usage_frequency" onChange={(e) => onChange(e.target)} />
+                    <Select name="usage_frequency" value={profile.usage_frequency} onChange={(e) => onChange(e.target)} />
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">自己紹介文</label>
-                    <Textarea name="self_introduction" onChange={(e) => onChange(e.target)} />
+                    <Textarea className="min-h-40" name="self_introduction" value={profile.self_introduction} onChange={(e) => onChange(e.target)} />
                 </section>
                 <section className="py-2">
                     <Button className="w-full">保存</Button>
