@@ -4,6 +4,7 @@ import Header from '../Header';
 import { client_menus } from "../menu";
 
 import Profile from './Profile';
+import ProfileRegistration from "./Profile/Registration";
 
 import ProjectDetail from '../Project/Detail';
 import ProjectInfo from '../Project/Info';
@@ -25,6 +26,7 @@ const ClientLayout = () => {
             <div className="container">
                 <Routes>
                     <Route path="/profile/view" element={<Profile mode="client" />} />
+                    <Route path="/profile/registration" element={<ProfileRegistration />} />
 
                     <Route path="/project/manage" element={<ProjectManage mode="client" />} />
                     <Route path="/project/registration" element={<ProjectRegistration mode="client" />} />
