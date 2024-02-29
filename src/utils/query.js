@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { NotificationManager } from 'react-notifications'
 import i18next from 'i18next'
-import _ from 'lodash'
 import { getAccessToken, getRefreshToken, saveAccessToken } from "../app/auth"
 
 const request = async (method, url, data, success, error, auth = false, access = false) => {

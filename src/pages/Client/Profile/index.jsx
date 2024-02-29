@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
 import Avatar from "../../../components/Avatar";
 import Button from "../../../components/Button";
 import Link from "../../../components/Link";
@@ -8,10 +10,13 @@ import ProjectItem from "../../../components/ProjectItem";
 import query from "../../../utils/query";
 
 const Profile = ({ mode }) => {
-    const [progressingSections, setProgressingSections] = useState([]);
+    const { user } = useSelector(state => state.user);
+
+    const [projects, setProjects] = useState([]);
     useEffect(() => {
-        query.auth.get("/api/section/step/4/10", (projects) => setProgressingSections(projects));
+        query.auth.get("/api/project/client", (projects) => setProjects(projects));
     }, []);
+
     return (
         <>
             <h1 className="text-2xl font-bold">マイページ</h1>
@@ -29,10 +34,12 @@ const Profile = ({ mode }) => {
                 <List
                     className="my-4"
                     items={
-                        progressingSections.map((section) => {
+                        projects.filter(project => {
+                            return project.status == 1;
+                        }).map(project => {
                             return {
-                                key: 0,
-                                content: <ProjectItem mode={mode} project={section.project} section={section} />
+                                key: project.id,
+                                content: <ProjectItem mode={mode} project={project} />
                             }
                         })
                     }
@@ -45,20 +52,16 @@ const Profile = ({ mode }) => {
                 <h2 className="text-xl font-bold">募集中のプロジェクト</h2>
                 <List
                     className="my-4"
-                    items={[
-                        {
-                            key: 0,
-                            content: <ProjectItem img={"/1"} date={"2023年10月20日"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} />
-                        },
-                        {
-                            key: 1,
-                            content: <ProjectItem img={"/1"} date={"2023年10月20日"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} />
-                        },
-                        {
-                            key: 2,
-                            content: <ProjectItem img={"/1"} date={"2023年10月20日"} title={"プロジェクトのタイトル"} point={"200Pt/I日〜"} type={"車広告"} />
-                        }
-                    ]}
+                    items={
+                        projects.filter(project => {
+                            return project.status == 0;
+                        }).map(project => {
+                            return {
+                                key: project.id,
+                                content: <ProjectItem mode={mode} project={project} />
+                            }
+                        })
+                    }
                 />
                 <div className="p-4">
                     <Button className="w-full">募集中のプロジェクトー覧</Button>
@@ -68,20 +71,9 @@ const Profile = ({ mode }) => {
                 <h2 className="text-xl font-bold">依頼中のスペース</h2>
                 <List
                     className="my-4"
-                    items={[
-                        {
-                            key: 0,
-                            content: <ProjectItem img={"/1"} title={"プロジェクトのタイトル"} subtitle={"佐藤太郎"} point={"200Pt/I日〜"} type={"車広告"} />
-                        },
-                        {
-                            key: 1,
-                            content: <ProjectItem img={"/1"} title={"プロジェクトのタイトル"} subtitle={"佐藤太郎"} point={"200Pt/I日〜"} type={"車広告"} />
-                        },
-                        {
-                            key: 2,
-                            content: <ProjectItem img={"/1"} title={"プロジェクトのタイトル"} subtitle={"佐藤太郎"} point={"200Pt/I日〜"} type={"車広告"} />
-                        }
-                    ]}
+                    items={
+                        []
+                    }
                 />
                 <div className="p-4">
                     <Button className="w-full">依頼中のスー覧</Button>
@@ -92,34 +84,29 @@ const Profile = ({ mode }) => {
                 <div className="py-4">
                     <Avatar src={"/1"} circle className={"w-16 h-16"} />
                 </div>
-                <h3 className="text-lg font-bold">PRcash</h3>
-                <p className="text-gray-400">東京都</p>
-                <p className="text-gray-400">企業</p>
+                <h3 className="text-lg font-bold">{user.name}</h3>
+                <p className="text-gray-400">{user.area}</p>
+                <p className="text-gray-400">{user.type}</p>
                 <div className="w-full mt-4">
                     <div className="my-2">
-                        <h3 className="text-lg font-bold my-2">用な人 ビスなど</h3>
-                        <p>企業店舗はもちろん、一般の方でも空きスペー スを PR 広告に貸し出したり、 商品使用をして報 酬を得られ、広告主もダイレクトに安価にPR可 能にできるスペースマッチングサービスを展開 しております。</p>
-                        <p>•主なPR対象エリア：日本（エリア指定な し）</p>
-                        <p>•インド（ムンバイ近郊）</p>
-                        <p>•アメリカ（カリフオ ルニア州• ロサンゼルス近郊）</p>
-                        <p>•主なPR対象：</p>
-                        <p>PRや看板を使用したい企業や店舗団体の方 や、スペースを貸し出して報酬を得たい一般 ユーザー様を募集しております。</p>
+                        <h3 className="text-lg font-bold my-2">主なサービスなど</h3>
+                        <p>{user.main_service}</p>
                     </div>
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">主なPR対象</h3>
-                        <p>PRや看板を使用したい企業や店舗団体の方や、 スペースを貸し出して報酬を得たい一般ユー ザー様を募集しております。</p>
+                        <p>{user.main_pr_target}</p>
                     </div>
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">メッセージ</h3>
-                        <p>現在多くの皆様にご応募をいただいておりま す。これからもよろしくおねがいいたします。 定員に達しているプロジェクトに関しては、お 気に入りプロジェクトに入れていただくと、募 集再開通知が送信されますので、ぜひお気に入 りプロジェクトへの追加をお願いいたします。</p>
+                        <p>{user.main_message}</p>
                     </div>
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">ホームページURL</h3>
-                        <Link to="https://hogehoge.com">https://hogehoge.com</Link>
+                        <Link to={user.website_url}>{user.website_url}</Link>
                     </div>
-                    <div className="p-4">
+                    <Link to="/client/profile/registration" className="mt-4">
                         <Button className="w-full">プロフィール編集</Button>
-                    </div>
+                    </Link>
                 </div>
             </div >
         </>

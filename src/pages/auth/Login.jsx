@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import md5 from "md5";
 
 import Button from "../../components/Button";
@@ -6,17 +9,32 @@ import Input from "../../components/Input";
 import Password from "../../components/Password";
 
 import query from "../../utils/query";
+
 import { saveTokens } from "../../app/auth";
+import { login } from '../../common/userSlice';
 
 const Login = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
+
+    const { user } = useSelector(state => state.user);
+
+    useEffect(() => {
+        if (user.id)
+            navigate("/");
+    }, [user]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         query.post('/api/auth/login', { username, password: md5(password) }, (res) => {
             saveTokens(res.token);
-        })
+            query.auth.get("/api/auth/loginWithToken", (user) => {
+                dispatch(login(user))
+            });
+        });
     }
 
     return (
