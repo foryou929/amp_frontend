@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 // import Avatar from "./Avatar";
 import moment from "moment";
-import { PROGRESS } from "../utils/constants";
+import { STEPS } from "../utils/constants";
 
 const SectionItem = ({ mode, section }) => {
     return (
@@ -13,7 +13,7 @@ const SectionItem = ({ mode, section }) => {
                 <div className="flex-grow flex flex-col justify-center">
                     <div className="w-full flex gap-2 items-center">
                         <div className={`p-2 font-bold rounded ${section.step == 5 || section.step == 6 ? "bg-[#F08E1B] text-white" : "bg-[#E9ECEF] text-[#212529]"}`}>
-                            {PROGRESS[mode][section.step]}
+                            {STEPS[mode][section.step].label}
                         </div>
                         <p>{moment(section.project.updated_at).format("YYYY年MM月DD日")}</p>
                     </div>
