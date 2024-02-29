@@ -33,7 +33,7 @@ const Summary = ({ project }) => {
                 </li>
                 <li className="border-b border-[#DEE2E6] px-2 py-3 flex">
                     <p className="w-1/2">年代指定</p>
-                    <p className="w-1/2">{project.year_designation}</p>
+                    <p className="w-1/2">{project.year_designation ? "なし" : "あり"}</p>
                 </li>
                 <li className="border-b border-[#DEE2E6] px-2 py-3 flex">
                     <p className="w-1/2">募集数</p>
@@ -41,7 +41,7 @@ const Summary = ({ project }) => {
                 </li>
                 <li className="border-b border-[#DEE2E6] px-2 py-3 flex">
                     <p className="w-1/2">提案数</p>
-                    <p className="w-1/2"></p>
+                    <p className="w-1/2">{project.suggest_count}</p>
                 </li>
                 <li className="border-b border-[#DEE2E6] px-2 py-3 flex">
                     <p className="w-1/2">コンテンツサイズ</p>
