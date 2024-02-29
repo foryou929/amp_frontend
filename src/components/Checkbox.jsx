@@ -10,8 +10,8 @@ function generateUniqueId() {
 const Checkbox = ({ label, className, ...rest }) => {
     const [id, setID] = useState(generateUniqueId())
     return (
-        <div className={`flex items-center ${className}`} {...rest}>
-            <input type="checkbox" id={id} />
+        <div className={`flex items-center ${className}`}>
+            <input type="checkbox" id={id} {...rest} />
             <label htmlFor={id} className="ml-2">{label}</label>
         </div>
     )
