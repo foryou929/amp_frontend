@@ -131,7 +131,7 @@ const Home = () => {
                             label2="PR場所で探す"
                         />
                     </div>
-                    <div className="w-full overflow-x-scroll">
+                    <div className="w-full">
                         <div className="w-full flex justify-between items-end">
                             <h3 className="ml-4 font-bold text-lg">おすすめプロジェクト</h3>
                             <Link to="/5">すべて⾒る</Link>
