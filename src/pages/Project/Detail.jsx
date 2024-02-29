@@ -7,23 +7,28 @@ import Summary from "./components/Summary"
 
 import query from "../../utils/query";
 
-const ProgressPage = ({ mode }) => {
+const Detail = ({ mode }) => {
     const [queryParameters] = useSearchParams();
 
     const id = queryParameters.get("id");
-    const section_id = queryParameters.get("section_id");
 
     const [project, setProject] = useState({});
+    const [section, setSection] = useState({ project: {} });
 
     useEffect(() => {
-        query.auth.get(`/api/project/${id}`, res => {
-            setProject(res)
-        });
+        if (id) {
+            query.auth.get(`/api/section/${id}`, section => {
+                setSection(section)
+                query.auth.get(`/api/project/${section.project.id}`, project => {
+                    setProject(project);
+                })
+            });
+        }
     }, [id]);
 
     return (
         <>
-            <h1 className="text-2xl font-bold">{project.name}</h1>
+            <h1 className="text-2xl font-bold">{section.project.name}</h1>
             <Tab
                 className="mt-12"
                 tabs={
@@ -31,7 +36,7 @@ const ProgressPage = ({ mode }) => {
                         {
                             title: '進推•概要', content: (
                                 <>
-                                    <Progress mode={mode} project={project} section_id={section_id} />
+                                    <Progress mode={mode} id={section.id} />
                                     <Summary project={project} />
                                 </>
                             )
@@ -54,4 +59,4 @@ const ProgressPage = ({ mode }) => {
     )
 }
 
-export default ProgressPage;
+export default Detail;
