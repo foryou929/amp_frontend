@@ -12,13 +12,14 @@ import Register from './pages/auth/Register';
 import ClientLayout from './pages/Client/Layout';
 import UserLayout from './pages/User/Layout';
 
-import initializeApp from './app/init';
+import { initializeApp, initializeSocket } from './app/init';
 import query from './utils/query';
 
 import { getAccessToken } from './app/auth';
 import { login } from './common/userSlice';
 
 initializeApp();
+initializeSocket();
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,11 @@ function App() {
       query.auth.get("/api/auth/loginWithToken", (user) => {
         dispatch(login(user))
       });
+    }
+    return () => {
+      if (window.socket) {
+        window.socket.disconnect();
+      }
     }
   }, []);
 

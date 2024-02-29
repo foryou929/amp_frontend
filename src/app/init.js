@@ -6,7 +6,7 @@ import { initReactI18next } from "react-i18next";
 // import translationEN from "./locales/en/translation.json";
 // import translationJA from "./locales/ja/translation.json";
 
-const initializeApp = () => {
+export const initializeApp = () => {
     // Setting base URL for all API request via axios
     axios.defaults.baseURL = process.env.REACT_APP_BASE_URL
 
@@ -41,4 +41,6 @@ const initializeApp = () => {
     });
 }
 
-export default initializeApp
+export const initializeSocket = () => {
+    window.socket = new WebSocket('ws://localhost:8000/ws/');
+}
