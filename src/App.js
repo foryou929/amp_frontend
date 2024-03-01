@@ -19,7 +19,6 @@ import { getAccessToken } from './app/auth';
 import { login } from './common/userSlice';
 
 initializeApp();
-initializeSocket();
 
 function App() {
   const dispatch = useDispatch();
@@ -34,11 +33,17 @@ function App() {
       });
     }
     return () => {
-      if (window.socket) {
+      if (window.socket)
         window.socket.disconnect();
-      }
     }
   }, []);
+
+  useEffect(() => {
+    if (user.id ) {
+      const access_token = getAccessToken();
+      initializeSocket(access_token);
+    }
+  }, [user]);
 
   return (
     <>
