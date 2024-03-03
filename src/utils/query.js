@@ -19,7 +19,7 @@ const request = async (method, url, data, success, error, auth = false, access =
     } catch (err) {
         if (access == false && err?.response?.status == 401) {
             try {
-                const { data } = await axios.request({ method: "post", url: "/api/token/refresh/", data: { refresh: getRefreshToken() } });
+                const { data } = await axios.request({ method: "post", url: "api/token/refresh/", data: { refresh: getRefreshToken() } });
                 saveAccessToken(data.access);
                 await request(method, url, data, success, error, auth, true);
             } catch (err) {
@@ -54,13 +54,6 @@ export default {
         return await request("delete", url, {}, success, error)
     },
 
-    upload: async (url, files, success, error) => {
-        const formData = new FormData()
-        for (let i = 0; i < files.length; i++)
-            formData.append(`files`, files[i])
-        return await request("post", url, formData, success, error)
-    },
-
     auth: {
         post: async (url, data, success, error) => {
             return await request("post", url, data, success, error, true)
@@ -80,13 +73,6 @@ export default {
 
         delete: async (url, success, error) => {
             return await request("delete", url, {}, success, error, true)
-        },
-
-        upload: async (url, files, success, error) => {
-            const formData = new FormData()
-            for (let i = 0; i < files.length; i++)
-                formData.append(`files`, files[i])
-            return await request("post", url, formData, success, error, true)
         },
     }
 }
