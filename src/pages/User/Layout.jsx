@@ -25,14 +25,14 @@ const UserLayout = () => {
             <div className="container">
                 <Routes>
                     <Route path="/profile/view" element={<Profile mode={"user"} />} />
-                    <Route path="/profile/registration" element={<ProfileRegistration />} />
+                    <Route path="/profile/registration" element={<ProfileRegistration mode={"user"} />} />
 
                     <Route path="/project/manage" element={<ProjectManage mode={"user"} />} />
                     <Route path="/project/view" element={<ProjectView mode={"user"} />} />
                     <Route path="/project/detail" element={<ProjectDetail mode={"user"} />} />
 
-                    <Route path="/space/manage" element={<SpaceManage />} />
-                    <Route path="/space/registration" element={<SpaceRegistration />} />
+                    <Route path="/space/manage" element={<SpaceManage mode={"user"} />} />
+                    <Route path="/space/registration" element={<SpaceRegistration mode={"user"} />} />
                 </Routes>
             </div>
         </>

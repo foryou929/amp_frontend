@@ -10,7 +10,7 @@ import Textarea from "../../components/Textarea";
 import query from "../../utils/query";
 import { NotificationManager } from "react-notifications";
 
-const Registration = () => {
+const Registration = ({ mode }) => {
     const [project, setProject] = useState({
         name: "",
         points: 0,
@@ -33,7 +33,7 @@ const Registration = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.auth.post('/api/project', project, res => {
+        query.auth.post(`api/${mode}/project`, project, res => {
             NotificationManager.success('Success');
         });
     }

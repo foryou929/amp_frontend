@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState, forwardRef, useImperativeHandle } from 'react';
+import query from '../utils/query';
 
-const FileUpload = ({ onChange }) => {
+const FileUpload = forwardRef((props, ref) => {
     const fileRef = useRef();
     const [selectedFiles, setSelectedFiles] = useState([]);
 
@@ -16,12 +17,16 @@ const FileUpload = ({ onChange }) => {
         });
     };
 
-    useEffect(() => {
-        if (onChange)
-            onChange(selectedFiles);
-    }, [selectedFiles]);
+    const upload = (url, success, error) => {
+        const formData = new FormData()
+        for (let i = 0; i < selectedFiles.length; i++)
+            formData.append(`files`, selectedFiles[i]);
+        query.auth.post(url, formData, success, error);
+    };
 
-    console.log(fileRef)
+    useImperativeHandle(ref, () => ({
+        upload
+    }));
 
     return (
         <div className='mt-2'>
@@ -38,7 +43,7 @@ const FileUpload = ({ onChange }) => {
                 <ul className='mt-2'>
                     {selectedFiles.map((file, index) => (
                         <li key={index} className={`flex items-center p-2 border-dashed ${index == 0 ? "border-y" : "border-b"}`}>
-                            <div className='flex-grow'>
+                            <div className='flex-grow text-ellipsis overflow-hidden'>
                                 {file.name}
                             </div>
                             <button className='flex-none' onClick={() => handleFileDelete(index)}>
@@ -54,6 +59,6 @@ const FileUpload = ({ onChange }) => {
             )}
         </div>
     );
-};
+});
 
 export default FileUpload;

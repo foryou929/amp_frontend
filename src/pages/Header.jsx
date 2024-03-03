@@ -9,6 +9,7 @@ import { clear } from "../common/messageSlice";
 
 const Header = ({ children }) => {
     const dispatch = useDispatch();
+    const { user } = useSelector(state => state.user);
 
     const [open, setOpen] = useState(false);
 
@@ -66,9 +67,7 @@ const Header = ({ children }) => {
             </div>
             <div className={`bg-white transition-all overflow-hidden h-[calc(100vh-80px)] p-5 ${open ? "block" : "hidden"}`}>
                 <div className="h-12 flex items-center gap-2 cursor-pointer">
-                    <div className="w-12">
-                        <Avatar src={"/"} circle />
-                    </div>
+                    <Avatar className="w-12 h-12" src={process.env.REACT_APP_BASE_URL + user.avatar} circle />
                     <div className="flex-grow" onClick={() => setMode(!mode)}>
                         {mode ? "ユーザーに切り替え" : "クライアントモードに切り替え"}
                     </div>

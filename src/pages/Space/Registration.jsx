@@ -10,7 +10,7 @@ import RadioGroup from "../../components/RadioGroup";
 
 import query from "../../utils/query";
 
-const Registration = () => {
+const Registration = ({ mode }) => {
     const [space, setSpace] = useState({
         title: "",
         points: 0,
@@ -29,7 +29,7 @@ const Registration = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.auth.post('/api/space', space, res => {
+        query.auth.post(`api/${mode}/space`, space, res => {
             NotificationManager.success('Success');
         });
     }

@@ -19,11 +19,11 @@ const Manage = ({ mode }) => {
 
     useEffect(() => {
         if (mode == "user") {
-            query.auth.get(`/api/section/user`, (sections) => {
+            query.auth.get(`api/${mode}/section`, (sections) => {
                 setSections(sections);
             });
         } else {
-            query.auth.get(`/api/project/client`, (projects) => {
+            query.auth.get(`api/${mode}/project`, (projects) => {
                 setProjects(projects);
             })
         }
@@ -70,7 +70,7 @@ const Manage = ({ mode }) => {
                     )
             }
             <List className="mt-4" items={
-                mode == "user " ?
+                mode == "user" ?
                     sections.filter((section) => {
                         if (type == PROJECT_STATUS.RECRUITING)
                             return section.step < 4;

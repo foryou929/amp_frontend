@@ -41,7 +41,7 @@ const SectionItem = ({ mode, section }) => {
                     </div>
                 </div>
             </div>
-            <NavLink to={mode == "user" ? `/user/project/detail?id=${section.project.id}` : `/client/project/detail?section_id=${section.id}`} className="flex-none cursor-pointer px-2 flex items-center">
+            <NavLink to={mode == "user" ? `/user/project/detail?id=${section.id}` : `/client/project/detail?id=${section.id}`} className="flex-none cursor-pointer px-2 flex items-center">
                 <img className="w-2 h-4 text-gray" src="/img/line-angle-right-icon.svg" />
             </NavLink>
         </div >

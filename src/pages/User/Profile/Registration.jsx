@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NotificationManager } from "react-notifications";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,14 +8,16 @@ import DatePicker from "../../../components/DatePicker";
 import Input from "../../../components/Input";
 import Select from "../../../components/Select";
 import Textarea from "../../../components/Textarea";
+import AvatarUploader from "../../../components/AvatarUploader";
 
 import query from "../../../utils/query";
 import { SPACE_TYPES, TRANSPORTATIONS } from "../../../utils/constants";
 
 import { login } from "../../../common/userSlice";
 
-const Registration = () => {
+const Registration = ({ mode }) => {
     const dispatch = useDispatch();
+    const avatarUploaderRef = useRef();
 
     const { user } = useSelector(state => state.user);
 
@@ -35,7 +37,7 @@ const Registration = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (user.id) {
-            query.auth.patch(`/api/user/${user.id}`, profile, (user) => {
+            query.auth.patch(`api/${mode}/${user.id}`, profile, (user) => {
                 dispatch(login(user));
                 NotificationManager.success('Success');
             });
@@ -46,11 +48,10 @@ const Registration = () => {
         <>
             <h1 className="text-2xl font-bold">ユーザープロフィール</h1>
             <form onSubmit={handleSubmit}>
+                <AvatarUploader className="py-4" defaultSrc={process.env.REACT_APP_BASE_URL + user.avatar} ref={avatarUploaderRef} />
                 <section className="py-2">
                     <label className="py-0.5">ユーザー名</label>
-                    <div>
-                        <Input name="username" value={profile.username} onChange={(e) => onChange(e.target)} />
-                    </div>
+                    <Input className="w-full" name="username" value={profile.username} onChange={(e) => onChange(e.target)} />
                 </section>
                 <section className="py-2">
                     <label className="py-0.5">種別</label>

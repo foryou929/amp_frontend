@@ -9,7 +9,7 @@ const Scout = ({ mode }) => {
     const [sections, setSections] = useState([]);
 
     useEffect(() => {
-        query.auth.get("/api/section/step/1/1", (sections) => {
+        query.auth.get(`api/${mode}/section`, (sections) => {
             setSections(sections);
         });
     }, []);
@@ -20,7 +20,7 @@ const Scout = ({ mode }) => {
             <List
                 className="mt-4"
                 items={
-                    sections.map(section => {
+                    sections.filter(section => section.step == 1).map(section => {
                         return {
                             key: section.id,
                             content: <SectionItem mode={mode} section={section} />
