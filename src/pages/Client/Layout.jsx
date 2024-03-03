@@ -26,7 +26,7 @@ const ClientLayout = () => {
             <div className="container">
                 <Routes>
                     <Route path="/profile/view" element={<Profile mode="client" />} />
-                    <Route path="/profile/registration" element={<ProfileRegistration />} />
+                    <Route path="/profile/registration" element={<ProfileRegistration mode="client" />} />
 
                     <Route path="/project/manage" element={<ProjectManage mode="client" />} />
                     <Route path="/project/registration" element={<ProjectRegistration mode="client" />} />
@@ -34,7 +34,7 @@ const ClientLayout = () => {
                     <Route path="/project/scout" element={<ProjectScout mode="client" />} />
                     <Route path="/project/info" element={<ProjectInfo mode="client" />} />
 
-                    <Route path="/space/view" element={<SpaceView />} />
+                    <Route path="/space/view" element={<SpaceView mode="client" />} />
                 </Routes>
             </div>
         </>
