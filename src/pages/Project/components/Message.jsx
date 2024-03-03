@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import moment from "moment";
 
 import query from "../../../utils/query";
@@ -30,15 +30,22 @@ const MessageContainer = ({ message }) => {
 }
 
 const Message = ({ mode, id }) => {
+    const fileUploaderRef = useRef();
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         if (id) {
-            query.auth.get(`/api/${mode}/section/${id}/message`, (messages) => {
+            query.auth.get(`api/${mode}/section/${id}/message`, (messages) => {
                 setMessages(messages);
             });
         }
     }, [id]);
+
+    const onSendClick = () => {
+        fileUploaderRef.current.upload("api/upload", (res) => {
+
+        });
+    }
 
     return (
         <div className="flex flex-col gap-4 py-4">
@@ -46,15 +53,13 @@ const Message = ({ mode, id }) => {
                 messages.map(message => <MessageContainer key={message.id} message={message} />)
             }
             <div className="">
-                {/* <div className="w-full border-dashed border">
-                </div> */}
                 <div className="">
                     <div className="">
                         <Textarea className="min-h-40" />
-                        <FileUploader />
+                        <FileUploader ref={fileUploaderRef} />
                     </div>
                 </div>
-                <Button className="w-full mt-4">メッセージを投稿する</Button>
+                <Button className="w-full mt-4" onClick={onSendClick}>メッセージを投稿する</Button>
             </div>
         </div>
     )
