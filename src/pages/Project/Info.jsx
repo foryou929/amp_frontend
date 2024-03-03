@@ -15,7 +15,7 @@ const Info = ({ mode }) => {
     const [project, setProject] = useState({});
 
     useEffect(() => {
-        query.auth.get(`/api/${mode}/project/${id}`, res => {
+        query.auth.get(`api/${mode}/project/${id}`, res => {
             setProject(res)
         });
     }, [id]);

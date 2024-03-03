@@ -14,7 +14,7 @@ const UserInfo = () => {
         <div className="w-full my-4">
             <h2 className="text-xl font-bold">プロフィール</h2>
             <div className="py-4">
-                <Avatar src={"/1"} circle className={"w-16 h-16"} />
+                <Avatar src={process.env.REACT_APP_BASE_URL + user.avatar} circle className={"w-16 h-16"} />
             </div>
             <h3 className="text-lg font-bold">{user.username}</h3>
             <p className="text-gray-400">{user.area}</p>

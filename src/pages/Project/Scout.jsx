@@ -9,7 +9,7 @@ const Scout = ({ mode }) => {
     const [sections, setSections] = useState([]);
 
     useEffect(() => {
-        query.auth.get(`/api/${mode}/section`, (sections) => {
+        query.auth.get(`api/${mode}/section`, (sections) => {
             setSections(sections);
         });
     }, []);

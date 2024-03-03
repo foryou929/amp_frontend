@@ -33,7 +33,7 @@ const Registration = ({ mode }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.auth.post(`/api/${mode}/project`, project, res => {
+        query.auth.post(`api/${mode}/project`, project, res => {
             NotificationManager.success('Success');
         });
     }

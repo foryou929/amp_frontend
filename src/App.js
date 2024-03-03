@@ -28,7 +28,7 @@ function App() {
   useEffect(() => {
     const access_token = getAccessToken();
     if (access_token) {
-      query.auth.get("/api/auth/loginWithToken", (user) => {
+      query.auth.get("api/auth/loginWithToken", (user) => {
         dispatch(login(user))
       });
     }

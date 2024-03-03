@@ -13,7 +13,7 @@ const Progress = ({ mode, project, id }) => {
 
     useEffect(() => {
         if (id) {
-            query.auth.get(`/api/${mode}/section/${id}`, (section) => {
+            query.auth.get(`api/${mode}/section/${id}`, (section) => {
                 setSection(section);
             });
         }
@@ -28,9 +28,9 @@ const Progress = ({ mode, project, id }) => {
 
     useEffect(() => {
         if (section.id) {
-            query.auth.get(`/api/${mode}/section/${section.id}/payment`, payment => setPayment(payment), () => { });
-            query.auth.get(`/api/${mode}/section/${section.id}/advert`, advert => setAdvert(advert), () => { });
-            query.auth.get(`/api/${mode}/section/${section.id}/message`, messages => {
+            query.auth.get(`api/${mode}/section/${section.id}/payment`, payment => setPayment(payment), () => { });
+            query.auth.get(`api/${mode}/section/${section.id}/advert`, advert => setAdvert(advert), () => { });
+            query.auth.get(`api/${mode}/section/${section.id}/message`, messages => {
                 messages.forEach(message => {
                     if (message.type == 7) setStartReport(message);
                     if (message.type == 8) setProgressReport(message);
@@ -43,48 +43,48 @@ const Progress = ({ mode, project, id }) => {
     const handleClick = () => {
         try {
             const onSuccess = () => {
-                query.auth.patch(`/api/${mode}/section/${section.id}`, { step: section.step + 1 }, (section) => {
+                query.auth.patch(`api/${mode}/section/${section.id}`, { step: section.step + 1 }, (section) => {
                     setSection(section);
                 });
             }
             switch (section.step) {
                 case 0:
-                    query.auth.post(`/api/${mode}/section/project/${project.id}`, (section) => {
+                    query.auth.post(`api/${mode}/section/project/${project.id}`, (section) => {
                         setSection(section);
-                        query.auth.post(`/api/${mode}/section/${section.id}/message`, { content: value, type: SECTION.APPLY });
+                        query.auth.post(`api/${mode}/section/${section.id}/message`, { content: value, type: SECTION.APPLY });
                     });
                     break;
                 default:
                     switch (section.step) {
                         case 1:
-                            query.auth.post(`/api/${mode}/section/${section.id}/message`, { content: value, type: SECTION.CHOOSE }, onSuccess);
+                            query.auth.post(`api/${mode}/section/${section.id}/message`, { content: value, type: SECTION.CHOOSE }, onSuccess);
                             break;
                         case 2:
-                            query.auth.post(`/api/${mode}/section/${section.id}/message`, { content: value, type: SECTION.AGREE }, onSuccess);
+                            query.auth.post(`api/${mode}/section/${section.id}/message`, { content: value, type: SECTION.AGREE }, onSuccess);
                             break;
                         case 3:
-                            query.auth.post(`/api/${mode}/section/${section.id}/payment`, { point: value }, (payment) => {
+                            query.auth.post(`api/${mode}/section/${section.id}/payment`, { point: value }, (payment) => {
                                 setPayment(payment);
                                 onSuccess();
                             });
                             break;
                         case 4:
-                            query.auth.post(`/api/${mode}/section/${section.id}/advert`, null, onSuccess);
+                            query.auth.post(`api/${mode}/section/${section.id}/advert`, null, onSuccess);
                             break;
                         case 5:
-                            query.auth.patch(`/api/${mode}/section/${section.id}/advert`, { is_received: true }, onSuccess);
+                            query.auth.patch(`api/${mode}/section/${section.id}/advert`, { is_received: true }, onSuccess);
                             break;
                         case 6:
-                            query.auth.post(`/api/${mode}/section/${section.id}/message`, { content: value, type: SECTION.START_REPORT }, onSuccess);
+                            query.auth.post(`api/${mode}/section/${section.id}/message`, { content: value, type: SECTION.START_REPORT }, onSuccess);
                             break;
                         case 7:
-                            query.auth.post(`/api/${mode}/section/${section.id}/message`, { content: value, type: SECTION.PROGRESS_REPORT }, onSuccess);
+                            query.auth.post(`api/${mode}/section/${section.id}/message`, { content: value, type: SECTION.PROGRESS_REPORT }, onSuccess);
                             break;
                         case 8:
-                            query.auth.post(`/api/${mode}/section/${section.id}/message`, { content: value, type: SECTION.END_REPORT }, onSuccess);
+                            query.auth.post(`api/${mode}/section/${section.id}/message`, { content: value, type: SECTION.END_REPORT }, onSuccess);
                             break;
                         case 9:
-                            query.auth.patch(`/api/${mode}/section/${section.id}/payment`, { is_paid: true }, (payment) => {
+                            query.auth.patch(`api/${mode}/section/${section.id}/payment`, { is_paid: true }, (payment) => {
                                 setPayment(payment);
                                 onSuccess();
                             });

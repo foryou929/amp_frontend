@@ -19,11 +19,11 @@ const Manage = ({ mode }) => {
 
     useEffect(() => {
         if (mode == "user") {
-            query.auth.get(`/api/${mode}/section`, (sections) => {
+            query.auth.get(`api/${mode}/section`, (sections) => {
                 setSections(sections);
             });
         } else {
-            query.auth.get(`/api/${mode}/project`, (projects) => {
+            query.auth.get(`api/${mode}/project`, (projects) => {
                 setProjects(projects);
             })
         }

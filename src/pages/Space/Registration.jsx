@@ -29,7 +29,7 @@ const Registration = ({ mode }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.auth.post(`/api/${mode}/space`, space, res => {
+        query.auth.post(`api/${mode}/space`, space, res => {
             NotificationManager.success('Success');
         });
     }

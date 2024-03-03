@@ -14,7 +14,7 @@ const Profile = ({ mode }) => {
 
     const [projects, setProjects] = useState([]);
     useEffect(() => {
-        query.auth.get(`/api/${mode}/project`, (projects) => setProjects(projects));
+        query.auth.get(`api/${mode}/project`, (projects) => setProjects(projects));
     }, []);
 
     return (
@@ -82,7 +82,7 @@ const Profile = ({ mode }) => {
             <div className="w-full my-4">
                 <h2 className="text-xl font-bold">プロフィール</h2>
                 <div className="py-4">
-                    <Avatar src={"/1"} circle className={"w-16 h-16"} />
+                    <Avatar src={process.env.REACT_APP_BASE_URL + user.avatar} circle className={"w-16 h-16"} />
                 </div>
                 <h3 className="text-lg font-bold">{user.name}</h3>
                 <p className="text-gray-400">{user.area}</p>
