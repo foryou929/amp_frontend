@@ -14,7 +14,7 @@ const Profile = ({ mode }) => {
 
     const [projects, setProjects] = useState([]);
     useEffect(() => {
-        query.auth.get("/api/project/client", (projects) => setProjects(projects));
+        query.auth.get(`/api/${mode}/project`, (projects) => setProjects(projects));
     }, []);
 
     return (

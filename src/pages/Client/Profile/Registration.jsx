@@ -11,7 +11,7 @@ import query from "../../../utils/query";
 
 import { login } from "../../../common/userSlice";
 
-const Registration = () => {
+const Registration = ({ mode }) => {
     const dispatch = useDispatch();
 
     const { user } = useSelector(state => state.user);
@@ -32,7 +32,7 @@ const Registration = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (user.id) {
-            query.auth.patch(`/api/user/${user.id}`, profile, (user) => {
+            query.auth.patch(`/api/${mode}/${user.id}`, profile, (user) => {
                 dispatch(login(user));
                 NotificationManager.success('Success');
             });
