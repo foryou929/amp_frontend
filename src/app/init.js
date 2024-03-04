@@ -46,16 +46,16 @@ export const initializeSocket = (accessToken) => {
 
     window.socket.onopen = () => {
         // Connection is established, send the authentication token
-        window.socket.send(JSON.stringify({ type: 'authenticate', token: accessToken }));
+        // window.socket.send(JSON.stringify({ type: 'authenticate', token: accessToken }));
     };
 
     window.socket.onmessage = (event) => {
         // Handle incoming messages from the WebSocket
-        console.log(event.data);
+        // console.log(event.data);
     };
 
     window.socket.onclose = (event) => {
         // Handle WebSocket close event
-        console.log('WebSocket connection closed:', event);
+        // console.log('WebSocket connection closed:', event);
     };
 }

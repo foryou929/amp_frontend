@@ -12,7 +12,7 @@ import Register from './pages/auth/Register';
 import ClientLayout from './pages/Client/Layout';
 import UserLayout from './pages/User/Layout';
 
-import { initializeApp, initializeSocket } from './app/init';
+import { initializeApp/*, initializeSocket*/ } from './app/init';
 import query from './utils/query';
 
 import { getAccessToken } from './app/auth';
@@ -32,18 +32,18 @@ function App() {
         dispatch(login(user))
       });
     }
-    return () => {
-      if (window.socket)
-        window.socket.disconnect();
-    }
+    // return () => {
+    //   if (window.socket)
+    //     window.socket.disconnect();
+    // }
   }, []);
 
-  useEffect(() => {
-    if (user.id ) {
-      const access_token = getAccessToken();
-      initializeSocket(access_token);
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user.id ) {
+  //     const access_token = getAccessToken();
+  //     initializeSocket(access_token);
+  //   }
+  // }, [user]);
 
   return (
     <>

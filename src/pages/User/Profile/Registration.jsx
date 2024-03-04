@@ -48,7 +48,7 @@ const Registration = ({ mode }) => {
         <>
             <h1 className="text-2xl font-bold">ユーザープロフィール</h1>
             <form onSubmit={handleSubmit}>
-                <AvatarUploader className="py-4" defaultSrc={process.env.REACT_APP_BASE_URL + user.avatar} ref={avatarUploaderRef} />
+                <AvatarUploader className="py-4" defaultSrc={user.avatar} ref={avatarUploaderRef} />
                 <section className="py-2">
                     <label className="py-0.5">ユーザー名</label>
                     <Input className="w-full" name="username" value={profile.username} onChange={(e) => onChange(e.target)} />

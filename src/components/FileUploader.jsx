@@ -17,21 +17,31 @@ const FileUpload = forwardRef((props, ref) => {
         });
     };
 
-    const upload = (url, success, error) => {
-        const formData = new FormData()
-        for (let i = 0; i < selectedFiles.length; i++)
-            formData.append(`files`, selectedFiles[i]);
-        query.auth.post(url, formData, success, error);
+    const upload = async (url, success, error) => {
+        for (let i = 0; i < selectedFiles.length; i++) {
+            const formData = new FormData()
+            formData.append(`file`, selectedFiles[i]);
+            await query.auth.post(url, formData, success, error);
+        }
     };
 
+    const clear = async () => {
+        setSelectedFiles([]);
+        fileRef.current.value = null;
+    }
+
     useImperativeHandle(ref, () => ({
-        upload
+        upload,
+        clear
     }));
 
     return (
         <div className='mt-2'>
             <input type="file" className='hidden' multiple onChange={handleFileSelect} ref={fileRef} />
-            <button className='flex items-center p-1 border-dashed border border-gray-400 rounded-full' onClick={() => fileRef.current.click()}>
+            <button className='flex ites-center p-1 border-dashed border border-gray-400 rounded-full' onClick={() => {
+                fileRef.current.value = null;
+                fileRef.current.click()
+            }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="12" fill='#4BAE4F' />
                     <line x1="12" y1="6" x2="12" y2="18" stroke='white' strokeWidth={2} />
