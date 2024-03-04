@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { NotificationManager } from 'react-notifications'
-import i18next from 'i18next'
 import { getAccessToken, getRefreshToken, saveAccessToken } from "../app/auth"
 
 const request = async (method, url, data, success, error, auth = false, access = false) => {
@@ -11,8 +10,6 @@ const request = async (method, url, data, success, error, auth = false, access =
     }
     try {
         const result = await axios.request({ method, url, data, headers })
-        if (result.data?.message)
-            NotificationManager.success(i18next.t(result.data?.message))
         if (success)
             success(result.data)
         return result.data
@@ -28,7 +25,7 @@ const request = async (method, url, data, success, error, auth = false, access =
             if (error)
                 error(err.response?.data)
             else
-                NotificationManager.error(i18next.t(err.response?.data?.message) || err.message)
+                NotificationManager.error(err.message)
         }
     }
 }
