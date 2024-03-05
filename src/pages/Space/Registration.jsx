@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { NotificationManager } from "react-notifications";
 
 import Button from "../../components/Button";
-import Image from "../../components/Image";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import Textarea from "../../components/Textarea";
 import RadioGroup from "../../components/RadioGroup";
+import ImageUploader from "../../components/ImageUploader";
 
 import query from "../../utils/query";
 
 const Registration = ({ mode }) => {
+    const imageUploaderRef = useRef();
+
     const [space, setSpace] = useState({
         title: "",
         points: 0,
@@ -29,7 +31,8 @@ const Registration = ({ mode }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.auth.post(`api/${mode}/space`, space, res => {
+        query.auth.post(`api/${mode}/space`, space, async (space) => {
+            await imageUploaderRef.current.upload(`/api/${mode}/image/space/${space.id}`);
             NotificationManager.success('Success');
         });
     }
@@ -97,18 +100,7 @@ const Registration = ({ mode }) => {
                 </section>
                 <section className="my-4">
                     <h6>コンテンツ見本画像</h6>
-                    <div className="flex gap-2 overflow-x-scroll">
-                        {
-                            Array.from({ length: 3 }).map((_, index) => (
-                                <div key={index} className="flex-none justify-center bg-[#F8F9FA]">
-                                    <div className="w-28 flex flex-wrap justify-center p-4">
-                                        <Image src="/1" />
-                                        <p>画像を追加</p>
-                                    </div>
-                                </div>
-                            ))
-                        }
-                    </div>
+                    <ImageUploader ref={imageUploaderRef} />
                 </section>
                 <section className="my-4">
                     <Button className="w-full">スペースを作成</Button>
