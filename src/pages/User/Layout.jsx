@@ -12,6 +12,7 @@ import ProjectView from '../Project/View';
 
 import SpaceManage from '../Space/Manage';
 import SpaceRegistration from '../Space/Registration';
+import SpaceDetail from '../Space/Detail';
 
 const UserLayout = () => {
     return (
@@ -33,6 +34,7 @@ const UserLayout = () => {
 
                     <Route path="/space/manage" element={<SpaceManage mode={"user"} />} />
                     <Route path="/space/registration" element={<SpaceRegistration mode={"user"} />} />
+                    <Route path="/space/detail" element={<SpaceDetail mode={"user"} />} />
                 </Routes>
             </div>
         </>

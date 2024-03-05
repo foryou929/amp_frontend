@@ -121,7 +121,7 @@ const Progress = ({ mode, project, id }) => {
                     STEPS[mode].map((step, index) => (
                         <li key={index} className="border-b border-[#DEE2E6] py-4">
                             <div className="flex items-center">
-                                <div className="w-[48px] px-2">
+                                <div className="w-12 px-2">
                                     {
                                         index < section.step ? (
                                             <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd">

@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Image = ({ src, fallbackSrc, alt, className, ...props }) => {
     const [imageSrc, setImageSrc] = useState(src);
+
+    useEffect(() => {
+        setImageSrc(src);
+    }, [src]);
 
     const onError = () => {
         if (imageSrc !== fallbackSrc) {
@@ -9,7 +13,7 @@ const Image = ({ src, fallbackSrc, alt, className, ...props }) => {
         }
     };
 
-    return <img className={className || "w-full h-full"} src={imageSrc} alt={alt} onError={onError} {...props} />;
+    return <img className={`${className || "w-full h-full"} object-cover`} src={imageSrc} alt={alt} onError={onError} {...props} />;
 };
 
 export default Image;

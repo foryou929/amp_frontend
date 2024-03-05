@@ -51,16 +51,8 @@ const Header = ({ children }) => {
                 <div className="w-16 flex-none flex justify-center items-center cursor-pointer" onClick={() => setOpen(!open)}>
                     {
                         open ?
-                            <svg key={1} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                                <line x1="2" y1="2" x2="16" y2="16" stroke="#00146E" strokeWidth="3" strokeLinecap="round" />
-                                <line x1="2" y1="16" x2="16" y2="2" stroke="#00146E" strokeWidth="3" strokeLinecap="round" />
-                            </svg>
-                            :
-                            <svg key={2} xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 18">
-                                <line x1="2" y1="2" x2="22" y2="2" stroke="#00146E" strokeWidth="3" strokeLinecap="round" />
-                                <line x1="2" y1="9" x2="22" y2="9" stroke="#00146E" strokeWidth="3" strokeLinecap="round" />
-                                <line x1="2" y1="16" x2="22" y2="16" stroke="#00146E" strokeWidth="3" strokeLinecap="round" />
-                            </svg>
+                            <img src="/img/menu-close.svg" /> :
+                            <img src="/img/menu.svg" />
                     }
                     {/*  */}
                 </div>

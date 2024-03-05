@@ -30,10 +30,10 @@ const MessageContainer = ({ message }) => {
                     {message.content}
                 </div>
                 <ul className='w-full mt-2'>
-                    {message.message_files.map(({ file }, index) => (
+                    {message.message_files.map((file, index) => (
                         <li key={index} className={`w-full p-2 border-dashed ${index == 0 ? "border-y" : "border-b"}`}>
-                            <a href={file} className='w-full text-ellipsis overflow-hidden text-[#56A7FF]'>
-                                {file.substring(file.lastIndexOf('/') + 1)}
+                            <a href={file.source} className='w-full text-ellipsis overflow-hidden text-[#56A7FF]'>
+                                {file.source.substring(file.source.lastIndexOf('/') + 1)}
                             </a>
                         </li>
                     ))}

@@ -40,7 +40,17 @@ const Manage = ({ mode }) => {
                             type == PROJECT_STATUS.FINISH ? projects.filter(project => project.status == 2).length : projects.filter(project => project.status != 2).length
                     }件
                 </p>
-                {type == PROJECT_STATUS.FINISH ? <Link to={`/${mode}/project/manage?type=${PROJECT_STATUS.RECRUITING}`} >進行中のプロジェクト&gt;</Link> : <Link to={`/${mode}/project/manage?type=${PROJECT_STATUS.FINISH}`} >終了したプロジェクト&gt;</Link>}
+                {
+                    type == PROJECT_STATUS.FINISH ?
+                        <Link className="flex items-center" to={`/${mode}/project/manage?type=${PROJECT_STATUS.RECRUITING}`} >
+                            進行中のプロジェクト
+                            <img className="ml-2" src="/img/right-arrow.svg" />
+                        </Link> :
+                        <Link className="flex items-center" to={`/${mode}/project/manage?type=${PROJECT_STATUS.FINISH}`} >
+                            終了したプロジェクト
+                            <img className="ml-2" src="/img/right-arrow.svg" />
+                        </Link>
+                }
             </div>
             {
                 type == PROJECT_STATUS.FINISH ? <></>
