@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import Button from "../../components/Button";
-import Image from "../../components/Image";
 import Input from "../../components/Input";
 import RadioGroup from "../../components/RadioGroup";
 import Select from "../../components/Select";
 import Textarea from "../../components/Textarea";
+import ImageUploader from "../../components/ImageUploader";
 
 import query from "../../utils/query";
 import { NotificationManager } from "react-notifications";
 
 const Registration = ({ mode }) => {
+    const imageUploaderRef = useRef();
+
     const [project, setProject] = useState({
         name: "",
         points: 0,
@@ -33,7 +35,8 @@ const Registration = ({ mode }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.auth.post(`api/${mode}/project`, project, res => {
+        query.auth.post(`api/${mode}/project`, project, async (project) => {
+            await imageUploaderRef.current.upload(`/api/${mode}/image/project/${project.id}`);
             NotificationManager.success('Success');
         });
     }
@@ -108,18 +111,7 @@ const Registration = ({ mode }) => {
                 </section>
                 <section className="my-4">
                     <h6>コンテンツ見本画像</h6>
-                    <div className="flex gap-2 overflow-x-scroll">
-                        {
-                            Array.from({ length: 3 }).map((_, index) => (
-                                <div key={index} className="flex-none justify-center bg-[#F8F9FA]">
-                                    <div className="w-28 flex flex-wrap justify-center p-4">
-                                        <Image src="/1" />
-                                        <p>画像を追加</p>
-                                    </div>
-                                </div>
-                            ))
-                        }
-                    </div>
+                    <ImageUploader ref={imageUploaderRef} />
                 </section>
                 <section className="my-4">
                     <Button className="w-full">プロジェクトを作成</Button>
