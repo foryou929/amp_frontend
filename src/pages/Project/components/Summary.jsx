@@ -3,7 +3,7 @@ const Summary = ({ project }) => {
         <div className="mt-8 rounded-xl p-4 bg-[#F8F9FA]">
             <h2 className="text-xl font-bold">プロジェクト概要</h2>
             <div className="flex items-center">
-                <div className="w-[96px] h-[96px]">
+                <div className="w-24 h-24">
 
                 </div>
                 <div className="flex-grow">
