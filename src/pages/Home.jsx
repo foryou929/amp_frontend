@@ -9,6 +9,7 @@ import Button from "../components/Button";
 import Select from "../components/Select";
 import Image from "../components/Image";
 
+import { getMode } from "../utils/storage";
 
 const Item = () => {
     return (
@@ -29,6 +30,7 @@ const Item = () => {
 }
 
 const Home = () => {
+    const mode = getMode();
     return (
         <>
             <Header>
@@ -65,7 +67,7 @@ const Home = () => {
                             <div className="flex-grow text-center">
                                 <p>
                                     <span>進⾏中</span>
-                                    <Link to={"/2"} className="ml-1 text-blue-400">進⾏中⼀覧へ</Link>
+                                    <Link to={`/${mode}/project/manage?type=0`} className="ml-1 text-blue-400">進⾏中⼀覧へ</Link>
                                 </p>
                             </div>
                         </div>
@@ -80,37 +82,35 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex p-2 text-xs">
-                        <div className="bg-gray-200 flex items-center">
-                            <div className="p-1 w-52">
-                                <div className="bg-white flex items-center">
-                                    <img
-                                        className="w-8"
-                                        src="/img/mouse-tap.svg" />
-                                    <div className="text-xs font-bold flex-grow">
-                                        多くのPRスペースを 追加して報酬を得よう
-                                    </div>
+                    <div className="mt-2 bg-gray-200 flex items-center text-xs">
+                        <div className="p-1 w-52">
+                            <div className="bg-white flex items-center">
+                                <img
+                                    className="w-8"
+                                    src="/img/mouse-tap.svg" />
+                                <div className="text-xs font-bold flex-grow">
+                                    多くのPRスペースを 追加して報酬を得よう
                                 </div>
                             </div>
-                            <div className="flex-grow">
-                                <Select
-                                    value={0}
-                                    options={[
-                                        { value: 0, label: "募集PRスペース・仕事の種類" },
-                                        { value: 1, label: "⾞" },
-                                        { value: 2, label: "家" },
-                                        { value: 3, label: "看板" },
-                                        { value: 4, label: "商品使⽤・レビュー等" },
-                                    ]}
-                                    onChange={() => { }}
-                                />
-                            </div>
-                            <div className="flex-none p-2">
-                                <Button>作成</Button>
-                            </div>
+                        </div>
+                        <div className="flex-grow">
+                            <Select
+                                value={0}
+                                options={[
+                                    { value: 0, label: "募集PRスペース・仕事の種類" },
+                                    { value: 1, label: "⾞" },
+                                    { value: 2, label: "家" },
+                                    { value: 3, label: "看板" },
+                                    { value: 4, label: "商品使⽤・レビュー等" },
+                                ]}
+                                onChange={() => { }}
+                            />
+                        </div>
+                        <div className="flex-none p-2">
+                            <Button>作成</Button>
                         </div>
                     </div>
-                    <div className="w-full flex gap-1 items-end">
+                    <div className="mt-2 w-full flex gap-1 items-end">
                         <div className="flex flex-col gap-1 text-xs">
                             <Select
                                 className="py-1"
@@ -131,10 +131,10 @@ const Home = () => {
                             label2="PR場所で探す"
                         />
                     </div>
-                    <div className="w-full">
+                    <div className="mt-2 w-full">
                         <div className="w-full flex justify-between items-end">
                             <h3 className="ml-4 font-bold text-lg">おすすめプロジェクト</h3>
-                            <Link to="/5">すべて⾒る</Link>
+                            <Link to={`/${mode}/project/view`}>すべて⾒る</Link>
                         </div>
                         <div className="flex overflow-x-scroll">
                             {
@@ -144,10 +144,10 @@ const Home = () => {
                             }
                         </div>
                     </div>
-                    <div className="w-full">
+                    <div className="mt-2 w-full">
                         <div className="w-full flex justify-between items-end">
                             <h3 className="ml-4 font-bold text-lg">ステッカー・シール</h3>
-                            <Link to="/6">すべて⾒る</Link>
+                            <Link to={`/${mode}/space/view`}>すべて⾒る</Link>
                         </div>
                         <div className="flex overflow-x-scroll">
                             {
