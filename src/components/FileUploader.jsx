@@ -1,7 +1,7 @@
 import React, { useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import query from '../utils/query';
 
-const FileUpload = forwardRef((props, ref) => {
+const FileUploader = forwardRef((props, ref) => {
     const fileRef = useRef();
     const [selectedFiles, setSelectedFiles] = useState([]);
 
@@ -20,7 +20,7 @@ const FileUpload = forwardRef((props, ref) => {
     const upload = async (url, success, error) => {
         for (let i = 0; i < selectedFiles.length; i++) {
             const formData = new FormData()
-            formData.append(`file`, selectedFiles[i]);
+            formData.append(`source`, selectedFiles[i]);
             await query.auth.post(url, formData, success, error);
         }
     };
@@ -42,11 +42,7 @@ const FileUpload = forwardRef((props, ref) => {
                 fileRef.current.value = null;
                 fileRef.current.click()
             }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="12" fill='#4BAE4F' />
-                    <line x1="12" y1="6" x2="12" y2="18" stroke='white' strokeWidth={2} />
-                    <line x1="6" y1="12" x2="18" y2="12" stroke='white' strokeWidth={2} />
-                </svg>
+                <img src="/img/remove.svg" />
                 <span className='ml-2'>ファイルアップロード</span>
             </button>
             {selectedFiles.length > 0 && (
@@ -57,11 +53,7 @@ const FileUpload = forwardRef((props, ref) => {
                                 {file.name}
                             </div>
                             <button className='flex-none' onClick={() => handleFileDelete(index)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="12" fill='#F44336' />
-                                    <line x1="8" y1="8" x2="16" y2="16" stroke='white' strokeWidth={2} />
-                                    <line x1="8" y1="16" x2="16" y2="8" stroke='white' strokeWidth={2} />
-                                </svg>
+                                <img src="/img/plus.svg" />
                             </button>
                         </li>
                     ))}
@@ -71,4 +63,4 @@ const FileUpload = forwardRef((props, ref) => {
     );
 });
 
-export default FileUpload;
+export default FileUploader;
