@@ -17,7 +17,7 @@ const Detail = ({ mode }) => {
     const id = queryParameters.get("id");
 
     useEffect(() => {
-        query.auth.get(`api/${mode}/space/${id}`, (space) => {
+        query.auth.get(`/${mode}/space/${id}`, (space) => {
             setSpace(space);
         });
     }, []);

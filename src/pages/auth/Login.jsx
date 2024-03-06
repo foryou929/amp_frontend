@@ -29,9 +29,9 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.post('api/auth/login', { username, password: md5(password) }, (res) => {
+        query.post(`/auth/login`, { username, password: md5(password) }, (res) => {
             saveTokens(res.token);
-            query.auth.get("api/auth/loginWithToken", (user) => {
+            query.auth.get(`/auth/loginWithToken`, (user) => {
                 dispatch(login(user))
             });
         });

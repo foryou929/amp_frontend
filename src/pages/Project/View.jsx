@@ -13,7 +13,7 @@ const View = ({ mode }) => {
     const [projects, setProjects] = useState([]);
 
     useEffect(() => {
-        query.auth.get(`api/${mode}/project`, (res) => setProjects(res));
+        query.auth.get(`/${mode}/project`, (res) => setProjects(res));
     }, [page]);
 
     return (
