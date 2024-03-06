@@ -5,6 +5,11 @@ import { STEPS } from "../utils/constants";
 import moment from "moment";
 
 const ProjectItem = ({ mode, project, section }) => {
+    const getRecruitmentPeriod = () => {
+        const days = moment(project.created_at).add(project.recruitment_period, 'days').diff(moment(project.current), 'days');
+        if (days < 0) return <p>募集終了</p>
+        return <p>期間:あと{days}日</p>
+    }
     return (
         <div className="flex gap-2">
             <div className="w-[calc(100%-16px)] flex gap-4 items-start">
@@ -28,7 +33,14 @@ const ProjectItem = ({ mode, project, section }) => {
                     <p className="font-bold text-sm mt-1">{project.points}pt</p>
                     <p className="text-gray-400 text-sm mt-1">{project.type}</p>
                     <div className="mt-1 p-2 bg-[#F8F9FA] text-sm flex justify-between">
-                        {section && <p>提案数: {section.suggest_count}</p>} {project && <><p>募集数:{project.recruitment_number}</p> <p>期間:あと{moment(project.created_at).add(project.recruitment_period, 'days').diff(moment(project.current), 'days')}日</p></>}
+                        {section && <p>提案数: {section.suggest_count}</p>}
+                        {
+                            project &&
+                            <>
+                                <p>募集数:{project.recruitment_number}</p>
+                                {getRecruitmentPeriod()}
+                            </>
+                        }
                     </div>
                 </div>
             </div>
