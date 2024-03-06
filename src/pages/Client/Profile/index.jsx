@@ -24,7 +24,7 @@ const Profile = ({ mode }) => {
                 <h2 className="text-xl font-bold">ポイント</h2>
                 <div className="bg-[#F0F2F8] rounded-lg p-6 flex justify-between items-center my-2">
                     <h2 className="text-xl font-bold text-[#00146E]">
-                        20,000pt
+                        {user.points}pt
                     </h2>
                     <Button>ポイント購入</Button>
                 </div>
@@ -82,7 +82,7 @@ const Profile = ({ mode }) => {
             <div className="w-full my-4">
                 <h2 className="text-xl font-bold">プロフィール</h2>
                 <div className="py-4">
-                    <Avatar src={user.avatar} circle className={"w-16 h-16"} />
+                    <Avatar src={user.avatar} fallbackSrc={process.env.REACT_APP_BASE_URL + user.avatar} circle className={"w-16 h-16"} />
                 </div>
                 <h3 className="text-lg font-bold">{user.name}</h3>
                 <p className="text-gray-400">{user.area}</p>
@@ -90,15 +90,15 @@ const Profile = ({ mode }) => {
                 <div className="w-full mt-4">
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">主なサービスなど</h3>
-                        <p>{user.main_service}</p>
+                        <pre>{user.main_service}</pre>
                     </div>
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">主なPR対象</h3>
-                        <p>{user.main_pr_target}</p>
+                        <pre>{user.main_pr_target}</pre>
                     </div>
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">メッセージ</h3>
-                        <p>{user.main_message}</p>
+                        <pre>{user.main_message}</pre>
                     </div>
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">ホームページURL</h3>
