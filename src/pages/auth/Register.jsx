@@ -22,7 +22,7 @@ const Register = () => {
             NotificationManager.error('Password length should be greater than 8.', 'Erorr');
             return;
         }
-        query.post('api/auth/register', { username, password: md5(password), email })
+        query.post(`/auth/register`, { username, password: md5(password), email })
     }
 
     return (

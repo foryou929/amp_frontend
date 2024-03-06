@@ -7,7 +7,7 @@ const Manage = ({ mode }) => {
     const [spaces, setSpaces] = useState([]);
 
     useEffect(() => {
-        query.auth.get(`api/${mode}/space`, (spaces) => {
+        query.auth.get(`/${mode}/space`, (spaces) => {
             setSpaces(spaces);
         });
     }, []);

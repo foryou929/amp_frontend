@@ -21,14 +21,14 @@ const Detail = ({ mode }) => {
     useEffect(() => {
         if (id) {
             if (mode == "client") {
-                query.auth.get(`api/${mode}/section/${id}`, section => {
+                query.auth.get(`/${mode}/section/${id}`, section => {
                     setSection(section)
-                    query.auth.get(`api/${mode}/project/${section.project.id}`, project => setProject(project))
+                    query.auth.get(`/${mode}/project/${section.project.id}`, project => setProject(project))
                 });
             }
             if (mode == "user") {
-                query.auth.get(`api/${mode}/project/${id}`, project => setProject(project))
-                query.auth.get(`api/${mode}/section/project/${id}`, section => {
+                query.auth.get(`/${mode}/project/${id}`, project => setProject(project))
+                query.auth.get(`/${mode}/section/project/${id}`, section => {
                     setSection(section);
                 }, () => { });
             }

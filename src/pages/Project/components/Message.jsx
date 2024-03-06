@@ -52,15 +52,15 @@ const Message = ({ mode, id }) => {
 
     useEffect(() => {
         if (id) {
-            query.auth.get(`api/${mode}/section/${id}/message`, (messages) => {
+            query.auth.get(`/${mode}/section/${id}/message`, (messages) => {
                 setMessages(messages);
             });
         }
     }, [id]);
 
     const onSendClick = () => {
-        query.auth.post(`api/${mode}/section/${id}/message`, { content }, async (message) => {
-            await fileUploaderRef.current.upload(`/api/${mode}/message/${message.id}`, (file) => {
+        query.auth.post(`/${mode}/section/${id}/message`, { content }, async (message) => {
+            await fileUploaderRef.current.upload(`/${mode}/message/${message.id}`, (file) => {
                 message.message_files.push(file);
             });
             setMessages([...messages, { ...message, sender: { ...message.sender, avatar: process.env.REACT_APP_BASE_URL + message.sender.avatar } }]);

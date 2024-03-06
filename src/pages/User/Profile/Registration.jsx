@@ -36,8 +36,8 @@ const Registration = ({ mode }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        avatarUploaderRef.current.upload(`api/${mode}/${user.id}`);
-        query.auth.patch(`api/${mode}/${user.id}`, profile, (user) => {
+        avatarUploaderRef.current.upload(`/${mode}/${user.id}`);
+        query.auth.patch(`/${mode}/${user.id}`, profile, (user) => {
             dispatch(login(user));
             NotificationManager.success('Success');
         });

@@ -31,8 +31,8 @@ const Registration = ({ mode }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        query.auth.post(`api/${mode}/space`, space, async (space) => {
-            await imageUploaderRef.current.upload(`/api/${mode}/image/space/${space.id}`);
+        query.auth.post(`/${mode}/space`, space, async (space) => {
+            await imageUploaderRef.current.upload(`/${mode}/image/space/${space.id}`);
             NotificationManager.success('Success');
         });
     }
