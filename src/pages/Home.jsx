@@ -20,8 +20,8 @@ const ProjectItem = ({ project }) => {
             <div className="w-40 h-32">
                 {
                     project.project_images.length >= 1 ?
-                        <Image className="flex-none w-40 h-32" src={project.project_images[0].source} fallbackSrc={process.env.REACT_APP_BASE_URL + project.project_images[0].source} /> :
-                        <Image className="flex-none w-40 h-32" src={"no-image"} />
+                        <Image className="flex-none w-40 h-32" src={project.project_images[0].source} /> :
+                        <Image className="flex-none w-40 h-32" src={"/img/no-image.svg"} />
                 }
             </div>
             <div className="w-full flex justify-between items-center">
