@@ -13,8 +13,8 @@ const SectionItem = ({ mode, section, project }) => {
                     mode == "client" ?
                         <Avatar src={section.user.avatar} /> :
                         project.project_images[0].length > 0 ?
-                            <Image className="w-12 flex-none" src={project.project_images} fallbackSrc={process.env.REACT_APP_BASE_URL + project.project_images[0].source} /> :
-                            <Image className="w-12 flex-none" src={"no-image"} />
+                            <Image className="w-12 flex-none" src={project.project_images} /> :
+                            <Image className="w-12 flex-none" src={"/img/no-image.svg"} />
                 }
                 <div className="flex-grow flex flex-col justify-center">
                     {

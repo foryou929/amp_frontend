@@ -8,8 +8,8 @@ const SpaceItem = ({ mode, space }) => {
             <div className="w-[calc(100%-16px)] flex gap-4 items-start">
                 {
                     space.space_images.length >= 1 ?
-                        <Image className="flex-none w-12 h-12" src={space.space_images[0].source} fallbackSrc={process.env.REACT_APP_BASE_URL + space.space_images[0].source} /> :
-                        <Image className="flex-none w-12 h-12" src={"no-image"} />
+                        <Image className="flex-none w-12 h-12" src={space.space_images[0].source} /> :
+                        <Image className="flex-none w-12 h-12" src={"/img/no-image.svg"} />
                 }
                 <div className="w-[calc(100%-64px)] flex flex-col justify-center">
                     <h3 className="text-[#00146E] text-lg font-bold mt-1 overflow-hidden text-ellipsis text-nowrap">{space.title}</h3>

@@ -59,7 +59,7 @@ const Header = ({ children }) => {
             </div>
             <div className={`bg-white transition-all overflow-hidden h-[calc(100vh-80px)] p-5 ${open ? "block" : "hidden"}`}>
                 <div className="h-12 flex items-center gap-2 cursor-pointer">
-                    <Avatar className="w-12 h-12" src={process.env.REACT_APP_BASE_URL + user.avatar} circle />
+                    <Avatar className="w-12 h-12" src={user.avatar} circle />
                     <div className="flex-grow" onClick={() => setMode(!mode)}>
                         {mode ? "ユーザーに切り替え" : "クライアントモードに切り替え"}
                     </div>

@@ -15,8 +15,8 @@ const ProjectItem = ({ mode, project, section }) => {
             <div className="w-[calc(100%-16px)] flex gap-4 items-start">
                 {
                     project.project_images.length >= 1 ?
-                        <Image className="flex-none w-12 h-12" src={project.project_images[0].source} fallbackSrc={process.env.REACT_APP_BASE_URL + project.project_images[0].source} /> :
-                        <Image className="flex-none w-12 h-12" src={"no-image"} />
+                        <Image className="flex-none w-12 h-12" src={project.project_images[0].source} /> :
+                        <Image className="flex-none w-12 h-12" src={"/img/no-image.svg"} />
                 }
                 <div className="w-[calc(100%-64px)] flex flex-col justify-center">
                     <div className="w-full flex gap-2 items-center">

@@ -31,8 +31,8 @@ const Detail = ({ mode }) => {
             <div className="mt-4">
                 {
                     space.space_images.length >= 1 ?
-                        <Image className="flex-none w-full" src={space.space_images[0].source} fallbackSrc={process.env.REACT_APP_BASE_URL + space.space_images[0].source} /> :
-                        <Image className="flex-none w-full" src={"no-image"} />
+                        <Image className="flex-none w-full" src={space.space_images[0].source} /> :
+                        <Image className="flex-none w-full" src={"/img/no-image.svg"} />
                 }
                 {
                     space.space_images.length >= 2 ?
@@ -40,7 +40,7 @@ const Detail = ({ mode }) => {
                             {
                                 space.space_images.map((image, index) => {
                                     if (index == 0) return <></>
-                                    return <Image className="flex-none h-full" src={space.space_images[0].source} fallbackSrc={process.env.REACT_APP_BASE_URL + space.space_images[0].source} />
+                                    return <Image className="flex-none h-full" src={space.space_images[0].source} />
                                 })
                             }
                         </div> :
