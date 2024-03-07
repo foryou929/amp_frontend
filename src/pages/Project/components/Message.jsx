@@ -63,7 +63,7 @@ const Message = ({ mode, id }) => {
             await fileUploaderRef.current.upload(`/${mode}/message/${message.id}`, (file) => {
                 message.message_files.push(file);
             });
-            setMessages([...messages, { ...message, sender: { ...message.sender, avatar: process.env.REACT_APP_BASE_URL + message.sender.avatar } }]);
+            setMessages([...messages, { ...message, sender: { ...message.sender, avatar: message.sender.avatar } }]);
             fileUploaderRef.current.clear();
             contentRef.current.value = "";
         });
