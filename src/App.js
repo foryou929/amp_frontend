@@ -8,6 +8,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import Page404 from './pages/common/Page404';
 
 import ClientLayout from './pages/Client/Layout';
 import UserLayout from './pages/User/Layout';
@@ -49,7 +50,6 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           {
@@ -57,7 +57,8 @@ function App() {
               <>
                 <Route path="/client/*" element={<ClientLayout />} />
                 <Route path="/user/*" element={<UserLayout />} />
-                <Route path="*" element={<Home />} />
+                <Route path="/" element={<Home />} />
+                <Route path="*" element={<Page404 />} />
               </> :
               <Route path="*" element={<Login />} />
           }
