@@ -8,13 +8,12 @@ import query from "../../utils/query";
 
 const View = ({ mode }) => {
     const [queryParameters] = useSearchParams();
-    const page = queryParameters.get("page") || 1;
 
     const [projects, setProjects] = useState([]);
 
     useEffect(() => {
         query.auth.get(`/${mode}/project`, (res) => setProjects(res));
-    }, [page]);
+    }, []);
 
     return (
         <>

@@ -7,10 +7,12 @@ const AvatarUploader = forwardRef(({ defaultSrc, className }, ref) => {
     const [src, setSrc] = useState(defaultSrc);
     const [file, setFile] = useState(null);
 
-    const upload = (url, success, error) => {
-        const formData = new FormData();
-        formData.append('avatar', file);
-        query.auth.patch(url, formData, success, error);
+    const upload = async (url, success, error) => {
+        if (file) {
+            const formData = new FormData();
+            formData.append('avatar', file);
+            await query.auth.patch(url, formData, success, error);
+        }
     }
 
     useImperativeHandle(ref, () => ({
