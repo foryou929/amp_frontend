@@ -90,15 +90,15 @@ const Profile = ({ mode }) => {
                 <div className="w-full mt-4">
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">主なサービスなど</h3>
-                        <pre>{user.main_service}</pre>
+                        <pre className="whitespace-pre-wrap">{user.main_service}</pre>
                     </div>
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">主なPR対象</h3>
-                        <pre>{user.main_pr_target}</pre>
+                        <pre className="whitespace-pre-wrap">{user.main_pr_target}</pre>
                     </div>
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">メッセージ</h3>
-                        <pre>{user.main_message}</pre>
+                        <pre className="whitespace-pre-wrap">{user.main_message}</pre>
                     </div>
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">ホームページURL</h3>
