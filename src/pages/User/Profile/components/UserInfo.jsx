@@ -22,11 +22,11 @@ const UserInfo = () => {
             <div className="w-full mt-4">
                 <div className="my-2">
                     <h3 className="text-lg font-bold my-2">自己紹介</h3>
-                    <p>{user.self_introduction ? user.self_introduction : "データはありません。"}</p>
+                    <pre className="whitespace-pre-wrap">{user.self_introduction ? user.self_introduction : "データはありません。"}</pre>
                 </div>
                 <div className="my-2">
                     <h3 className="text-lg font-bold my-2">活動範囲と頻度</h3>
-                    <p>{user.activity_scope ? user.activity_scope : "データはありません。"}</p>
+                    <pre className="whitespace-pre-wrap">{user.activity_scope ? user.activity_scope : "データはありません。"}</pre>
                 </div>
                 <div className="my-2">
                     <h3 className="text-lg font-bold my-2">詳細</h3>
