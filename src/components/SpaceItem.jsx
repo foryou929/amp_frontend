@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { FaAngleRight } from "react-icons/fa";
 
 import Image from "./Image";
 
@@ -18,7 +19,7 @@ const SpaceItem = ({ mode, space }) => {
                 </div>
             </div>
             <NavLink to={mode == "user" ? `/user/space/detail?id=${space?.id}` : `/client/space/detail?id=${space?.id}`} className="flex-none cursor-pointer px-2 flex items-center">
-                <img className="w-4 h-4 text-gray" src="/img/right-arrow.svg" />
+                <FaAngleRight />
             </NavLink>
         </div >
     )
