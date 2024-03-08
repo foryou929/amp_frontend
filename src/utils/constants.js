@@ -31,7 +31,7 @@ export const STEPS = {
         { label: "経過報告" },
         { label: "終了報告" },
         { label: "支払い", button: "報酬受取" },
-        { label: "レビュー", button: "レビューする", child: 1 },
+        { label: "レビュー", button: "レビューする", child: 3 },
     ],
     user: [
         { label: "提案", button: "応募する", child: 1 },
@@ -44,7 +44,7 @@ export const STEPS = {
         { label: "経過報告", button: "報告する", child: 1 },
         { label: "終了報告", button: "報告する", child: 1 },
         { label: "報酬受取" },
-        { label: "レビュー", button: "レビューする", child: 1 },
+        { label: "レビュー", button: "レビューする", child: 3 },
     ]
 }
 
