@@ -1,12 +1,14 @@
+import moment from "moment";
+import { FaAngleRight } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 import Image from "./Image";
+
 import { STEPS } from "../utils/constants";
-import moment from "moment";
 
 const ProjectItem = ({ mode, project, section }) => {
     const getRecruitmentPeriod = () => {
-        const days = moment(project.created_at).add(project.recruitment_period, 'days').diff(moment(project.current), 'days');
+        const days = moment(project.created_at).add(project.recruitment_period, 'month').diff(moment(project.current), 'days');
         if (days < 0) return <p>募集終了</p>
         return <p>期間:あと{days}日</p>
     }
@@ -15,7 +17,7 @@ const ProjectItem = ({ mode, project, section }) => {
             <div className="w-[calc(100%-16px)] flex gap-4 items-start">
                 {
                     project.project_images.length >= 1 ?
-                        <Image className="flex-none w-12 h-12" src={project.project_images[0].source} /> :
+                        <Image className="flex-none w-12 h-12" src={project.project_images[0]?.source} /> :
                         <Image className="flex-none w-12 h-12" src={"/img/no-image.svg"} />
                 }
                 <div className="w-[calc(100%-64px)] flex flex-col justify-center">
@@ -44,8 +46,8 @@ const ProjectItem = ({ mode, project, section }) => {
                     </div>
                 </div>
             </div>
-            <NavLink to={mode == "user" ? `/user/project/detail?id=${project?.id}` : `/client/project/info?id=${project?.id}`} className="flex-none cursor-pointer px-2 flex items-center">
-                <img className="w-4 h-4 text-gray" src="/img/right-arrow.svg" />
+            <NavLink to={`/${mode}/project/detail?id=${project?.id}`} className="flex-none cursor-pointer px-2 flex items-center">
+                <FaAngleRight />
             </NavLink>
         </div >
     )
