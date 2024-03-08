@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Button from "../../../components/Button";
 import List from "../../../components/List";
@@ -9,6 +10,7 @@ import query from "../../../utils/query";
 
 const Profile = ({ mode }) => {
     const [sections, setSections] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         query.auth.get(`/${mode}/section`, (sections) => {
@@ -35,7 +37,7 @@ const Profile = ({ mode }) => {
                     }
                 />
                 <div className="p-4">
-                    <Button className="w-full">プロジェクトー覧</Button>
+                    <Button className="w-full" onClick={() => navigate('/user/project/manage?type=0')}>プロジェクトー覧</Button>
                 </div>
             </div>
             <div className="w-full my-4">
@@ -54,7 +56,7 @@ const Profile = ({ mode }) => {
                     }
                 />
                 <div className="p-4">
-                    <Button className="w-full">応募•スカウトー覧</Button>
+                    <Button className="w-full" onClick={() => navigate('/user/project/manage?type=1')}>応募•スカウトー覧</Button>
                 </div>
             </div>
             <div className="w-full my-4">
@@ -64,7 +66,7 @@ const Profile = ({ mode }) => {
                     items={[]}
                 />
                 <div className="p-4">
-                    <Button className="w-full">依頼中のスー覧</Button>
+                    <Button className="w-full" onClick={() => navigate('/user/space/manage')}>依頼中のスー覧</Button>
                 </div>
             </div>
             <UserInfo />
