@@ -48,24 +48,32 @@ export const STEPS = {
     ]
 }
 
-export const SPACE_TYPES = [
-    { label: "車の窓" },
-    { label: "車の車体" },
-    { label: "自転車" },
-    { label: "バイク" },
-    { label: "徒歩バックパック等" },
-    { label: "一軒家" },
-    { label: "集合住宅" },
-    { label: "ノベルティーグッズの使用" },
-    { label: "工事現場" },
-    { label: "看板" },
-    { label: "WEB SNS" },
-    { label: "他" },
-]
-
 export const TRANSPORTATIONS = [
     { label: "徒歩" },
     { label: "車" },
     { label: "バイク" },
     { label: "その他" },
+]
+
+export const SPACE_TYPES = [
+    { value: 0, label: "車の窓" },
+    { value: 1, label: "車の車体" },
+    { value: 2, label: "自転車" },
+    { value: 3, label: "バイク" },
+    { value: 4, label: "徒歩バックパック等" },
+    { value: 5, label: "一軒家" },
+    { value: 6, label: "集合住宅" },
+    { value: 7, label: "ノベルティーグッズの使用" },
+    { value: 8, label: "工事現場" },
+    { value: 9, label: "看板" },
+    { value: 10, label: "WEB SNS" },
+    { value: 11, label: "他" },
+]
+
+export const AREAS = [
+    { value: 0, label: "東京都(23区内)" }
+]
+
+export const RECRUITMENT_CONTENTS = [
+    { value: 0, label: "ステッカー" }
 ]
