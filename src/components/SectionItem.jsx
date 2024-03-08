@@ -1,22 +1,17 @@
+import moment from "moment";
+import { FaAngleRight } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
+import { STEPS } from "../utils/constants";
 import Avatar from "./Avatar";
 import Image from "./Image";
-import moment from "moment";
-import { STEPS } from "../utils/constants";
 
 const SectionItem = ({ mode, section, project }) => {
     return (
         <div className="flex gap-2">
-            <div className="flex-grow flex gap-4 items-start">
-                {
-                    mode == "client" ?
-                        <Avatar src={section.user.avatar} /> :
-                        project.project_images[0].length > 0 ?
-                            <Image className="w-12 flex-none" src={project.project_images} /> :
-                            <Image className="w-12 flex-none" src={"/img/no-image.svg"} />
-                }
-                <div className="flex-grow flex flex-col justify-center">
+            <div className="w-[calc(100%-40px)] flex gap-4 items-start">
+                <Avatar src={section.user.avatar} />
+                <div className="w-[calc(100%-64px)] flex flex-col justify-center">
                     {
                         project ?
                             <>
@@ -32,22 +27,19 @@ const SectionItem = ({ mode, section, project }) => {
                             </> :
                             <></>
                     }
-                    <div className="flex gap-2 items-start">
-                        <div className="w-12 flex-none">
-                        </div>
-                        <div className="flex-grow">
-                            <NavLink to={`/user/profile/info?id=${section.user.id}`} className="whitespace-nowrap overflow-hidden text-ellipsis font-bold">
-                                {section.user.username}
-                            </NavLink>
-                            <p className="text-right text-sm text-gray-400">
-                                {moment(section.created_at).format("YYYY年MM月DD日 HH:mm")}
-                            </p>
-                        </div>
-                    </div>
+                    <NavLink to={`/user/profile/view?id=${section.user.id}`} className="whitespace-nowrap overflow-hidden text-ellipsis font-bold">
+                        {section.user.username}
+                    </NavLink>
+                    <p className="whitespace-nowrap overflow-hidden text-ellipsis">
+                        {section.section_messages[0].content}
+                    </p>
+                    <p className="text-right text-sm text-gray-400">
+                        {moment(section.created_at).format("YYYY年MM月DD日 HH:mm")}
+                    </p>
                 </div>
             </div>
-            <NavLink to={mode == "user" ? `/user/project/detail?id=${section.id}` : `/client/project/detail?id=${section.id}`} className="flex-none cursor-pointer px-2 flex items-center">
-                <img className="w-4 h-4 text-gray" src="/img/right-arrow.svg" />
+            <NavLink to={`/client/project/progress?id=${section.id}`} className="flex-none cursor-pointer px-2 flex items-center">
+                <FaAngleRight />
             </NavLink>
         </div >
     )
