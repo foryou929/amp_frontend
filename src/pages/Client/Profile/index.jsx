@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import Avatar from "../../../components/Avatar";
 import Button from "../../../components/Button";
@@ -10,6 +11,7 @@ import ProjectItem from "../../../components/ProjectItem";
 import query from "../../../utils/query";
 
 const Profile = ({ mode }) => {
+    const navigate = useNavigate();
     const { user } = useSelector(state => state.user);
 
     const [projects, setProjects] = useState([]);
@@ -26,7 +28,7 @@ const Profile = ({ mode }) => {
                     <h2 className="text-xl font-bold text-[#00146E]">
                         {user.points}pt
                     </h2>
-                    <Button>ポイント購入</Button>
+                    <Button onClick={() => navigate("/client/score")}>ポイント購入</Button>
                 </div>
             </div>
             <div className="w-full my-8">
@@ -45,7 +47,7 @@ const Profile = ({ mode }) => {
                     }
                 />
                 <div className="p-4">
-                    <Button className="w-full">プロジェクトー覧</Button>
+                    <Button className="w-full" onClick={() => navigate("/client/project/manage?type=0")}>プロジェクトー覧</Button>
                 </div>
             </div>
             <div className="w-full my-4">
@@ -64,7 +66,7 @@ const Profile = ({ mode }) => {
                     }
                 />
                 <div className="p-4">
-                    <Button className="w-full">募集中のプロジェクトー覧</Button>
+                    <Button className="w-full" onClick={() => navigate("/client/project/manage?type=1")}>募集中のプロジェクトー覧</Button>
                 </div>
             </div>
             <div className="w-full my-4">
@@ -76,7 +78,7 @@ const Profile = ({ mode }) => {
                     }
                 />
                 <div className="p-4">
-                    <Button className="w-full">依頼中のスー覧</Button>
+                    <Button className="w-full" onClick={() => navigate("/client/space/view")}>依頼中のスー覧</Button>
                 </div>
             </div>
             <div className="w-full my-4">
