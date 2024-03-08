@@ -1,9 +1,20 @@
+import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 
-const Ranking = ({ className, rank, children }) => {
+const Ranking = ({ className, rank, onChange, children }) => {
+    const [value, setValue] = useState(rank);
+
+    useEffect(() => {
+        setValue(rank || 0);
+    }, [rank]);
+
     return <div className={`flex items-center gap-1 ${className}`}>
         {
-            Array.from({ length: rank }).map((_, index) => <FaStar key={index} className="text-[#E9CC32]" />)
+            Array.from({ length: 5 }).map((_, index) => (
+                <FaStar key={index} className={`${index <= value ? "text-[#E9CC32]" : "text-gray-400"} cursor-pointer`} onClick={() => {
+                    if (onChange) onChange(index);
+                }} />
+            ))
         }
         <span>{children}</span>
     </div>
