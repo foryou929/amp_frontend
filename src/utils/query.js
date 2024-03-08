@@ -16,8 +16,8 @@ const request = async (method, url, data, success, error, auth = false, access =
     } catch (err) {
         if (access == false && err?.response?.status == 401) {
             try {
-                const { data } = await axios.request({ method: "post", url: `/token/refresh/`, data: { refresh: getRefreshToken() } });
-                saveAccessToken(data.access);
+                const token = await axios.request({ method: "post", url: `/token/refresh/`, data: { refresh: getRefreshToken() } });
+                saveAccessToken(token.data.access);
                 await request(method, url, data, success, error, auth, true);
             } catch (err) {
             }

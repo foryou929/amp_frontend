@@ -29,9 +29,9 @@ const ImageUploader = forwardRef((props, ref) => {
         <div className="flex gap-2 overflow-x-scroll">
             {
                 images.map((image, index) => (
-                    <div key={index} className="relative flex-none justify-center bg-[#F8F9FA]">
+                    <div key={index} className="relative flex-none justify-center bg-[#F8F9FA] p-2">
                         <Image className="w-28 h-28" src={image.src} />
-                        <button className="absolute right-2 top-2" onClick={(e) => {
+                        <button className="absolute right-0 top-0 p-1 bg-white rounded-full shadow shadow-[#000C]" onClick={(e) => {
                             e.preventDefault();
                             setImages((images) => {
                                 const updatedImages = [...images];
@@ -39,7 +39,7 @@ const ImageUploader = forwardRef((props, ref) => {
                                 return updatedImages;
                             });
                         }}>
-                            <img src="/img/remove.svg" />
+                            <img className="w-5 h-5" src="/img/remove.svg" />
                         </button>
                     </div>
                 ))
