@@ -7,6 +7,7 @@ import Input from "../../../components/Input";
 
 import query from "../../../utils/query";
 import { SECTION, STEPS } from "../../../utils/constants";
+import Ranking from "../../../components/Ranking";
 
 const Progress = ({ mode, project, id }) => {
     const [section, setSection] = useState({ step: 0 });
@@ -20,6 +21,7 @@ const Progress = ({ mode, project, id }) => {
     }, [id]);
 
     const [value, setValue] = useState();
+    const [rank, setRank] = useState(0);
     const [payment, setPayment] = useState({});
     const [advert, setAdvert] = useState({});
     const [startReport, setStartReport] = useState({});
@@ -89,6 +91,9 @@ const Progress = ({ mode, project, id }) => {
                                 onSuccess();
                             });
                             break;
+                        case 10:
+                            query.auth.post(`/${mode}/section/${section.id}/review`, { content: value, rank }, onSuccess);
+                            break;
                     }
                     break;
             }
@@ -105,13 +110,23 @@ const Progress = ({ mode, project, id }) => {
             <div className="rounded p-4 bg-[#F0F2F8] mt-2">
                 <h2 className="text-xl font-bold text-[#00146E]">{STEPS[mode][section.step]?.label}</h2>
                 <p className="mt-2">
-                    {STEPS[mode][section.step]?.content}
+                    {
+                        section.step == 11 ?
+                            "プロジェクトが完了しました。" :
+                            STEPS[mode][section.step]?.content
+                    }
                 </p>
                 {
                     STEPS[mode][section.step]?.button &&
                     <>
                         {STEPS[mode][section.step]?.child == 1 && <Textarea className="min-h-40 mt-4" name="content" onChange={(e) => setValue(e.target.value)} />}
-                        {STEPS[mode][section.step]?.child == 1 && <div className="flex items-center mt-4"><Input className="flex-grow" onChange={(e) => setValue(e.target.value)} />&nbsp;pt</div>}
+                        {STEPS[mode][section.step]?.child == 2 && <div className="flex items-center mt-4"><Input className="flex-grow" onChange={(e) => setValue(e.target.value)} />&nbsp;pt</div>}
+                        {STEPS[mode][section.step]?.child == 3 && (
+                            <>
+                                <Ranking rank={rank} className="mt-4" onChange={(rank) => setRank(rank)} />
+                                <Textarea className="min-h-40 mt-2" name="content" onChange={(e) => setValue(e.target.value)} />
+                            </>
+                        )}
                         <Button className="mt-4" onClick={handleClick}>{STEPS[mode][section.step]?.button}</Button>
                     </>
                 }
