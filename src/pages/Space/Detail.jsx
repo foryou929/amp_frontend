@@ -90,24 +90,30 @@ const Detail = ({ mode }) => {
                     </p>
                 </li>
             </ul>
-            <div className="p-4 bg-[#F8F9FA] rounded mt-4">
-                <h2 className="text-xl font-bold">
-                    ユーザー情報
-                </h2>
-                <div className="flex mt-4 gap-4">
-                    <div className="flex-none">
-                        <Avatar src={space.creator?.avatar} circle />
-                    </div>
-                    <div className="flex-grow">
-                        <h3 className="text-lg font-bold text-[#00146E]">{space.creator?.username}</h3>
-                        <Ranking className="mt-2" rank={3}>
-                            <span className="text-[#00146E]">30</span>
-                        </Ranking>
-                    </div>
-                </div>
-            </div>
-            {mode == "client" && <Button className="w-full mt-16" onClick={() => navigate(`/client/space/apply?id=${id}`)}>依頼する</Button>}
-            <Button className="w-full mt-4" revert>お気に入りに追加</Button>
+            {
+                mode == "client" && (
+                    <>
+                        <div className="p-4 bg-[#F8F9FA] rounded mt-4">
+                            <h2 className="text-xl font-bold">
+                                ユーザー情報
+                            </h2>
+                            <div className="flex mt-4 gap-4">
+                                <div className="flex-none">
+                                    <Avatar src={space.creator?.avatar} circle />
+                                </div>
+                                <div className="flex-grow">
+                                    <h3 className="text-lg font-bold text-[#00146E]">{space.creator?.username}</h3>
+                                    <Ranking className="mt-2" rank={3}>
+                                        <span className="text-[#00146E]">30</span>
+                                    </Ranking>
+                                </div>
+                            </div>
+                        </div >
+                        <Button className="w-full mt-4" revert>お気に入りに追加</Button>
+                        <Button className="w-full mt-16" onClick={() => navigate(`/client/space/apply?id=${id}`)}>依頼する</Button>
+                    </>
+                )
+            }
         </>
     )
 }
