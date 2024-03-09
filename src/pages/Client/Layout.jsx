@@ -14,6 +14,7 @@ import ProjectScout from '../Project/Scout';
 
 import SpaceView from '../Space/View';
 import SpaceDetail from '../Space/Detail';
+import SpaceApply from '../Space/Apply';
 
 const ClientLayout = () => {
     return (
@@ -36,7 +37,8 @@ const ClientLayout = () => {
                     <Route path="/project/info" element={<ProjectInfo mode="client" />} />
 
                     <Route path="/space/view" element={<SpaceView mode="client" />} />
-                    <Route path="/space/detail" element={<SpaceDetail mode={"user"} />} />
+                    <Route path="/space/detail" element={<SpaceDetail mode={"client"} />} />
+                    <Route path="/space/apply" element={<SpaceApply mode={"cient"} />} />
                 </Routes>
             </div>
         </>
