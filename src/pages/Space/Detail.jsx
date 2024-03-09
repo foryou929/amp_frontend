@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { HiLocationMarker } from "react-icons/hi";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-import Button from "../../components/Button";
 import Avatar from "../../components/Avatar";
-import Ranking from "../../components/Ranking";
+import Backward from "../../components/Backward";
+import Button from "../../components/Button";
 import Image from "../../components/Image";
+import Ranking from "../../components/Ranking";
 
 import query from "../../utils/query";
 
 const Detail = ({ mode }) => {
+    const navigate = useNavigate();
+
     const [space, setSpace] = useState({ space_images: [] });
 
     const [queryParameters] = useSearchParams();
-
     const id = queryParameters.get("id");
 
     useEffect(() => {
@@ -24,10 +26,7 @@ const Detail = ({ mode }) => {
 
     return (
         <>
-            <div className="text-[#00146E] cursor-pointer font-bold flex items-center" onClick={() => window.history.back()}>
-                <img src="/img/left-arrow.svg" />
-                <span className="ml-2">戻る</span>
-            </div>
+            <Backward>戻る</Backward>
             <div className="mt-4">
                 {
                     space.space_images.length >= 1 ?
@@ -40,7 +39,7 @@ const Detail = ({ mode }) => {
                             {
                                 space.space_images.map((image, index) => {
                                     if (index == 0) return <></>
-                                    return <Image className="flex-none h-full" src={space.space_images[0].source} />
+                                    return <Image className="flex-none h-full" src={image.source} />
                                 })
                             }
                         </div> :
@@ -50,7 +49,7 @@ const Detail = ({ mode }) => {
             <h1 className="text-2xl font-bold mt-4">{space.title}</h1>
             <h3 className="text-lg font-bold mt-2">{space.points}pt</h3>
             <p className="mt-2"><HiLocationMarker /></p>
-            <Ranking className="mt-2" rank={3}>
+            <Ranking className="mt-2" rank={2}>
                 <span>30</span>
             </Ranking>
             <p className="mt-8">
@@ -107,7 +106,7 @@ const Detail = ({ mode }) => {
                     </div>
                 </div>
             </div>
-            <Button className="w-full mt-16">依頼する</Button>
+            {mode == "client" && <Button className="w-full mt-16" onClick={() => navigate(`/client/space/apply?id=${id}`)}>依頼する</Button>}
             <Button className="w-full mt-4" revert>お気に入りに追加</Button>
         </>
     )
