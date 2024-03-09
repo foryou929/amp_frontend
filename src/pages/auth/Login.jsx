@@ -12,6 +12,7 @@ import query from "../../utils/query";
 
 import { saveTokens } from "../../app/auth";
 import { login } from '../../common/userSlice';
+import { getMode } from '../../utils/storage';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -22,9 +23,11 @@ const Login = () => {
 
     const { user } = useSelector(state => state.user);
 
+    const mode = getMode();
+
     useEffect(() => {
         if (user.id)
-            navigate("/");
+            navigate(`${mode}/project/manage?type=0`);
     }, [user]);
 
     const handleSubmit = (e) => {

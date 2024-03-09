@@ -9,6 +9,7 @@ import ImageUploader from "../../components/ImageUploader";
 
 import query from "../../utils/query";
 import { NotificationManager } from "react-notifications";
+import { SPACE_TYPES, AREAS, RECRUITMENT_CONTENTS } from "../../utils/constants";
 
 const Registration = ({ mode }) => {
     const imageUploaderRef = useRef();
@@ -57,27 +58,23 @@ const Registration = ({ mode }) => {
                 </section>
                 <section className="my-4">
                     <h6>募集コンテンツ</h6>
-                    <Select options={[
-                        { value: 0, label: "ステッカー" }
-                    ]} name="recruitment_content" onChange={(target) => onChange(target)} />
+                    <Select options={RECRUITMENT_CONTENTS} name="recruitment_content" onChange={(target) => onChange(target)} />
                 </section>
                 <section className="my-4">
                     <h6>スペース種別</h6>
-                    <Select options={[
-                        { value: 0, label: "車の窓" }
-                    ]} name="space_type" onChange={(target) => onChange(target)} />
+                    <Select options={SPACE_TYPES} name="space_type" onChange={(target) => onChange(target)} />
                 </section>
                 <section className="my-4">
                     <h6>募集期間</h6>
-                    <Select options={[
-                        { value: 0, label: "1週間" }
-                    ]} name="recruitment_period" onChange={(target) => onChange(target)} />
+                    <Select options={
+                        Array.from({ length: 12 }, (_, index) => ({
+                            value: index + 1, label: `${index + 1}週間`
+                        }))
+                    } name="recruitment_period" onChange={(target) => onChange(target)} />
                 </section>
                 <section className="my-4">
                     <h6>エリア</h6>
-                    <Select options={[
-                        { value: 0, label: "東京都(23区内)" }
-                    ]} name="area" onChange={(target) => onChange(target)} />
+                    <Select options={AREAS} name="area" onChange={(target) => onChange(target)} />
                 </section>
                 <section className="my-4">
                     <h6>年代指定</h6>
@@ -97,9 +94,11 @@ const Registration = ({ mode }) => {
                 </section>
                 <section className="my-4">
                     <h6>プロジェクト期間</h6>
-                    <Select options={[
-                        { value: 0, label: "3週間" }
-                    ]} name="area" onChange={(target) => onChange(target)} />
+                    <Select options={
+                        Array.from({ length: 12 }, (_, index) => ({
+                            value: index + 1, label: `${index + 1}週間`
+                        }))
+                    } name="area" onChange={(target) => onChange(target)} />
                 </section>
                 <section className="my-4">
                     <h6>コンテンツのサイズ等</h6>

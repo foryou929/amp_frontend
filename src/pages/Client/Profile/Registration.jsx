@@ -31,54 +31,49 @@ const Registration = ({ mode }) => {
         setProfile(newProfile);
     }
 
-    const handleSubmit = (e) => {
+    const onSave = async (e) => {
         e.preventDefault();
-        if (user.id) {
-            avatarUploaderRef.current.upload(`/${mode}/${user.id}/avatar`);
-            query.auth.patch(`/${mode}/${user.id}`, profile, (user) => {
-                dispatch(login(user));
-                NotificationManager.success('Success');
-            });
-        }
+        await avatarUploaderRef.current.upload(`/${mode}/${user.id}/avatar`);
+        const newUser = await query.auth.patch(`/${mode}/${user.id}`, profile);
+        dispatch(login(newUser));
+        NotificationManager.success('Success');
     }
 
     return (
         <>
             <h1 className="text-2xl font-bold">ユーザープロフィール</h1>
-            <form onSubmit={handleSubmit}>
-                <AvatarUploader className="py-4" defaultSrc={user.avatar} ref={avatarUploaderRef} />
-                <section className="py-2">
-                    <label className="py-0.5">ユーザー名</label>
-                    <Input className="w-full" name="username" value={profile.username} onChange={(e) => onChange(e.target)} />
-                </section>
-                <section className="py-2">
-                    <label className="py-0.5">種別</label>
-                    <Select name="type" value={profile.type} onChange={(e) => onChange(e.target)} />
-                </section>
-                <section className="py-2">
-                    <label className="py-0.5">エリア</label>
-                    <Select name="area" value={profile.area} onChange={(e) => onChange(e.target)} />
-                </section>
-                <section className="py-2">
-                    <label className="py-0.5">主なサービスなど</label>
-                    <Textarea className="min-h-40 mt-2" name="main_service" value={profile.main_service} onChange={(e) => onChange(e.target)} />
-                </section>
-                <section className="py-2">
-                    <label className="py-0.5">主なPR対象</label>
-                    <Textarea className="min-h-40 mt-2" name="main_pr_target" value={profile.main_pr_target} onChange={(e) => onChange(e.target)} />
-                </section>
-                <section className="py-2">
-                    <label className="py-0.5">メッセージ</label>
-                    <Textarea className="min-h-40 mt-2" name="main_message" value={profile.main_message} onChange={(e) => onChange(e.target)} />
-                </section>
-                <section className="py-2">
-                    <label className="py-0.5">ホームページURL</label>
-                    <Input className="w-full mt-2" name="website_url" value={profile.website_url} onChange={(e) => onChange(e.target)} />
-                </section>
-                <section className="py-2">
-                    <Button className="w-full">保存</Button>
-                </section>
-            </form>
+            <AvatarUploader className="py-4" defaultSrc={user.avatar} ref={avatarUploaderRef} />
+            <section className="py-2">
+                <label className="py-0.5">ユーザー名</label>
+                <Input className="w-full" name="username" value={profile.username} onChange={(e) => onChange(e.target)} />
+            </section>
+            <section className="py-2">
+                <label className="py-0.5">種別</label>
+                <Select name="type" value={profile.type} onChange={(e) => onChange(e.target)} />
+            </section>
+            <section className="py-2">
+                <label className="py-0.5">エリア</label>
+                <Select name="area" value={profile.area} onChange={(e) => onChange(e.target)} />
+            </section>
+            <section className="py-2">
+                <label className="py-0.5">主なサービスなど</label>
+                <Textarea className="min-h-40 mt-2" name="main_service" value={profile.main_service} onChange={(e) => onChange(e.target)} />
+            </section>
+            <section className="py-2">
+                <label className="py-0.5">主なPR対象</label>
+                <Textarea className="min-h-40 mt-2" name="main_pr_target" value={profile.main_pr_target} onChange={(e) => onChange(e.target)} />
+            </section>
+            <section className="py-2">
+                <label className="py-0.5">メッセージ</label>
+                <Textarea className="min-h-40 mt-2" name="main_message" value={profile.main_message} onChange={(e) => onChange(e.target)} />
+            </section>
+            <section className="py-2">
+                <label className="py-0.5">ホームページURL</label>
+                <Input className="w-full mt-2" name="website_url" value={profile.website_url} onChange={(e) => onChange(e.target)} />
+            </section>
+            <section className="py-2">
+                <Button className="w-full" onClick={onSave}>保存</Button>
+            </section>
         </>
     )
 }

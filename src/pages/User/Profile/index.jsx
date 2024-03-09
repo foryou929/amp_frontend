@@ -27,7 +27,7 @@ const Profile = ({ mode }) => {
                     className="my-4"
                     items={
                         sections.filter(section => {
-                            return section.step >= 4 && section.step <= 10;
+                            return section.project && section.step >= 4 && section.step <= 10;
                         }).map(section => {
                             return {
                                 key: section.id,
@@ -46,7 +46,7 @@ const Profile = ({ mode }) => {
                     className="my-4"
                     items={
                         sections.filter(section => {
-                            return section.step < 4;
+                            return section.project && section.step < 4;
                         }).map(section => {
                             return {
                                 key: section.id,
@@ -56,7 +56,7 @@ const Profile = ({ mode }) => {
                     }
                 />
                 <div className="p-4">
-                    <Button className="w-full" onClick={() => navigate('/user/project/manage?type=1')}>応募•スカウトー覧</Button>
+                    <Button className="w-full" onClick={() => navigate('/user/project/manage?type=1')}>応募•スカウト一覧</Button>
                 </div>
             </div>
             <div className="w-full my-4">

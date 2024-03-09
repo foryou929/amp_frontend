@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, useSearchParams } from "react-router-dom";
 
-import Link from "../../components/Link";
+import Forward from "../../components/Forward";
 import List from "../../components/List";
 import ProjectItem from "../../components/ProjectItem";
 
@@ -42,14 +42,12 @@ const Manage = ({ mode }) => {
                 </p>
                 {
                     type == PROJECT_STATUS.FINISH ?
-                        <Link className="flex items-center" to={`/${mode}/project/manage?type=${PROJECT_STATUS.RECRUITING}`} >
+                        <Forward className="flex-none cursor-pointer pr-2 flex items-center text-[#00146E]" to={`/${mode}/project/manage?type=${PROJECT_STATUS.RECRUITING}`} >
                             進行中のプロジェクト
-                            <img className="ml-2" src="/img/right-arrow.svg" />
-                        </Link> :
-                        <Link className="flex items-center" to={`/${mode}/project/manage?type=${PROJECT_STATUS.FINISH}`} >
+                        </Forward> :
+                        <Forward className="flex-none cursor-pointer pr-2 flex items-center text-[#00146E]" to={`/${mode}/project/manage?type=${PROJECT_STATUS.FINISH}`} >
                             終了したプロジェクト
-                            <img className="ml-2" src="/img/right-arrow.svg" />
-                        </Link>
+                        </Forward>
                 }
             </div>
             {
