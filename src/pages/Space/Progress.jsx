@@ -121,7 +121,7 @@ const Progress = ({ mode }) => {
                 await query.auth.patch(`/${mode}/section/${section.id}`, { step: section.step + 1 });
                 setSection({ ...section, step: section.step + 1 });
             }
-
+            setContent("");
             dispatch(clear());
         } catch (err) {
             console.error(err.message)
