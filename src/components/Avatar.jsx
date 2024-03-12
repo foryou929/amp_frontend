@@ -4,7 +4,10 @@ const Avatar = ({ src, fallbackSrc, alt, className, circle, ...props }) => {
     const [imageSrc, setImageSrc] = useState(src);
 
     useEffect(() => {
-        setImageSrc(src);
+        if (src)
+            setImageSrc(src);
+        else
+            setImageSrc("/img/no-user.png");
     }, [src]);
 
     const onError = () => {
