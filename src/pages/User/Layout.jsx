@@ -10,10 +10,12 @@ import ProjectDetail from '../Project/Detail';
 import ProjectManage from '../Project/Manage';
 import ProjectView from '../Project/View';
 import ProjectApply from '../Project/Apply';
+import ProjectProgress from '../Project/Progress';
 
 import SpaceManage from '../Space/Manage';
 import SpaceRegistration from '../Space/Registration';
 import SpaceDetail from '../Space/Detail';
+import SpaceProgress from '../Space/Progress';
 
 const UserLayout = () => {
     return (
@@ -33,10 +35,12 @@ const UserLayout = () => {
                     <Route path="/project/view" element={<ProjectView mode={"user"} />} />
                     <Route path="/project/detail" element={<ProjectDetail mode={"user"} />} />
                     <Route path="/project/apply" element={<ProjectApply mode={"user"} />} />
+                    <Route path="/project/progress" element={<ProjectProgress mode={"user"} />} />
 
                     <Route path="/space/manage" element={<SpaceManage mode={"user"} />} />
                     <Route path="/space/registration" element={<SpaceRegistration mode={"user"} />} />
                     <Route path="/space/detail" element={<SpaceDetail mode={"user"} />} />
+                    <Route path="/space/progress" element={<SpaceProgress mode={"user"} />} />
                 </Routes>
             </div>
         </>
