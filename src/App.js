@@ -31,7 +31,7 @@ function App() {
     if (access_token) {
       query.auth.get(`/auth/loginWithToken`, (user) => {
         dispatch(login(user))
-      });
+      }, () => { });
     }
     // return () => {
     //   if (window.socket)
