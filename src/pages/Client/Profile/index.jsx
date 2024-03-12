@@ -8,6 +8,7 @@ import Link from "../../../components/Link";
 import List from "../../../components/List";
 import ProjectItem from "../../../components/ProjectItem";
 
+import { AREAS, USER_TYPES } from "../../../utils/constants";
 import query from "../../../utils/query";
 
 const Profile = ({ mode }) => {
@@ -87,8 +88,8 @@ const Profile = ({ mode }) => {
                     <Avatar src={user.avatar} circle className={"w-16 h-16"} />
                 </div>
                 <h3 className="text-lg font-bold">{user.name}</h3>
-                <p className="text-gray-400">{user.area}</p>
-                <p className="text-gray-400">{user.type}</p>
+                <p className="text-gray-400">{AREAS.filter(area => area.value == user.area)[0]?.label}</p>
+                <p className="text-gray-400">{USER_TYPES.filter(user_type => user_type.value == user.type)[0]?.label}</p>
                 <div className="w-full mt-4">
                     <div className="my-2">
                         <h3 className="text-lg font-bold my-2">主なサービスなど</h3>

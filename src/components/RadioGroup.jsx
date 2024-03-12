@@ -1,12 +1,4 @@
-import { useEffect, useState } from "react";
-
-const RadioGroup = ({ name, options, onChange, defaultValue, ...props }) => {
-    const [value, setValue] = useState(defaultValue || 0);
-    useEffect(() => {
-        if (onChange)
-            onChange({ name, value });
-    }, [value])
-
+const RadioGroup = ({ name, options, onChange, value, defaultValue, ...props }) => {
     return (
         <div {...props}>
             {
@@ -17,7 +9,7 @@ const RadioGroup = ({ name, options, onChange, defaultValue, ...props }) => {
                             type="radio"
                             className="border border-ltgray"
                             id={option.value}
-                            onChange={() => setValue(option.value)}
+                            onChange={() => onChange({ name, value: option.value })}
                             checked={value == option.value}
                         />
                         <label className="ml-2" htmlFor={option.value} >{option.label}</label>

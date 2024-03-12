@@ -9,12 +9,16 @@ import ProfileRegistration from "./Profile/Registration";
 import ProjectDetail from '../Project/Detail';
 import ProjectInfo from '../Project/Info';
 import ProjectManage from '../Project/Manage';
+import ProjectProgress from '../Project/Progress';
 import ProjectRegistration from '../Project/Registration';
 import ProjectScout from '../Project/Scout';
 
-import SpaceView from '../Space/View';
-import SpaceDetail from '../Space/Detail';
 import SpaceApply from '../Space/Apply';
+import SpaceDetail from '../Space/Detail';
+import SpaceProgress from '../Space/Progress';
+import SpaceView from '../Space/View';
+
+import SectionMessage from '../Section/Message';
 
 const ClientLayout = () => {
     return (
@@ -35,10 +39,14 @@ const ClientLayout = () => {
                     <Route path="/project/detail" element={<ProjectDetail mode="client" />} />
                     <Route path="/project/scout" element={<ProjectScout mode="client" />} />
                     <Route path="/project/info" element={<ProjectInfo mode="client" />} />
+                    <Route path="/project/progress" element={<ProjectProgress mode="client" />} />
 
                     <Route path="/space/view" element={<SpaceView mode="client" />} />
                     <Route path="/space/detail" element={<SpaceDetail mode={"client"} />} />
-                    <Route path="/space/apply" element={<SpaceApply mode={"cient"} />} />
+                    <Route path="/space/apply" element={<SpaceApply mode={"client"} />} />
+                    <Route path="/space/progress" element={<SpaceProgress mode={"client"} />} />
+
+                    <Route path="/section/message" element={<SectionMessage mode={"client"} />} />
                 </Routes>
             </div>
         </>

@@ -1,11 +1,15 @@
-import { useEffect, useRef, useState } from "react";
 import moment from "moment";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
-import query from "../../../utils/query";
-import Button from "../../../components/Button";
-import FileUploader from "../../../components/FileUploader";
-import Textarea from "../../../components/Textarea";
-import Avatar from "../../../components/Avatar";
+import Avatar from "../../components/Avatar";
+import Button from "../../components/Button";
+import FileUploader from "../../components/FileUploader";
+import Textarea from "../../components/Textarea";
+
+import { danger } from "../../common/messageSlice";
+import query from "../../utils/query";
 
 const MessageContainer = ({ message }) => {
     return (
@@ -43,12 +47,16 @@ const MessageContainer = ({ message }) => {
     )
 }
 
-const Message = ({ mode, id }) => {
+const Message = ({ mode }) => {
+    const dispatch = useDispatch();
+
     const fileUploaderRef = useRef();
-    const contentRef = useRef();
 
     const [messages, setMessages] = useState([]);
     const [content, setContent] = useState("");
+
+    const [queryParameters] = useSearchParams();
+    const id = queryParameters.get("id");
 
     useEffect(() => {
         if (id) {
@@ -56,17 +64,22 @@ const Message = ({ mode, id }) => {
                 setMessages(messages);
             });
         }
-    }, [id]);
+    }, []);
 
-    const onSendClick = () => {
-        query.auth.post(`/${mode}/section/${id}/message`, { content }, async (message) => {
-            await fileUploaderRef.current.upload(`/${mode}/message/${message.id}`, (file) => {
-                message.message_files.push(file);
-            });
+    const onSendClick = async () => {
+        try {
+            if (content.trim().length == 0) {
+                dispatch(danger("メッセージを入力してください。"));
+                return;
+            }
+            const message = await query.auth.post(`/${mode}/section/${id}/message`, { content });
+            await fileUploaderRef.current.upload(`/${mode}/message/${message.id}`, (file) => message.message_files.push(file));
             setMessages([...messages, { ...message, sender: { ...message.sender, avatar: message.sender.avatar } }]);
             fileUploaderRef.current.clear();
-            contentRef.current.value = "";
-        });
+            setContent("");
+        } catch (err) {
+            console.error(err.message);
+        }
     }
 
     return (
@@ -75,7 +88,7 @@ const Message = ({ mode, id }) => {
             <div className="">
                 <div className="">
                     <div className="">
-                        <Textarea className="min-h-40" ref={contentRef} onChange={(e) => {
+                        <Textarea className="min-h-40" value={content} onChange={(e) => {
                             setContent(e.target.value);
                         }} />
                         <FileUploader ref={fileUploaderRef} />
