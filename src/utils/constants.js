@@ -109,7 +109,8 @@ export const SPACE_TYPES = [
 ]
 
 export const AREAS = [
-    { value: 0, label: "東京都(23区内)" }
+    { value: 0, label: "未知" },
+    { value: 1, label: "東京都(23区内)" }
 ]
 
 export const RECRUITMENT_CONTENTS = [
