@@ -1,16 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NotificationManager } from "react-notifications";
 import { useDispatch, useSelector } from "react-redux";
 
+import AvatarUploader from "../../../components/AvatarUploader";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import Select from "../../../components/Select";
 import Textarea from "../../../components/Textarea";
-import AvatarUploader from "../../../components/AvatarUploader";
-
-import query from "../../../utils/query";
 
 import { login } from "../../../common/userSlice";
+import query from "../../../utils/query";
+import { USER_TYPES, AREAS } from "../../../utils/constants";
+
 
 const Registration = ({ mode }) => {
     const dispatch = useDispatch();
@@ -49,11 +50,11 @@ const Registration = ({ mode }) => {
             </section>
             <section className="py-2">
                 <label className="py-0.5">種別</label>
-                <Select name="type" value={profile.type} onChange={(e) => onChange(e.target)} />
+                <Select name="type" options={USER_TYPES} value={profile.type} onChange={(e) => onChange(e.target)} />
             </section>
             <section className="py-2">
                 <label className="py-0.5">エリア</label>
-                <Select name="area" value={profile.area} onChange={(e) => onChange(e.target)} />
+                <Select name="area" options={AREAS} value={profile.area} onChange={(e) => onChange(e.target)} />
             </section>
             <section className="py-2">
                 <label className="py-0.5">主なサービスなど</label>
