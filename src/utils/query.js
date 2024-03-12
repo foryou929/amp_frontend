@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { NotificationManager } from 'react-notifications'
 import { getAccessToken, getRefreshToken, saveAccessToken } from "../app/auth"
 
 const request = async (method, url, data, success, error, auth = false, access = false) => {
@@ -20,12 +19,12 @@ const request = async (method, url, data, success, error, auth = false, access =
                 saveAccessToken(token.data.access);
                 await request(method, url, data, success, error, auth, true);
             } catch (err) {
+                if (error) error(err);
+                else throw err;
             }
         } else {
-            if (error)
-                error(err.response?.data)
-            else
-                NotificationManager.error(err.message)
+            if (error) error(err);
+            else throw err;
         }
     }
 }
