@@ -9,7 +9,7 @@ import Image from "../../components/Image";
 
 import query from "../../utils/query";
 import { SECTION } from "../../utils/constants";
-import {danger, success} from "../../common/messageSlice";
+import { danger, success } from "../../common/messageSlice";
 
 const Apply = ({ mode }) => {
     const dispatch = useDispatch();
