@@ -47,7 +47,7 @@ function App() {
   // }, [user]);
 
   return (
-    <>
+    <main>
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -65,7 +65,7 @@ function App() {
         </Routes>
       </Router>
       <NotificationContainer />
-    </>
+    </main>
   );
 }
 
