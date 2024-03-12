@@ -16,10 +16,16 @@ code {
     monospace;
 }
 
+main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .container {
   padding: 16px;
   max-width: 100%;
-  height: calc(100vh - 80px);
+  flex-grow: 1;
   overflow-y: scroll;
 }
 
