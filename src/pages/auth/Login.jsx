@@ -27,7 +27,7 @@ const Login = () => {
 
     useEffect(() => {
         if (user.id)
-            navigate(`${mode}/project/manage?type=0`);
+            navigate(`${mode}/profile/view`);
     }, [user]);
 
     const handleSubmit = (e) => {
