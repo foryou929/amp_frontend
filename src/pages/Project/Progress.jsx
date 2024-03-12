@@ -6,10 +6,12 @@ import { useSearchParams } from "react-router-dom";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Textarea from "../../components/Textarea";
-
-import { danger, clear } from "../../common/messageSlice";
 import Ranking from "../../components/Ranking";
-import { SECTION, PROJECT_STEPS } from "../../utils/constants";
+import Backward from "../../components/Backward";
+import Forward from "../../components/Forward";
+
+import { clear, danger } from "../../common/messageSlice";
+import { PROJECT_STEPS, SECTION } from "../../utils/constants";
 import query from "../../utils/query";
 
 const Progress = ({ mode }) => {
@@ -135,6 +137,10 @@ const Progress = ({ mode }) => {
 
     return (
         <>
+            <div className="py-2 flex justify-between">
+                <Backward>戻る</Backward>
+                <Forward to={`/${mode}/project/message?id=${id}`}>メッセージページへ</Forward>
+            </div>
             <h1 className="text-2xl font-bold mt-4">
                 プロジェクト進榜状況
             </h1>
