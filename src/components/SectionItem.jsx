@@ -2,9 +2,8 @@ import moment from "moment";
 import { FaAngleRight } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-import { STEPS } from "../utils/constants";
+import { PROJECT_STEPS } from "../utils/constants";
 import Avatar from "./Avatar";
-import Image from "./Image";
 
 const SectionItem = ({ mode, section, project }) => {
     return (
@@ -17,7 +16,7 @@ const SectionItem = ({ mode, section, project }) => {
                             <>
                                 <div className="w-full flex gap-2 items-center">
                                     <div className={`p-2 font-bold rounded ${section.step == 5 || section.step == 6 ? "bg-[#F08E1B] text-white" : "bg-[#E9ECEF] text-[#212529]"}`}>
-                                        {STEPS[mode][section.step].label}
+                                        {PROJECT_STEPS[mode][section.step].label}
                                     </div>
                                     <p>{moment(project.updated_at).format("YYYY年MM月DD日")}</p>
                                 </div>
@@ -31,7 +30,7 @@ const SectionItem = ({ mode, section, project }) => {
                         {section.user.username}
                     </NavLink>
                     <p className="whitespace-nowrap overflow-hidden text-ellipsis">
-                        {section.section_messages[0].content}
+                        {section.section_messages[0]?.content}
                     </p>
                     <p className="text-right text-sm text-gray-400">
                         {moment(section.created_at).format("YYYY年MM月DD日 HH:mm")}
