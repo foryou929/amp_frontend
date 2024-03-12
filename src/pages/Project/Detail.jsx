@@ -10,14 +10,16 @@ import query from "../../utils/query";
 
 const Detail = ({ mode }) => {
     const navigate = useNavigate();
-    
+
     const [project, setProject] = useState({});
+    const [section, setSection] = useState({});
 
     const [queryParameters] = useSearchParams();
     const id = queryParameters.get("id");
 
     useEffect(() => {
         query.auth.get(`/${mode}/project/${id}`, project => setProject(project));
+        query.auth.get(`/${mode}/section/project/${id}`, section => setSection(section), () => { });
     }, []);
 
     return (
@@ -79,7 +81,7 @@ const Detail = ({ mode }) => {
                     <p className="w-1/2">{project.project_period}週間</p>
                 </li>
             </ul>
-            {mode == "user" && <Button className="w-full mt-4" onClick={() => navigate(`/user/project/apply?id=${id}`)}>応募する</Button>}
+            {mode == "user" && (section.id ? <Button className="w-full mt-4" onClick={() => navigate(`/user/project/progress?id=${section.id}`)}>プログレススペッジ</Button> : <Button className="w-full mt-4" onClick={() => navigate(`/user/project/apply?id=${id}`)}>応募する</Button>)}
             {mode == "client" && <Button className="w-full mt-4" onClick={() => navigate(`/client/project/info?id=${id}`)}>進行状況</Button>}
         </>
     )
