@@ -23,8 +23,10 @@ const Progress = ({ mode }) => {
     useEffect(() => {
         if (id) {
             query.auth.get(`/${mode}/section/${id}`, (section) => {
-                setSection(section)
-                query.auth.get(`/${mode}/project/${section.project.id}`, (project) => setProject(project));
+                query.auth.get(`/${mode}/project/${section.project.id}`, (project) => {
+                    setSection(section)
+                    setProject(project)
+                });
             });
         }
     }, [id]);
@@ -37,18 +39,38 @@ const Progress = ({ mode }) => {
     const [startReport, setStartReport] = useState({});
     const [progressReport, setProgressReport] = useState({});
     const [endReport, setEndReport] = useState({});
+    const [clientReview, setClientReview] = useState({});
+    const [userReview, setUserReview] = useState({});
 
     useEffect(() => {
         if (section.id) {
-            query.auth.get(`/${mode}/section/${section.id}/payment`, payment => setPayment(payment), () => { });
-            query.auth.get(`/${mode}/section/${section.id}/advert`, advert => setAdvert(advert), () => { });
-            query.auth.get(`/${mode}/section/${section.id}/message`, messages => {
-                messages.forEach(message => {
-                    if (message.type == 7) setStartReport(message);
-                    if (message.type == 8) setProgressReport(message);
-                    if (message.type == 9) setEndReport(message);
+            try {
+                query.auth.get(`/${mode}/section/${section.id}/message`, messages => {
+                    messages.forEach(message => {
+                        if (message.type == 7) setStartReport(message);
+                        if (message.type == 8) setProgressReport(message);
+                        if (message.type == 9) setEndReport(message);
+                    });
                 });
-            }, () => { });
+                if (section.step == 5) {
+                    query.auth.get(`/${mode}/section/${section.id}/payment`, payment => setPayment(payment));
+                }
+                if (section.step == 6) {
+                    query.auth.get(`/${mode}/section/${section.id}/advert`, advert => setAdvert(advert));
+                }
+                if (section.step == 10) {
+                    query.auth.get(`/${mode}/section/${section.id}/review`, reviews => {
+                        reviews.map(review => {
+                            if (review.reviewer == project.creator.id)
+                                setUserReview(review);
+                            if (review.reviewer == section.user.id)
+                                setClientReview(review);
+                        })
+                    })
+                }
+            } catch (err) {
+                console.error(err.message);
+            }
         }
     }, [section]);
 
@@ -129,26 +151,26 @@ const Progress = ({ mode }) => {
                     PROJECT_STEPS[mode][section.step]?.button &&
                     <>
                         {
-                            SPACE_STEPS[mode][section.step]?.child == 1 &&
+                            PROJECT_STEPS[mode][section.step]?.child == 1 &&
                             <>
                                 <Textarea className="min-h-40 mt-4" name="content" value={content} onChange={(e) => setContent(e.target.value)} />
-                                <Button className="mt-4" onClick={handleClick}>{SPACE_STEPS[mode][section.step]?.button}</Button>
+                                <Button className="mt-4" onClick={handleClick}>{PROJECT_STEPS[mode][section.step]?.button}</Button>
                             </>
                         }
                         {
-                            SPACE_STEPS[mode][section.step]?.child == 2 &&
+                            PROJECT_STEPS[mode][section.step]?.child == 2 &&
                             <>
                                 <div className="flex items-center mt-4"><Input className="flex-grow" onChange={(e) => setPoint(e.target.value)} />&nbsp;pt</div>
-                                <Button className="mt-4" onClick={handleClick}>{SPACE_STEPS[mode][section.step]?.button}</Button>
+                                <Button className="mt-4" onClick={handleClick}>{PROJECT_STEPS[mode][section.step]?.button}</Button>
                             </>
                         }
                         {
-                            SPACE_STEPS[mode][section.step]?.child == 3 && (
+                            PROJECT_STEPS[mode][section.step]?.child == 3 && (
                                 (mode == "client" && !clientReview.id) || (mode == "user" && !userReview.id) &&
                                 <>
                                     <Ranking rank={rank} className="mt-4" onChange={(rank) => setRank(rank)} />
                                     <Textarea className="min-h-40 mt-2" name="content" onChange={(e) => setContent(e.target.value)} />
-                                    <Button className="mt-4" onClick={handleClick}>{SPACE_STEPS[mode][section.step]?.button}</Button>
+                                    <Button className="mt-4" onClick={handleClick}>{PROJECT_STEPS[mode][section.step]?.button}</Button>
                                 </>
                             )
                         }
