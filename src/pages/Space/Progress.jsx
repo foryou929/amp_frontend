@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
+import Backward from "../../components/Backward";
 import Button from "../../components/Button";
+import Forward from "../../components/Forward";
 import Input from "../../components/Input";
+import Ranking from "../../components/Ranking";
 import Textarea from "../../components/Textarea";
 
-import { danger, clear } from "../../common/messageSlice";
-import Ranking from "../../components/Ranking";
+import { clear, danger } from "../../common/messageSlice";
 import { SECTION, SPACE_STEPS } from "../../utils/constants";
 import query from "../../utils/query";
 
@@ -130,6 +132,10 @@ const Progress = ({ mode }) => {
 
     return (
         <>
+            <div className="py-2 flex justify-between">
+                <Backward>戻る</Backward>
+                <Forward to={`/${mode}/project/message?id=${id}`}>メッセージページへ</Forward>
+            </div>
             <h1 className="text-2xl font-bold mt-4">
                 空間進行状況
             </h1>
