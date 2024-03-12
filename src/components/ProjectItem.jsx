@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 import Image from "./Image";
 
-import { STEPS } from "../utils/constants";
+import { PROJECT_STEPS } from "../utils/constants";
 
 const ProjectItem = ({ mode, project, section }) => {
     const getRecruitmentPeriod = () => {
@@ -25,7 +25,7 @@ const ProjectItem = ({ mode, project, section }) => {
                         {
                             section ? (
                                 <div className={`p-2 font-bold rounded ${section.step == 5 || section.step == 6 ? "bg-[#F08E1B] text-white" : "bg-[#E9ECEF] text-[#212529]"}`}>
-                                    {STEPS[mode][section.step].label}
+                                    {PROJECT_STEPS[mode][section.step].label}
                                 </div>
                             ) : <></>
                         }
@@ -35,7 +35,7 @@ const ProjectItem = ({ mode, project, section }) => {
                     <p className="font-bold text-sm mt-1">{project.points}pt</p>
                     <p className="text-gray-400 text-sm mt-1">{project.type}</p>
                     <div className="mt-1 p-2 bg-[#F8F9FA] text-sm flex justify-between">
-                        {section && <p>提案数: {section.suggest_count}</p>}
+                        <p>提案数: {project.suggest_count || (section ? section.suggest_count : 0)}</p>
                         {
                             project &&
                             <>
