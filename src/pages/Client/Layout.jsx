@@ -9,14 +9,16 @@ import ProfileRegistration from "./Profile/Registration";
 import ProjectDetail from '../Project/Detail';
 import ProjectInfo from '../Project/Info';
 import ProjectManage from '../Project/Manage';
+import ProjectProgress from '../Project/Progress';
 import ProjectRegistration from '../Project/Registration';
 import ProjectScout from '../Project/Scout';
-import ProjectProgress from '../Project/Progress';
 
-import SpaceView from '../Space/View';
-import SpaceDetail from '../Space/Detail';
 import SpaceApply from '../Space/Apply';
+import SpaceDetail from '../Space/Detail';
 import SpaceProgress from '../Space/Progress';
+import SpaceView from '../Space/View';
+
+import SectionMessage from '../Section/Message';
 
 const ClientLayout = () => {
     return (
@@ -43,6 +45,8 @@ const ClientLayout = () => {
                     <Route path="/space/detail" element={<SpaceDetail mode={"client"} />} />
                     <Route path="/space/apply" element={<SpaceApply mode={"client"} />} />
                     <Route path="/space/progress" element={<SpaceProgress mode={"client"} />} />
+
+                    <Route path="/section/message" element={<SectionMessage mode={"client"} />} />
                 </Routes>
             </div>
         </>
