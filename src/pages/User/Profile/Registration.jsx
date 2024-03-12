@@ -1,19 +1,18 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NotificationManager } from "react-notifications";
 import { useDispatch, useSelector } from "react-redux";
 
+import AvatarUploader from "../../../components/AvatarUploader";
 import Button from "../../../components/Button";
 import CheckGroup from "../../../components/CheckGroup";
 import DatePicker from "../../../components/DatePicker";
 import Input from "../../../components/Input";
 import Select from "../../../components/Select";
 import Textarea from "../../../components/Textarea";
-import AvatarUploader from "../../../components/AvatarUploader";
-
-import query from "../../../utils/query";
-import { SPACE_TYPES, TRANSPORTATIONS } from "../../../utils/constants";
 
 import { login } from "../../../common/userSlice";
+import { USER_TYPES, AREAS, SPACE_TYPES, TRANSPORTATIONS } from "../../../utils/constants";
+import query from "../../../utils/query";
 
 const Registration = ({ mode }) => {
     const dispatch = useDispatch();
@@ -52,11 +51,11 @@ const Registration = ({ mode }) => {
             </section>
             <section className="py-2">
                 <label className="py-0.5">種別</label>
-                <Select name="type" value={profile.type} onChange={(e) => onChange(e.target)} />
+                <Select name="type" options={USER_TYPES} value={profile.type} onChange={(e) => onChange(e.target)} />
             </section>
             <section className="py-2">
                 <label className="py-0.5">エリア</label>
-                <Select name="area" value={profile.area} onChange={(e) => onChange(e.target)} />
+                <Select name="area" options={AREAS} value={profile.area} onChange={(e) => onChange(e.target)} />
             </section>
             <section className="py-2">
                 <CheckGroup label={"新有するスペース"} itemClassName={"py-1"}
