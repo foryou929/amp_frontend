@@ -19,11 +19,11 @@ const Registration = ({ mode }) => {
         points: 0,
         recruitment_content: 0,
         space_type: 0,
-        recruitment_period: 0,
+        recruitment_period: 1,
         area: 0,
         year_designation: 0,
         recruitment_number: 0,
-        project_period: 0,
+        project_period: 1,
         content_size: "",
         description: "",
     });
@@ -34,18 +34,10 @@ const Registration = ({ mode }) => {
         setProject(newProject);
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        query.auth.post(`/${mode}/project`, project, async (project) => {
-            await imageUploaderRef.current.upload(`/${mode}/image/project/${project.id}`);
-            NotificationManager.success('Success');
-        });
-    }
-
     return (
         <>
             <h1 className="text-2xl font-bold">プロジェクトを作成</h1>
-            <form onSubmit={handleSubmit}>
+            <div>
                 <section className="my-4">
                     <h6>タイトル</h6>
                     <Textarea name="name" onChange={(e) => onChange(e.target)} />
@@ -113,9 +105,13 @@ const Registration = ({ mode }) => {
                     <ImageUploader ref={imageUploaderRef} />
                 </section>
                 <section className="my-4">
-                    <Button className="w-full">プロジェクトを作成</Button>
+                    <Button className="w-full" onClick={async () => {
+                        const newProject = await query.auth.post(`/${mode}/project`, project);
+                        await imageUploaderRef.current.upload(`/${mode}/image/project/${newProject.id}`);
+                        NotificationManager.success('Success');
+                    }}>プロジェクトを作成</Button>
                 </section>
-            </form>
+            </div>
         </>
     );
 }
