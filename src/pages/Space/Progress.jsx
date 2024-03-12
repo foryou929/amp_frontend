@@ -134,7 +134,7 @@ const Progress = ({ mode }) => {
         <>
             <div className="py-2 flex justify-between">
                 <Backward>戻る</Backward>
-                <Forward to={`/${mode}/project/message?id=${id}`}>メッセージページへ</Forward>
+                <Forward to={`/${mode}/section/message?id=${id}`}>メッセージページへ</Forward>
             </div>
             <h1 className="text-2xl font-bold mt-4">
                 空間進行状況
