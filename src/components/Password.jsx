@@ -8,7 +8,7 @@ const regex = {
     length: /^.{8,}$/ // Minimum length of 8 characters
 };
 
-const Password = ({ className, showStrength, ...rest }) => {
+const Password = ({ className, showStrength, onChange, ...rest }) => {
     const [password, setPassword] = useState('');
     const [strength, setStrength] = useState({});
     useEffect(() => {
@@ -22,7 +22,10 @@ const Password = ({ className, showStrength, ...rest }) => {
     }, [password]);
     return (
         <>
-            <input type="password" className={`p-2 border border-[#DEE2E6] focus:shadow outline-none ${className}`} {...rest} onChange={(e) => setPassword(e.target.value)} />
+            <input type="password" className={`p-2 border border-[#DEE2E6] focus:shadow outline-none ${className}`} {...rest} onChange={(e) => {
+                setPassword(e.target.value)
+                onChange(e);
+            }} />
             {
                 showStrength &&
                 <div className="flex gap-2 mt-2">

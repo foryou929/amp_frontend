@@ -18,31 +18,42 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [username, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+    const mode = getMode();
 
     const { user } = useSelector(state => state.user);
 
-    const mode = getMode();
+    const [username, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        setError(null);
+    }, [username, password]);
 
     useEffect(() => {
         if (user.id)
-            navigate(`${mode}/profile/view`);
+            navigate(`/${mode}/profile/view`);
     }, [user]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        query.post(`/auth/login`, { username, password: md5(password) }, (res) => {
-            saveTokens(res.token);
-            query.auth.get(`/auth/loginWithToken`, (user) => {
-                dispatch(login(user))
-            });
-        });
+    const onClick = async () => {
+        try {
+            const { token } = await query.post(`/auth/login`, { username, password: md5(password) });
+            saveTokens(token);
+            const user = await query.auth.get(`/auth/loginWithToken`);
+            dispatch(login(user))
+        } catch (err) {
+            if (err.response.status == 400)
+                setError("ユーザーIDまたはパスワードを正確に入力してください。");
+            else
+                setError("サーバー側でエラーが発生しました。");
+            console.error(err.message);
+        }
     }
 
     return (
         <div className="flex h-screen justify-center items-center">
-            <form className="max-w-[480px] px-8 py-16 border border-gray-200 shadow-xl" onSubmit={handleSubmit}>
+            <div className="w-[400px] px-8 py-16 border border-gray-200 shadow-xl">
                 <section className="py-2">
                     <label>ユーザーID:</label>
                     <div>
@@ -53,15 +64,25 @@ const Login = () => {
                     <label>パスワード:</label>
                     <Password className="w-full" onChange={(e) => setPassword(e.target.value)} />
                 </section>
-                <section className="py-2 flex gap-2">
-                    <Button className="flex-grow">ログイン</Button>
+                {
+                    error ? (
+                        <section className="py-2">
+                            <p className="text-center text-red-500">{error}</p>
+                        </section>
+                    ) : (
+                        <>
+                        </>
+                    )
+                }
+                <section className="py-2">
+                    <Button className="w-full" onClick={onClick}>ログイン</Button>
                 </section>
                 <section className="text-right py-2">
                     <NavLink className="text-[#56A7FF] font-bold" to={"/register"}>
-                        ユーザー登録ページで
+                        会員登録ページへ
                     </NavLink>
                 </section>
-            </form>
+            </div>
         </div>
     )
 }
