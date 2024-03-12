@@ -37,7 +37,7 @@ const Profile = ({ mode }) => {
                     }
                 />
                 <div className="p-4">
-                    <Button className="w-full" onClick={() => navigate('/user/project/manage?type=0')}>プロジェクトー覧</Button>
+                    <Button className="w-full" onClick={() => navigate('/user/project/manage?type=0')}>進行中のプロジェクトー覧</Button>
                 </div>
             </div>
             <div className="w-full my-4">
