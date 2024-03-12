@@ -180,7 +180,6 @@ const Progress = ({ mode }) => {
                                 </>
                             )
                         }
-                        <Button className="mt-4" onClick={handleClick}>{PROJECT_STEPS[mode][section.step]?.button}</Button>
                     </>
                 }
             </div >
