@@ -96,9 +96,9 @@ const Header = ({ children }) => {
             </div>
             {
                 message.type > 0 && (
-                    <div className="px-8 relative text-center">
+                    <div className={`px-8 relative text-center ${message.type == 1 ? "text-green-500" : message.type == 3 ? "text-red-500" : "text-yellow-500"}`}>
                         <p className="py-1">{message.content}</p>
-                        <div className="absolute w-4 right-2 top-0 text-xl cursor-pointer" onClick={() => {
+                        <div className="absolute w-4 right-4 top-0 text-xl cursor-pointer" onClick={() => {
                             dispatch(clear());
                         }}>
                             &times;
