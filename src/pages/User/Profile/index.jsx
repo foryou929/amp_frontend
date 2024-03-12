@@ -103,10 +103,10 @@ const Profile = ({ mode }) => {
                     </div>
                     <div className="flex border-b border-b-gray-200 py-3">
                         <div className="w-5/12">
-                            年代
+                            生年月日
                         </div>
                         <div className="w-7/12">
-                            <p>{user.birthday ? user.birthday : "データはありません。"}</p>
+                            <p>{user.birthday != "0000-0-0" ? user.birthday : "データはありません。"}</p>
                         </div>
                     </div>
                     <div className="flex border-b border-b-gray-200 py-3">
