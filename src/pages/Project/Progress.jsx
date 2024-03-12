@@ -1,28 +1,36 @@
-import { useEffect, useState } from "react";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
-import Button from "../../../components/Button";
-import Textarea from "../../../components/Textarea";
-import Input from "../../../components/Input";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
+import Textarea from "../../components/Textarea";
 
-import query from "../../../utils/query";
-import { SECTION, STEPS } from "../../../utils/constants";
-import Ranking from "../../../components/Ranking";
+import { danger, clear } from "../../common/messageSlice";
+import Ranking from "../../components/Ranking";
+import { SECTION, PROJECT_STEPS } from "../../utils/constants";
+import query from "../../utils/query";
 
-const Progress = ({ mode, id }) => {
+const Progress = ({ mode }) => {
+    const dispatch = useDispatch();
     const [project, setProject] = useState({});
     const [section, setSection] = useState({ step: 0 });
+
+    const [queryParameters] = useSearchParams();
+    const id = queryParameters.get("id");
 
     useEffect(() => {
         if (id) {
             query.auth.get(`/${mode}/section/${id}`, (section) => {
-                setSection(section);
-                setProject(section.project);
+                setSection(section)
+                query.auth.get(`/${mode}/project/${section.project.id}`, (project) => setProject(project));
             });
         }
     }, [id]);
 
-    const [value, setValue] = useState();
+    const [content, setContent] = useState("");
+    const [point, setPoint] = useState(0);
     const [rank, setRank] = useState(0);
     const [payment, setPayment] = useState({});
     const [advert, setAdvert] = useState({});
@@ -44,51 +52,60 @@ const Progress = ({ mode, id }) => {
         }
     }, [section]);
 
-    const handleClick = () => {
-        try {
-            const onSuccess = () => {
-                query.auth.patch(`/${mode}/section/${section.id}`, { step: section.step + 1 }, (section) => {
-                    setSection(section);
-                });
+    const handleClick = async () => {
+        if (PROJECT_STEPS[mode][section.step].child == 1) {
+            if (content.trim().length == 0) {
+                dispatch(danger("メッセージを入力してください。"));
+                return;
             }
+        }
+        if (PROJECT_STEPS[mode][section.step].child == 2) {
+            if (point == 0) {
+                dispatch(danger("ポイントは0より大きい値を入力してください。"));
+                return;
+            }
+        }
+        try {
             switch (section.step) {
                 case 1:
-                    query.auth.post(`/${mode}/section/${section.id}/message`, { content: value, type: SECTION.CHOOSE }, onSuccess);
+                    await query.auth.post(`/${mode}/section/${section.id}/message`, { content, type: SECTION.CHOOSE });
                     break;
                 case 2:
-                    query.auth.post(`/${mode}/section/${section.id}/message`, { content: value, type: SECTION.AGREE }, onSuccess);
+                    await query.auth.post(`/${mode}/section/${section.id}/message`, { content, type: SECTION.CHOOSE });
                     break;
                 case 3:
-                    query.auth.post(`/${mode}/section/${section.id}/payment`, { point: value }, (payment) => {
-                        setPayment(payment);
-                        onSuccess();
-                    });
+                    const newPayment = await query.auth.post(`/${mode}/section/${section.id}/payment`, { point });
+                    setPayment(newPayment);
                     break;
                 case 4:
-                    query.auth.post(`/${mode}/section/${section.id}/advert`, null, onSuccess);
+                    await query.auth.post(`/${mode}/section/${section.id}/advert`);
                     break;
                 case 5:
-                    query.auth.patch(`/${mode}/section/${section.id}/advert`, { is_received: true }, onSuccess);
+                    await query.auth.patch(`/${mode}/section/${section.id}/advert`, { is_received: true });
                     break;
                 case 6:
-                    query.auth.post(`/${mode}/section/${section.id}/message`, { content: value, type: SECTION.START_REPORT }, onSuccess);
+                    await query.auth.post(`/${mode}/section/${section.id}/message`, { content, type: SECTION.START_REPORT });
                     break;
                 case 7:
-                    query.auth.post(`/${mode}/section/${section.id}/message`, { content: value, type: SECTION.PROGRESS_REPORT }, onSuccess);
+                    await query.auth.post(`/${mode}/section/${section.id}/message`, { content, type: SECTION.PROGRESS_REPORT });
                     break;
                 case 8:
-                    query.auth.post(`/${mode}/section/${section.id}/message`, { content: value, type: SECTION.END_REPORT }, onSuccess);
+                    await query.auth.post(`/${mode}/section/${section.id}/message`, { content, type: SECTION.END_REPORT });
                     break;
                 case 9:
-                    query.auth.patch(`/${mode}/section/${section.id}/payment`, { is_paid: true }, (payment) => {
-                        setPayment(payment);
-                        onSuccess();
-                    });
+                    const updatedPayment = await query.auth.patch(`/${mode}/section/${section.id}/payment`, { is_paid: true });
+                    setPayment(updatedPayment);
                     break;
                 case 10:
-                    query.auth.post(`/${mode}/section/${section.id}/review`, { content: value, rank }, onSuccess);
+                    await query.auth.post(`/${mode}/section/${section.id}/review`, { content, rank });
                     break;
             }
+            if (section.step != 10) {
+                await query.auth.patch(`/${mode}/section/${section.id}`, { step: section.step + 1 });
+                setSection({ ...section, step: section.step + 1 });
+            }
+            setContent("");
+            dispatch(clear());
         } catch (err) {
             console.error(err.message)
         }
@@ -100,32 +117,48 @@ const Progress = ({ mode, id }) => {
                 プロジェクト進榜状況
             </h1>
             <div className="rounded p-4 bg-[#F0F2F8] mt-2">
-                <h2 className="text-xl font-bold text-[#00146E]">{STEPS[mode][section.step]?.label}</h2>
+                <h2 className="text-xl font-bold text-[#00146E]">{PROJECT_STEPS[mode][section.step]?.label}</h2>
                 <p className="mt-2">
                     {
                         section.step == 11 ?
                             "プロジェクトが完了しました。" :
-                            STEPS[mode][section.step]?.content
+                            PROJECT_STEPS[mode][section.step]?.content
                     }
                 </p>
                 {
-                    STEPS[mode][section.step]?.button &&
+                    PROJECT_STEPS[mode][section.step]?.button &&
                     <>
-                        {STEPS[mode][section.step]?.child == 1 && <Textarea className="min-h-40 mt-4" name="content" onChange={(e) => setValue(e.target.value)} />}
-                        {STEPS[mode][section.step]?.child == 2 && <div className="flex items-center mt-4"><Input className="flex-grow" onChange={(e) => setValue(e.target.value)} />&nbsp;pt</div>}
-                        {STEPS[mode][section.step]?.child == 3 && (
+                        {
+                            SPACE_STEPS[mode][section.step]?.child == 1 &&
                             <>
-                                <Ranking rank={rank} className="mt-4" onChange={(rank) => setRank(rank)} />
-                                <Textarea className="min-h-40 mt-2" name="content" onChange={(e) => setValue(e.target.value)} />
+                                <Textarea className="min-h-40 mt-4" name="content" value={content} onChange={(e) => setContent(e.target.value)} />
+                                <Button className="mt-4" onClick={handleClick}>{SPACE_STEPS[mode][section.step]?.button}</Button>
                             </>
-                        )}
-                        <Button className="mt-4" onClick={handleClick}>{STEPS[mode][section.step]?.button}</Button>
+                        }
+                        {
+                            SPACE_STEPS[mode][section.step]?.child == 2 &&
+                            <>
+                                <div className="flex items-center mt-4"><Input className="flex-grow" onChange={(e) => setPoint(e.target.value)} />&nbsp;pt</div>
+                                <Button className="mt-4" onClick={handleClick}>{SPACE_STEPS[mode][section.step]?.button}</Button>
+                            </>
+                        }
+                        {
+                            SPACE_STEPS[mode][section.step]?.child == 3 && (
+                                (mode == "client" && !clientReview.id) || (mode == "user" && !userReview.id) &&
+                                <>
+                                    <Ranking rank={rank} className="mt-4" onChange={(rank) => setRank(rank)} />
+                                    <Textarea className="min-h-40 mt-2" name="content" onChange={(e) => setContent(e.target.value)} />
+                                    <Button className="mt-4" onClick={handleClick}>{SPACE_STEPS[mode][section.step]?.button}</Button>
+                                </>
+                            )
+                        }
+                        <Button className="mt-4" onClick={handleClick}>{PROJECT_STEPS[mode][section.step]?.button}</Button>
                     </>
                 }
             </div >
             <ul>
                 {
-                    STEPS[mode].map((step, index) => (
+                    PROJECT_STEPS[mode].map((step, index) => (
                         <li key={index} className="border-b border-[#DEE2E6] py-4">
                             <div className="flex items-center">
                                 <div className="w-12 px-2">
@@ -161,8 +194,8 @@ const Progress = ({ mode, id }) => {
                                 </div>
                             </div>
                             <div className="ml-[48px] text-sm text-[#757D85] pr-4">
-                                {index == 3 && payment.id ? `${moment(payment.created_at).format("YYYY年MM月DD日")}: ${project.creator.username}さんが仮払いをおこないました` : ""}
-                                {index == 4 && advert.id ? `${moment(advert.created_at).format("YYYY年MM月DD日")}: ${project.creator.username}さんが広告物を発送しました` : ""}
+                                {index == 3 && payment.id ? `${moment(payment.created_at).format("YYYY年MM月DD日")}: ${project.creator?.username}さんが仮払いをおこないました` : ""}
+                                {index == 4 && advert.id ? `${moment(advert.created_at).format("YYYY年MM月DD日")}: ${project.creator?.username}さんが広告物を発送しました` : ""}
                                 {index == 5 && advert.id && advert.is_received ? `${moment(advert.updated_at).format("YYYY年MM月DD日")}: ${section.user.username}さんが広告物を受け取りました` : ""}
                                 {index == 6 && startReport.id ? `${moment(startReport.updated_at).format("YYYY年MM月DD日")}: ${section.user.username}さんが開始報告をおこないました` : ""}
                                 {index == 7 && progressReport.id ? `${moment(progressReport.updated_at).format("YYYY年MM月DD日")}: ${section.user.username}さんが経過報告をおこないました` : ""}
