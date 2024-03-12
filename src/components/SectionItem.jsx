@@ -9,7 +9,7 @@ const SectionItem = ({ mode, section, project }) => {
     return (
         <div className="flex gap-2">
             <div className="w-[calc(100%-40px)] flex gap-4 items-start">
-                <Avatar src={section.user.avatar} />
+                <Avatar className="w-16 h-16 flex-none" src={section.user.avatar} />
                 <div className="w-[calc(100%-64px)] flex flex-col justify-center">
                     {
                         project ?
