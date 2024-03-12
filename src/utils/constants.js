@@ -1,3 +1,8 @@
+export const USER_TYPES = [
+    { value: 0, label: "個人" },
+    { value: 1, label: "法人" }
+]
+
 export const PROJECT_STATUS = {
     RECRUITING: 0,
     PROGRESSING: 1,
