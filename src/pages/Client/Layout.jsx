@@ -19,6 +19,7 @@ import SpaceProgress from '../Space/Progress';
 import SpaceView from '../Space/View';
 
 import SectionMessage from '../Section/Message';
+import Settings from '../Setting';
 
 const ClientLayout = () => {
     return (
