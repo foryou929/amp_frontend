@@ -18,6 +18,7 @@ import SpaceProgress from '../Space/Progress';
 import SpaceRegistration from '../Space/Registration';
 
 import SectionMessage from '../Section/Message';
+import Settings from '../Setting';
 
 const UserLayout = () => {
     return (
@@ -45,6 +46,7 @@ const UserLayout = () => {
                     <Route path="/space/progress" element={<SpaceProgress mode={"user"} />} />
 
                     <Route path="/section/message" element={<SectionMessage mode={"client"} />} />
+                    <Route path="/settings" element={<Settings />} />
                 </Routes>
             </div>
         </>
