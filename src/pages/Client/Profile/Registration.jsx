@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { NotificationManager } from "react-notifications";
 import { useDispatch, useSelector } from "react-redux";
 
 import AvatarUploader from "../../../components/AvatarUploader";
@@ -9,6 +8,7 @@ import Select from "../../../components/Select";
 import Textarea from "../../../components/Textarea";
 
 import { login } from "../../../common/userSlice";
+import { success, danger } from "../../../common/messageSlice";
 import query from "../../../utils/query";
 import { USER_TYPES, AREAS } from "../../../utils/constants";
 
@@ -34,10 +34,15 @@ const Registration = ({ mode }) => {
 
     const onSave = async (e) => {
         e.preventDefault();
+        const { username } = profile;
+        if (username.trim().length == 0) {
+            dispatch(danger("ユーザー名を入力してください。"));
+            return;
+        }
         await avatarUploaderRef.current.upload(`/${mode}/${user.id}/avatar`);
         const newUser = await query.auth.patch(`/${mode}/${user.id}`, profile);
         dispatch(login(newUser));
-        NotificationManager.success('Success');
+        dispatch(success("プロフィールを登録しました。"));
     }
 
     return (

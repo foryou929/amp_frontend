@@ -47,6 +47,7 @@ const ClientLayout = () => {
                     <Route path="/space/progress" element={<SpaceProgress mode={"client"} />} />
 
                     <Route path="/section/message" element={<SectionMessage mode={"client"} />} />
+                    <Route path="/settings" element={<Settings />} />
                 </Routes>
             </div>
         </>

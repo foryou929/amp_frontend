@@ -44,7 +44,7 @@ const Registration = ({ mode }) => {
         setSpace(newSpace);
     }
 
-    const handleSubmit = async (e) => {
+    const onClick = async (e) => {
         const { title, points, type, perioid, area, status, description } = space;
         if (title.trim().length == 0) {
             dispatch(danger("タイトルを入力してください。"));
@@ -132,7 +132,7 @@ const Registration = ({ mode }) => {
                     <ImageUploader ref={imageUploaderRef} />
                 </section>
                 <section className="my-4">
-                    <Button className="w-full" onClick={handleSubmit}>スペースを作成</Button>
+                    <Button className="w-full" onClick={onClick}>スペースを作成</Button>
                 </section>
             </div>
         </>

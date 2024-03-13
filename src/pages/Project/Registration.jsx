@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Button from "../../components/Button";
 import Input from "../../components/Input";
@@ -8,10 +9,12 @@ import Textarea from "../../components/Textarea";
 import ImageUploader from "../../components/ImageUploader";
 
 import query from "../../utils/query";
-import { NotificationManager } from "react-notifications";
+import { success, danger } from "../../common/messageSlice";
 import { SPACE_TYPES, AREAS, RECRUITMENT_CONTENTS } from "../../utils/constants";
 
 const Registration = ({ mode }) => {
+    const dispatch = useDispatch();
+
     const imageUploaderRef = useRef();
 
     const [project, setProject] = useState({
@@ -106,9 +109,21 @@ const Registration = ({ mode }) => {
                 </section>
                 <section className="my-4">
                     <Button className="w-full" onClick={async () => {
+                        if (project.name.trim().length == 0) {
+                            dispatch(danger("タイトルを入力してください。"));
+                            return;
+                        }
+                        if (project.description.trim().length == 0) {
+                            dispatch(danger("説明文を入力してください。"));
+                            return;
+                        }
+                        if (project.content_size.trim().length == 0) {
+                            dispatch(danger("コンテンツのサイズを入力してください。"));
+                            return;
+                        }
                         const newProject = await query.auth.post(`/${mode}/project`, project);
                         await imageUploaderRef.current.upload(`/${mode}/image/project/${newProject.id}`);
-                        NotificationManager.success('Success');
+                        dispatch(success("プロジェクトを登録しました。"));
                     }}>プロジェクトを作成</Button>
                 </section>
             </div>
