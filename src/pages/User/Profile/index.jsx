@@ -10,6 +10,7 @@ import ProjectItem from "../../../components/ProjectItem";
 
 import { AREAS, SPACE_TYPES, TRANSPORTATIONS, USER_TYPES } from "../../../utils/constants";
 import query from "../../../utils/query";
+import SpaceItem from "../../../components/SpaceItem";
 
 const Profile = ({ mode }) => {
     const navigate = useNavigate();
@@ -17,11 +18,15 @@ const Profile = ({ mode }) => {
     const { user } = useSelector(state => state.user);
 
     const [sections, setSections] = useState([]);
+    const [spaces, setSpaces] = useState([]);
 
     useEffect(() => {
         query.auth.get(`/${mode}/section`, (sections) => {
             setSections(sections);
-        });
+        }, () => { });
+        query.auth.get(`/${mode}/space`, (spaces) => {
+            setSpaces(spaces);
+        }, () => { });
     }, []);
 
     return (
@@ -69,7 +74,12 @@ const Profile = ({ mode }) => {
                 <h2 className="text-xl font-bold">スペース</h2>
                 <List
                     className="my-4"
-                    items={[]}
+                    items={spaces.map(space => {
+                        return {
+                            key: space.id,
+                            content: <SpaceItem mode={mode} space={space} />
+                        }
+                    })}
                 />
                 <div className="p-4">
                     <Button className="w-full" onClick={() => navigate('/user/space/manage')}>依頼中のスー覧</Button>
