@@ -16,7 +16,7 @@ const ProjectItem = ({ mode, project, section }) => {
         <div className="flex gap-2">
             <div className="w-[calc(100%-16px)] flex gap-4 items-start">
                 {
-                    project.project_images.length >= 1 ?
+                    project.project_images.length > 0 ?
                         <Image className="flex-none w-12 h-12" src={project.project_images[0]?.source} /> :
                         <Image className="flex-none w-12 h-12" src={"/img/no-image.svg"} />
                 }
