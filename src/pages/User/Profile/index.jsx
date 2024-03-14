@@ -21,12 +21,8 @@ const Profile = ({ mode }) => {
     const [spaces, setSpaces] = useState([]);
 
     useEffect(() => {
-        query.auth.get(`/${mode}/section`, (sections) => {
-            setSections(sections);
-        }, () => { });
-        query.auth.get(`/${mode}/space`, (spaces) => {
-            setSpaces(spaces);
-        }, () => { });
+        query.auth.get(`/${mode}/section`, (sections) => setSections(sections), () => { });
+        query.auth.get(`/${mode}/space`, (spaces) => setSpaces(spaces), () => { });
     }, []);
 
     return (
