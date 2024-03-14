@@ -43,7 +43,7 @@ const Login = () => {
             const user = await query.auth.get(`/auth/loginWithToken`);
             dispatch(login(user))
         } catch (err) {
-            if (err.response.status == 400)
+            if (err.response?.status == 400)
                 setError("ユーザーIDまたはパスワードを正確に入力してください。");
             else
                 setError("サーバー側でエラーが発生しました。");

@@ -8,6 +8,8 @@ import { NavLink } from "react-router-dom";
 
 const Register = () => {
     const [username, setUserName] = useState('');
+    const [first_name, setFirstName] = useState('');
+    const [last_name, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -27,6 +29,10 @@ const Register = () => {
             setError("ユーザーIDを入力してください。");
             return;
         }
+        if ((last_name + first_name).trim().length == 0) {
+            setError("ユーザー名を入力してください。");
+            return;
+        }
         const RegExp = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
         if (!RegExp.test(email)) {
             setError("メールアドレスを正確に入力してください。");
@@ -41,7 +47,7 @@ const Register = () => {
             return;
         }
         try {
-            await query.post(`/auth/register`, { username, password: md5(password), email })
+            await query.post(`/auth/register`, { username, last_name, first_name, password: md5(password), email })
             setSuccess("会員登録が完了しました。");
         } catch (err) {
             if (err.response.status == 400)
@@ -58,6 +64,13 @@ const Register = () => {
                     <label>ユーザーID:</label>
                     <div>
                         <Input className="w-full" onChange={(e) => setUserName(e.target.value)} />
+                    </div>
+                </section>
+                <section className="py-2">
+                    <label>ユーザー名</label>
+                    <div className="flex gap-4">
+                        <Input className="w-full" onChange={(e) => setLastName(e.target.value)} />
+                        <Input className="w-full" onChange={(e) => setFirstName(e.target.value)} />
                     </div>
                 </section>
                 <section className="py-2">
@@ -85,7 +98,7 @@ const Register = () => {
                     )
                 }
                 {
-                    error ? (
+                    success ? (
                         <section className="py-2">
                             <p className="text-center text-green-500">{success}</p>
                         </section>

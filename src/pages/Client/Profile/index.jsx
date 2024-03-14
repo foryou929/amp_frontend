@@ -10,14 +10,18 @@ import ProjectItem from "../../../components/ProjectItem";
 
 import { AREAS, USER_TYPES } from "../../../utils/constants";
 import query from "../../../utils/query";
+import SpaceItem from "../../../components/SpaceItem";
 
 const Profile = ({ mode }) => {
     const navigate = useNavigate();
     const { user } = useSelector(state => state.user);
 
     const [projects, setProjects] = useState([]);
+    const [sections, setSections] = useState([]);
+
     useEffect(() => {
-        query.auth.get(`/${mode}/project`, (projects) => setProjects(projects));
+        query.auth.get(`/${mode}/project`, (projects) => setProjects(projects), () => { });
+        query.auth.get(`/${mode}/section`, (sections) => setSections(sections), () => { });
     }, []);
 
     return (
@@ -75,7 +79,13 @@ const Profile = ({ mode }) => {
                 <List
                     className="my-4"
                     items={
-                        []
+                        sections.filter(section => section.space != null)
+                            .map(section => {
+                                return {
+                                    key: section.id,
+                                    content: <SpaceItem space={section.space} />
+                                }
+                            })
                     }
                 />
                 <div className="p-4">
