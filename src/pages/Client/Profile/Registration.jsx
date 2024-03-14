@@ -22,8 +22,8 @@ const Registration = ({ mode }) => {
     const [profile, setProfile] = useState({});
 
     useEffect(() => {
-        const { username, type, area, main_service, main_pr_target, main_message, website_url } = user;
-        setProfile({ username, type, area, main_service, main_pr_target, main_message, website_url })
+        const { first_name, last_name, type, area, main_service, main_pr_target, main_message, website_url } = user;
+        setProfile({ first_name, last_name, type, area, main_service, main_pr_target, main_message, website_url })
     }, [user])
 
     const onChange = (target) => {
@@ -32,17 +32,21 @@ const Registration = ({ mode }) => {
         setProfile(newProfile);
     }
 
-    const onSave = async (e) => {
-        e.preventDefault();
-        const { username } = profile;
-        if (username.trim().length == 0) {
+    const onSave = async () => {
+        const { first_name, last_name } = profile;
+        if (first_name.trim().length == 0 || last_name.trim().length == 0) {
             dispatch(danger("ユーザー名を入力してください。"));
             return;
         }
-        await avatarUploaderRef.current.upload(`/${mode}/${user.id}/avatar`);
-        const newUser = await query.auth.patch(`/${mode}/${user.id}`, profile);
-        dispatch(login(newUser));
-        dispatch(success("プロフィールを登録しました。"));
+        try {
+            await avatarUploaderRef.current.upload(`/${mode}/${user.id}/avatar`);
+            const updatedUser = await query.auth.patch(`/${mode}/${user.id}`, profile);
+            dispatch(login(updatedUser));
+            dispatch(success("プロフィールを登録しました。"));
+        } catch (err) {
+            dispatch(danger("サーバー側でエラーが発生しました。"));
+            console.error(err.message);
+        }
     }
 
     return (
@@ -51,7 +55,10 @@ const Registration = ({ mode }) => {
             <AvatarUploader className="py-4" defaultSrc={user.avatar} ref={avatarUploaderRef} />
             <section className="py-2">
                 <label className="py-0.5">ユーザー名</label>
-                <Input className="w-full" name="username" value={profile.username} onChange={(e) => onChange(e.target)} />
+                <div className="flex gap-4">
+                    <Input name="last_name" value={profile.last_name} onChange={(e) => onChange(e.target)} />
+                    <Input name="first_name" value={profile.first_name} onChange={(e) => onChange(e.target)} />
+                </div>
             </section>
             <section className="py-2">
                 <label className="py-0.5">種別</label>
