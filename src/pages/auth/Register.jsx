@@ -29,7 +29,7 @@ const Register = () => {
             setError("ユーザーIDを入力してください。");
             return;
         }
-        if (last_name.trim().length == 0 || first_name.trim().length == 0) {
+        if ((last_name + first_name).trim().length == 0) {
             setError("ユーザー名を入力してください。");
             return;
         }
@@ -98,7 +98,7 @@ const Register = () => {
                     )
                 }
                 {
-                    error ? (
+                    success ? (
                         <section className="py-2">
                             <p className="text-center text-green-500">{success}</p>
                         </section>
