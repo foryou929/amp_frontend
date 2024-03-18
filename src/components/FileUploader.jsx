@@ -42,7 +42,7 @@ const FileUploader = forwardRef((props, ref) => {
                 fileRef.current.value = null;
                 fileRef.current.click()
             }}>
-                <img src="/img/remove.svg" />
+                <img src="/img/plus.svg" />
                 <span className='ml-2'>ファイルアップロード</span>
             </button>
             {selectedFiles.length > 0 && (
@@ -53,7 +53,7 @@ const FileUploader = forwardRef((props, ref) => {
                                 {file.name}
                             </div>
                             <button className='flex-none' onClick={() => handleFileDelete(index)}>
-                                <img src="/img/plus.svg" />
+                                <img src="/img/remove.svg" />
                             </button>
                         </li>
                     ))}

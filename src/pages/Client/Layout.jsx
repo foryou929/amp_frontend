@@ -15,6 +15,7 @@ import ProjectScout from '../Project/Scout';
 
 import SpaceApply from '../Space/Apply';
 import SpaceDetail from '../Space/Detail';
+import SpaceManage from '../Space/Manage';
 import SpaceProgress from '../Space/Progress';
 import SpaceView from '../Space/View';
 
@@ -25,7 +26,6 @@ const ClientLayout = () => {
     return (
         <>
             <Header
-                avatar={"/1"}
                 name={"クライアントモードに切り替え"}
                 subname={"クライアントメニュー"}
                 menu={client_menus}
@@ -42,6 +42,7 @@ const ClientLayout = () => {
                     <Route path="/project/info" element={<ProjectInfo mode="client" />} />
                     <Route path="/project/progress" element={<ProjectProgress mode="client" />} />
 
+                    <Route path="/space/manage" element={<SpaceManage mode={"client"} />} />
                     <Route path="/space/view" element={<SpaceView mode="client" />} />
                     <Route path="/space/detail" element={<SpaceDetail mode={"client"} />} />
                     <Route path="/space/apply" element={<SpaceApply mode={"client"} />} />

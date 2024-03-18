@@ -61,7 +61,7 @@ const Registration = ({ mode }) => {
             } else {
                 const newSpace = await query.auth.post(`/${mode}/space`, { title, points, type, perioid, area, status, description });
                 setSpace(newSpace);
-                await imageUploaderRef.current.upload(`/${mode}/image/space/${space.id}`);
+                await imageUploaderRef.current.upload(`/${mode}/image/space/${newSpace.id}`);
                 dispatch(success("スペースが正常に作成されました。"));
             }
         } catch (err) {

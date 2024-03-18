@@ -24,7 +24,6 @@ const UserLayout = () => {
     return (
         <>
             <Header
-                avatar={"/1"}
                 name={"クライアントモードに切り替え"}
                 subname={"ユーザーメニュー"}
                 menu={user_menus}

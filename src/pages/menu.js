@@ -31,6 +31,7 @@ export const client_menus = [
         { icon: <IoMdBriefcase className='w-full h-full' />, href: "/client/project/scout", content: "スカウトー覧" },
     ],
     [
+        { icon: <MdSpaceDashboard className='w-full h-full' />, href: "/client/space/manage", content: "スペース管理" },
         { icon: <MdSpaceDashboard className='w-full h-full' />, href: "/client/space/view", content: "スペースを探す" },
     ],
     [

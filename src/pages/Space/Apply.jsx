@@ -52,7 +52,7 @@ const Apply = ({ mode }) => {
                         <Textarea className="mt-2 min-h-40" onChange={(e) => setMessage(e.target.value)} />
                         <Button className="w-full mt-4" onClick={async () => {
                             try {
-                                const space = await query.auth.post(`/${mode}/section/space/${space.id}`);
+                                const section = await query.auth.post(`/${mode}/section/space/${space.id}`);
                                 setSection(section);
                                 await query.auth.post(`/${mode}/section/${section.id}/message`, { content: message, type: SECTION.APPLY });
                                 dispatch(success("スペースが正常に作成されました。"));

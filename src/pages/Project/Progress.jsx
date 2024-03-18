@@ -35,7 +35,7 @@ const Progress = ({ mode }) => {
 
     const [content, setContent] = useState("");
     const [point, setPoint] = useState(0);
-    const [rank, setRank] = useState(0);
+    const [rank, setRank] = useState(1);
     const [payment, setPayment] = useState({});
     const [advert, setAdvert] = useState({});
     const [startReport, setStartReport] = useState({});
@@ -54,13 +54,13 @@ const Progress = ({ mode }) => {
                         if (message.type == 9) setEndReport(message);
                     });
                 });
-                if (section.step == 5) {
+                if (section.step >= 4) {
                     query.auth.get(`/${mode}/section/${section.id}/payment`, payment => setPayment(payment));
                 }
-                if (section.step == 6) {
+                if (section.step >= 5) {
                     query.auth.get(`/${mode}/section/${section.id}/advert`, advert => setAdvert(advert));
                 }
-                if (section.step == 10) {
+                if (section.step >= 10) {
                     query.auth.get(`/${mode}/section/${section.id}/review`, reviews => {
                         reviews.map(review => {
                             if (review.reviewer == project.creator.id)
@@ -77,7 +77,7 @@ const Progress = ({ mode }) => {
     }, [section]);
 
     const handleClick = async () => {
-        if (PROJECT_STEPS[mode][section.step].child == 1) {
+        if (PROJECT_STEPS[mode][section.step].child == 1 || PROJECT_STEPS[mode][section.step].child == 3) {
             if (content.trim().length == 0) {
                 dispatch(danger("メッセージを入力してください。"));
                 return;
@@ -102,10 +102,12 @@ const Progress = ({ mode }) => {
                     setPayment(newPayment);
                     break;
                 case 4:
-                    await query.auth.post(`/${mode}/section/${section.id}/advert`);
+                    const newAdvert = await query.auth.post(`/${mode}/section/${section.id}/advert`);
+                    setAdvert(newAdvert);
                     break;
                 case 5:
-                    await query.auth.patch(`/${mode}/section/${section.id}/advert`, { is_received: true });
+                    const updatedAdvert = await query.auth.patch(`/${mode}/section/${section.id}/advert`, { is_received: true });
+                    setAdvert(updatedAdvert);
                     break;
                 case 6:
                     await query.auth.post(`/${mode}/section/${section.id}/message`, { content, type: SECTION.START_REPORT });
@@ -121,7 +123,11 @@ const Progress = ({ mode }) => {
                     setPayment(updatedPayment);
                     break;
                 case 10:
-                    await query.auth.post(`/${mode}/section/${section.id}/review`, { content, rank });
+                    const newReview = await query.auth.post(`/${mode}/section/${section.id}/review`, { content, rank });
+                    if (newReview.reviewer == project.creator.id)
+                        setUserReview(newReview);
+                    if (newReview.reviewer == section.user.id)
+                        setClientReview(newReview);
                     break;
             }
             if (section.step != 10) {
@@ -158,28 +164,24 @@ const Progress = ({ mode }) => {
                     <>
                         {
                             PROJECT_STEPS[mode][section.step]?.child == 1 &&
-                            <>
-                                <Textarea className="min-h-40 mt-4" name="content" value={content} onChange={(e) => setContent(e.target.value)} />
-                                <Button className="mt-4" onClick={handleClick}>{PROJECT_STEPS[mode][section.step]?.button}</Button>
-                            </>
+                            <Textarea className="min-h-40 mt-4" name="content" value={content} onChange={(e) => setContent(e.target.value)} />
                         }
                         {
                             PROJECT_STEPS[mode][section.step]?.child == 2 &&
-                            <>
-                                <div className="flex items-center mt-4"><Input className="flex-grow" onChange={(e) => setPoint(e.target.value)} />&nbsp;pt</div>
-                                <Button className="mt-4" onClick={handleClick}>{PROJECT_STEPS[mode][section.step]?.button}</Button>
-                            </>
+                            <div className="flex items-center mt-4">
+                                <Input className="flex-grow" onChange={(e) => setPoint(e.target.value)} />&nbsp;pt
+                            </div>
                         }
                         {
                             PROJECT_STEPS[mode][section.step]?.child == 3 && (
-                                (mode == "client" && !clientReview.id) || (mode == "user" && !userReview.id) &&
+                                ((mode == "client" && !clientReview.id) || (mode == "user" && !userReview.id)) &&
                                 <>
                                     <Ranking rank={rank} className="mt-4" onChange={(rank) => setRank(rank)} />
                                     <Textarea className="min-h-40 mt-2" name="content" onChange={(e) => setContent(e.target.value)} />
-                                    <Button className="mt-4" onClick={handleClick}>{PROJECT_STEPS[mode][section.step]?.button}</Button>
                                 </>
                             )
                         }
+                        {PROJECT_STEPS[mode][section.step]?.button && <Button className="mt-4" onClick={handleClick}>{PROJECT_STEPS[mode][section.step]?.button}</Button>}
                     </>
                 }
             </div >
