@@ -121,8 +121,12 @@ const Registration = ({ mode }) => {
                             dispatch(danger("コンテンツのサイズを入力してください。"));
                             return;
                         }
-                        const newProject = await query.auth.post(`/${mode}/project`, project);
-                        await imageUploaderRef.current.upload(`/${mode}/image/project/${newProject.id}`);
+                        try {
+                            const newProject = await query.auth.post(`/${mode}/project`, project);
+                            await imageUploaderRef.current.upload(`/${mode}/image/project/${newProject.id}`);
+                        } catch (err) {
+                            console.error(err.message);
+                        }
                         dispatch(success("プロジェクトを登録しました。"));
                     }}>プロジェクトを作成</Button>
                 </section>
