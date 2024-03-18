@@ -21,8 +21,8 @@ const Detail = ({ mode }) => {
     const id = queryParameters.get("id");
 
     useEffect(() => {
-        query.auth.get(`/${mode}/space/${id}`, (space) => setSpace(space));
-        query.auth.get(`/${mode}/section/space/${id}`, section => setSection(section));
+        query.auth.get(`/${mode}/space/${id}`, (space) => setSpace(space), () => {});
+        query.auth.get(`/${mode}/section/space/${id}`, section => setSection(section), () => {});
     }, []);
 
     return (
