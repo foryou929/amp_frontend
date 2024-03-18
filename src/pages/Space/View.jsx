@@ -7,9 +7,11 @@ const View = ({ mode }) => {
     const [spaces, setSpaces] = useState([]);
 
     useEffect(() => {
-        query.auth.get(`/${mode}/space`, (spaces) => {
-            setSpaces(spaces);
-        });
+        try {
+            query.auth.get(`/${mode}/space`, (spaces) => setSpaces(spaces));
+        } catch (err) {
+            console.error(err.message);
+        }
     }, []);
 
     return (
