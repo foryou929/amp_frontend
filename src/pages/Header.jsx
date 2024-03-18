@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 
+import { MdMailOutline } from "react-icons/md";
+
 import Avatar from "../components/Avatar";
 
 import { user_menus, client_menus } from "./menu";
@@ -48,6 +50,9 @@ const Header = ({ children }) => {
                         children
                     }
                 </div>
+                <NavLink to={`/notification`} className="w-12 flex justify-center items-center cursor-pointer">
+                    <MdMailOutline className="w-6 h-6"/>
+                </NavLink>
                 <div className="w-16 flex-none flex justify-center items-center cursor-pointer" onClick={() => setOpen(!open)}>
                     {
                         open ?
