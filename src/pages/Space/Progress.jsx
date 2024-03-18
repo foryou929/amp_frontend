@@ -35,7 +35,7 @@ const Progress = ({ mode }) => {
 
     const [content, setContent] = useState("");
     const [point, setPoint] = useState(0);
-    const [rank, setRank] = useState(0);
+    const [rank, setRank] = useState(1);
     const [payment, setPayment] = useState({});
     const [advert, setAdvert] = useState({});
     const [startReport, setStartReport] = useState({});
@@ -54,11 +54,11 @@ const Progress = ({ mode }) => {
                         if (message.type == 9) setEndReport(message);
                     });
                 });
-                if (section.step >= 4)
+                if (section.step >= 3)
                     query.auth.get(`/${mode}/section/${section.id}/payment`, payment => setPayment(payment));
-                if (section.step >= 5)
+                if (section.step >= 4)
                     query.auth.get(`/${mode}/section/${section.id}/advert`, advert => setAdvert(advert));
-                if (section.step == 9) {
+                if (section.step >= 9) {
                     query.auth.get(`/${mode}/section/${section.id}/review`, reviews => {
                         reviews.map(review => {
                             if (review.reviewer == space.creator.id)
@@ -75,7 +75,7 @@ const Progress = ({ mode }) => {
     }, [section]);
 
     const handleClick = async () => {
-        if (SPACE_STEPS[mode][section.step].child == 1) {
+        if (SPACE_STEPS[mode][section.step].child == 1 || SPACE_STEPS[mode][section.step].child == 3) {
             if (content.trim().length == 0) {
                 dispatch(danger("メッセージを入力してください。"));
                 return;
@@ -116,7 +116,11 @@ const Progress = ({ mode }) => {
                     setPayment(updatedPayment);
                     break;
                 case 9:
-                    await query.auth.post(`/${mode}/section/${section.id}/review`, { content, rank });
+                    const newReview = await query.auth.post(`/${mode}/section/${section.id}/review`, { content, rank });
+                    if (newReview.reviewer == space.creator.id)
+                        setUserReview(newReview);
+                    if (newReview.reviewer == section.user.id)
+                        setClientReview(newReview);
                     break;
             }
             if (section.step != 9) {
@@ -155,26 +159,24 @@ const Progress = ({ mode }) => {
                             SPACE_STEPS[mode][section.step]?.child == 1 &&
                             <>
                                 <Textarea className="min-h-40 mt-4" name="content" value={content} onChange={(e) => setContent(e.target.value)} />
-                                <Button className="mt-4" onClick={handleClick}>{SPACE_STEPS[mode][section.step]?.button}</Button>
                             </>
                         }
                         {
                             SPACE_STEPS[mode][section.step]?.child == 2 &&
                             <>
                                 <div className="flex items-center mt-4"><Input className="flex-grow" onChange={(e) => setPoint(e.target.value)} />&nbsp;pt</div>
-                                <Button className="mt-4" onClick={handleClick}>{SPACE_STEPS[mode][section.step]?.button}</Button>
                             </>
                         }
                         {
                             SPACE_STEPS[mode][section.step]?.child == 3 && (
-                                (mode == "client" && !clientReview.id) || (mode == "user" && !userReview.id) &&
+                                ((mode == "client" && !clientReview.id) || (mode == "user" && !userReview.id)) &&
                                 <>
                                     <Ranking rank={rank} className="mt-4" onChange={(rank) => setRank(rank)} />
                                     <Textarea className="min-h-40 mt-2" name="content" onChange={(e) => setContent(e.target.value)} />
-                                    <Button className="mt-4" onClick={handleClick}>{SPACE_STEPS[mode][section.step]?.button}</Button>
                                 </>
                             )
                         }
+                        {SPACE_STEPS[mode][section.step].button && <Button className="mt-4" onClick={handleClick}>{SPACE_STEPS[mode][section.step]?.button}</Button>}
                     </>
                 }
             </div >
