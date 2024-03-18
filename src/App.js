@@ -8,7 +8,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
-import Page404 from './pages/common/Page404';
+import Page404 from './pages/Page404';
 
 import ClientLayout from './pages/Client/Layout';
 import UserLayout from './pages/User/Layout';
@@ -18,6 +18,7 @@ import query from './utils/query';
 
 import { getAccessToken } from './app/auth';
 import { login } from './common/userSlice';
+import Notification from './pages/Notification';
 
 initializeApp();
 
@@ -57,6 +58,7 @@ function App() {
               <>
                 <Route path="/client/*" element={<ClientLayout />} />
                 <Route path="/user/*" element={<UserLayout />} />
+                <Route path="/notification" element={<Notification />} />
                 <Route path="/" element={<Home />} />
                 <Route path="*" element={<Page404 />} />
               </> :
