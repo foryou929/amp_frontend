@@ -60,6 +60,7 @@ const Profile = ({ mode }) => {
                 <h2 className="text-xl font-bold">募集中のプロジェクト</h2>
                 <List
                     className="my-4"
+                    limit={3}
                     items={
                         projects.filter(project => {
                             return project.status == 0;
