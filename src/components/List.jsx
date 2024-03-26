@@ -1,13 +1,12 @@
 import { useState } from "react";
 
-const List = ({ className, pagination, ...props }) => {
+const List = ({ className, pagination, items, ...props }) => {
     const [page, setPage] = useState(1);
 
     const pageSize = props.pageSize || 10;
 
-    const items = props.items || [];
-    const limitedItems = items.filter((_, index) => props.limit ? index < props.limit : true);
-    const itemCount = items.length;
+    const limitedItems = (items || []).filter((_, index) => props.limit ? index < props.limit : true);
+    const itemCount = limitedItems.length;
 
     const pageCount = Math.floor((itemCount + pageSize - 1) / pageSize);
     const paginatedItems = limitedItems.filter((_, index) => pagination ? index >= pageSize * (page - 1) && index < pageSize * page : true);
@@ -19,7 +18,7 @@ const List = ({ className, pagination, ...props }) => {
                     paginatedItems.length == 0 ?
                         <p className="py-4 text-center border-b border-gray-200">データはありません。</p>
                         : items?.map((item) => (
-                            <li key={item.key} className="border-b border-gray-200 p-4">
+                            <li key={item.key} className="border-b border-gray-200 py-4 px-2">
                                 {
                                     item.content
                                 }
