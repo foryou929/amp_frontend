@@ -18,6 +18,7 @@ const Scout = ({ mode }) => {
         <>
             <h1 className="text-2xl font-bold">スカウト一覧</h1>
             <List
+                pagination
                 className="mt-4"
                 items={
                     sections.filter(section => section.step == 1).map(section => {
