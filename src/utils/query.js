@@ -20,11 +20,11 @@ const request = async (method, url, data, success, error, auth = false, access =
                 await request(method, url, data, success, error, auth, true);
             } catch (err) {
                 if (error) error(err);
-                // else throw err;
+                else throw err;
             }
         } else {
             if (error) error(err);
-            // else throw err;
+            else throw err;
         }
     }
 }

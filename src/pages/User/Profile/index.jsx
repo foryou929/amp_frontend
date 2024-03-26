@@ -32,6 +32,7 @@ const Profile = ({ mode }) => {
                 <h2 className="text-xl font-bold">進行中のプロジェクト</h2>
                 <List
                     className="my-4"
+                    limit={3}
                     items={
                         sections.filter(section => {
                             return section.project && section.step >= 4 && section.step <= 10;
@@ -51,6 +52,7 @@ const Profile = ({ mode }) => {
                 <h2 className="text-xl font-bold">応募•招待</h2>
                 <List
                     className="my-4"
+                    limit={3}
                     items={
                         sections.filter(section => {
                             return section.project && section.step < 4;
@@ -70,6 +72,7 @@ const Profile = ({ mode }) => {
                 <h2 className="text-xl font-bold">スペース</h2>
                 <List
                     className="my-4"
+                    limit={3}
                     items={spaces.map(space => {
                         return {
                             key: space.id,
