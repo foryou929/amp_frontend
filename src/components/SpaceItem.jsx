@@ -7,7 +7,7 @@ import { SPACE_TYPES } from "../utils/constants";
 const SpaceItem = ({ mode, space }) => {
     return (
         <div className="flex gap-2">
-            <div className="w-[calc(100%-16px)] flex gap-4 items-start">
+            <div className="w-[calc(100%-40px)] flex gap-4 items-start">
                 {
                     space.space_images.length >= 1 ?
                         <Image className="flex-none w-12 h-12" src={space.space_images[0].source} /> :
