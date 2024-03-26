@@ -77,34 +77,37 @@ const Manage = ({ mode }) => {
                         </div>
                     )
             }
-            <List className="mt-4" items={
-                mode == "user" ?
-                    sections.filter((section) => {
-                        if (section.project == null) return false;
-                        if (type == PROJECT_STATUS.RECRUITING)
-                            return section.step < 4;
-                        if (type == PROJECT_STATUS.PROGRESSING)
-                            return section.step >= 4 && section.step <= 10;
-                        if (type == PROJECT_STATUS.FINISH)
-                            return section.step > 10;
-                        return false;
-                    }).map((section) => {
-                        console.log()
-                        return {
-                            key: section.id,
-                            content: <ProjectItem mode={mode} project={section.project} section={section} />
-                        }
-                    })
-                    :
-                    projects.filter((project) => {
-                        return project.status == type
-                    }).map((project) => {
-                        return {
-                            key: project.id,
-                            content: <ProjectItem mode={mode} project={project} />
-                        }
-                    })
-            }
+            <List
+                pagination
+                className="mt-4"
+                items={
+                    mode == "user" ?
+                        sections.filter((section) => {
+                            if (section.project == null) return false;
+                            if (type == PROJECT_STATUS.RECRUITING)
+                                return section.step < 4;
+                            if (type == PROJECT_STATUS.PROGRESSING)
+                                return section.step >= 4 && section.step <= 10;
+                            if (type == PROJECT_STATUS.FINISH)
+                                return section.step > 10;
+                            return false;
+                        }).map((section) => {
+                            console.log()
+                            return {
+                                key: section.id,
+                                content: <ProjectItem mode={mode} project={section.project} section={section} />
+                            }
+                        })
+                        :
+                        projects.filter((project) => {
+                            return project.status == type
+                        }).map((project) => {
+                            return {
+                                key: project.id,
+                                content: <ProjectItem mode={mode} project={project} />
+                            }
+                        })
+                }
             />
         </>
     )
