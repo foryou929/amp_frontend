@@ -17,12 +17,15 @@ const View = ({ mode }) => {
     return (
         <>
             <h1 className="text-2xl font-bold">スペースを管理</h1>
-            <List className="mt-4" items={spaces.map(space => {
-                return {
-                    key: space.id,
-                    content: <SpaceItem mode={mode} space={space} />
-                }
-            })} />
+            <List
+                pagination
+                className="mt-4"
+                items={spaces.map(space => {
+                    return {
+                        key: space.id,
+                        content: <SpaceItem mode={mode} space={space} />
+                    }
+                })} />
         </>
     )
 }
