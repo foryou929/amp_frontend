@@ -18,12 +18,15 @@ const View = ({ mode }) => {
     return (
         <>
             <h1 className="text-2xl font-bold">仕事•案件を探す</h1>
-            <List className="mt-4" items={projects.map((project) => {
-                return {
-                    key: project.id,
-                    content: <ProjectItem mode={mode} project={project} />
-                }
-            })}
+            <List
+                pagination
+                className="mt-4"
+                items={projects.map((project) => {
+                    return {
+                        key: project.id,
+                        content: <ProjectItem mode={mode} project={project} />
+                    }
+                })}
             />
         </>
     )
