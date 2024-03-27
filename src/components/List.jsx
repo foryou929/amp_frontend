@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-const List = ({ className, pagination, items, ...props }) => {
+const List = ({ className, pagination, ...props }) => {
     const [page, setPage] = useState(1);
 
     const pageSize = props.pageSize || 10;
 
+    const items = props.items || [];
     const limitedItems = (items || []).filter((_, index) => props.limit ? index < props.limit : true);
     const itemCount = limitedItems.length;
 
@@ -13,11 +14,11 @@ const List = ({ className, pagination, items, ...props }) => {
 
     return (
         <>
-            <ul className={`border-t border-gray-200 ${className}`} {...props}>
+            <ul className={`border-t border-gray-200 ${className}`}>
                 {
                     paginatedItems.length == 0 ?
                         <p className="py-4 text-center border-b border-gray-200">データはありません。</p>
-                        : items?.map((item) => (
+                        : paginatedItems?.map((item) => (
                             <li key={item.key} className="border-b border-gray-200 py-4 px-2">
                                 {
                                     item.content
